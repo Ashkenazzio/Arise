@@ -1,0 +1,18 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.label {
+  width: 100%;
+  font: var(--font-body);
+  color: var(--clr-dark);
+}
+
+.info {
+  width: 100%;
+  font: var(--font-small);
+  color: var(--clr-subtle);
+}

@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 0.75em 0.5em;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  background-color: var(--clr-light);
+  box-shadow: var(--shadow-box);
+}
+
+.rail {
+  display: flex;
+  overflow-x: scroll;
+  gap: 0.5em;
+  /* padding: 0 0.5rem; */
+  scrollbar-width: none;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.arrow {
+  font-size: 1.75rem;
+}
+
+@media (min-width: 75em) {
+  .container {
+    grid-column: span 3;
+  }
+}

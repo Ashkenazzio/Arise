@@ -1,26 +1,130 @@
-html,
-body {
-  padding: 0;
+@font-face {
+  font-family: 'Euclid Circular B';
+  src: local('Euclid Circular B Medium'), local('EuclidCircularB-Medium'),
+    url('../assets/webfonts/fonts/EuclidCircularB-Medium.woff2') format('woff2'),
+    url('../assets/webfonts/fonts/EuclidCircularB-Medium.woff2') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Euclid Circular B';
+  src: local('Euclid Circular B SemiBold'), local('EuclidCircularB-SemiBold'),
+    url('../assets/webfonts/fonts/EuclidCircularB-SemiBold.woff2')
+      format('woff2'),
+    url('../assets/webfonts/fonts/EuclidCircularB-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Euclid Circular B';
+  src: local('Euclid Circular B SemiBold Italic'),
+    local('EuclidCircularB-SemiBoldItalic'),
+    url('../assets/webfonts/fonts/EuclidCircularB-SemiBoldItalic.woff2')
+      format('woff2'),
+    url('../assets/webfonts/fonts/EuclidCircularB-SemiBoldItalic.woff')
+      format('woff');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Euclid Circular B';
+  src: local('Euclid Circular B Regular'), local('EuclidCircularB-Regular'),
+    url('../assets/webfonts/fonts/EuclidCircularB-Regular.woff2')
+      format('woff2'),
+    url('../assets/webfonts/fonts/EuclidCircularB-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@import url('../assets/css/font-awesome.all.css');
+
+:root {
+  --clr-primary: #ffce00;
+  --clr-secondary: #4547e3;
+  --clr-secondary-700: #575ae6;
+  --clr-secondary-100: #ededfc;
+  --clr-secondary-50: #f6f6fe;
+  --clr-success: #31d0aa;
+  --clr-success-100: #cbf3ea;
+  --clr-error: #f03838;
+  --clr-error-700: #f46a6a;
+  --clr-error-100: #fbcdcd;
+  --clr-error-50: #fef5f5;
+  --clr-body: #4a4a68;
+  --clr-subtle: #8c8ca1;
+  --clr-dark: #0e0e2c;
+  --clr-accent: #ecf1f4;
+  --clr-light: #fbfcfd;
+
+  --hover-brightness: 1.05;
+
+  --ff-primary: 'Euclid Circular B', sans-serif;
+
+  --font-h1: 500 clamp(2rem, 2.75vw, 3rem) 'Euclid Circular B', sans-serif;
+  --font-h2: 500 clamp(1.5rem, 2.5vw, 2.5rem) 'Euclid Circular B', sans-serif;
+  --font-h3: 500 clamp(1.25rem, 1.5vw, 1.5rem) 'Euclid Circular B', sans-serif;
+  --font-subtitle: 500 clamp(1.125rem, 1.25vw, 1.5rem) 'Euclid Circular B',
+    sans-serif;
+  --font-body: normal 1rem 'Euclid Circular B', sans-serif;
+  --font-bold: 600 1rem 'Euclid Circular B', sans-serif;
+  --font-small: 500 0.875rem 'Euclid Circular B', sans-serif;
+  --font-pretitle: 600 0.75rem 'Euclid Circular B', sans-serif;
+  --font-button: small-caps 600 1rem 'Euclid Circular B', sans-serif;
+  --font-link: italic 500 1rem 'Euclid Circular B', sans-serif;
+
+  --shadow-box: 0px 1px 2px rgba(14, 14, 44, 0.15),
+    0px 4px 8px rgba(14, 14, 44, 0.2);
+  --shadow-inner: 0px -1px 0.5px rgba(14, 14, 44, 0.4);
+  --shadow-inset: 0px 2px 2px -1px rgba(14, 14, 44, 0.1) inset;
+}
+
+*,
+*::before,
+*::after {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
+  padding: 0;
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
+body {
+  min-height: 100vh;
+  background-color: var(--clr-secondary-50);
+  display: flex;
+  scroll-behavior: smooth;
+  font-family: var(--ff-primary);
+  color: var(--clr-body);
+}
+
+body::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--clr-text-light);
+  border-radius: 100vmax;
+}
+
+#__next {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.icon-before::before,
+.icon-before::after {
+  display: block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font: var(--fa-font-solid);
+}
+
+@media (min-width: 75em) {
+  #__next {
+    max-height: 100vh;
   }
 }

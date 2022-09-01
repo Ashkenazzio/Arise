@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.top-bar {
+  padding: 0 0em 1em 0.5em;
+}
+
+.title {
+  font: var(--font-h1);
+  color: var(--clr-secondary);
+}
+
+.view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 2rem;
+  align-items: center;
+  background-color: var(--clr-light);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-box);
+  padding: 1.5rem;
+  position: relative;
+}
+
+.view > * {
+  min-width: 0;
+  min-height: 0;
+}
