@@ -13,16 +13,10 @@
 }
 
 .view {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   height: 100%;
   gap: 2rem;
-  align-items: center;
-  background-color: var(--clr-light);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-box);
-  padding: 1.5rem;
-  position: relative;
 }
 
 .view > * {

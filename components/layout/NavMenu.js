@@ -22,7 +22,7 @@ const NavMenu = () => {
         </Link>
         <Link href='/new-query'>
           <a>
-            <NavItem icon={String.fromCharCode(0xf0ca)}>Add Query</NavItem>
+            <NavItem icon={String.fromCharCode(0xf0ca)}>Add Items</NavItem>
           </a>
         </Link>
         <Link href='/flow'>

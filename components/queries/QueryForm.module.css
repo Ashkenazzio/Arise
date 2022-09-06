@@ -23,6 +23,8 @@
   box-shadow: var(--shadow-box);
   padding: 1.5rem;
   position: relative;
+  min-height: 0;
+  min-width: 0;
 }
 
 .view > * {
@@ -53,14 +55,22 @@
   column-gap: 4rem;
   row-gap: 2rem;
   place-content: start;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.form::-webkit-scrollbar {
+  display: none;
 }
 
 .actions {
   display: flex;
+  height: 100%;
   width: 100%;
   gap: 1rem;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: flex-end;
+  grid-column: span 2;
 }
 
 .actions > :last-child {

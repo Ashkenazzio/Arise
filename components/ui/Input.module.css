@@ -1,11 +1,12 @@
 .input {
   width: 100%;
   background-color: var(--clr-accent);
-  color: var(--clr-subtle);
+  color: var(--clr-body);
   border-radius: 0.5rem;
   padding: 0.75em 1em;
   font: inherit;
   box-shadow: var(--shadow-inset);
   outline: none;
   border: none;
+  resize: vertical;
 }

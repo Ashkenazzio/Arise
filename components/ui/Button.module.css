@@ -11,6 +11,7 @@
   position: relative;
   cursor: pointer;
   outline: none;
+  border: none;
 }
 
 .btn-alt {

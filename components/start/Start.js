@@ -7,7 +7,9 @@ const Start = () => {
         <h1 className={styles.title}>Get Started</h1>
       </div>
 
-      <div className={styles.view}></div>
+      <div className={styles.view}>
+        <h2>Hello and Welcome!</h2>
+      </div>
     </div>
   );
 };

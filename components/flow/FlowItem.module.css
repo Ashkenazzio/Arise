@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  width: 100%;
+  background-color: var(--clr-accent);
+  color: var(--clr-dark);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  justify-content: space-between;
+  font: var(--font-body);
+}
+
+.title {
+  display: flex;
+  gap: 1rem;
+}
+
+.title::before {
+  content: attr(icon);
+  color: attr(var);
+  color: var(--clr-error);
+  font-size: 1.5em;
+}
