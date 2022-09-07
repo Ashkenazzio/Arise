@@ -1,11 +1,11 @@
-import styles from './QueryForm.module.css';
+import styles from './EntryForm.module.css';
 import FormField from './FormField';
 import Button from '@/ui/Button';
 import ButtonAlt from '@/ui/ButtonAlt';
 
 import { useRef, useState } from 'react';
 
-const QueryForm = (props) => {
+const EntryForm = (props) => {
   // useState();
 
   const listOpts = [
@@ -60,11 +60,11 @@ const QueryForm = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles['top-bar']}>
-        <h1 className={styles.title}>Items</h1>
+        <h1 className={styles.title}>Add Entries</h1>
       </div>
 
       <div className={styles.view}>
-        <h2 className={styles.heading}>Add an Item</h2>
+        <h2 className={styles.heading}>Add a new entry</h2>
         <form className={styles.form} onSubmit={submitHandler}>
           <FormField
             ref={titleRef}
@@ -125,4 +125,4 @@ const QueryForm = (props) => {
   );
 };
 
-export default QueryForm;
+export default EntryForm;

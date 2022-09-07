@@ -1,10 +1,10 @@
-import styles from './Summary.module.css';
+import styles from './SummaryPage.module.css';
 
 import ExpenseRail from './expense-rail/ExpenseRail';
 import Graph from './data-vis/Graph';
 import Info from './info/Info';
 
-const Summary = (props) => {
+const SummaryPage = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles['top-bar']}>
@@ -19,4 +19,4 @@ const Summary = (props) => {
   );
 };
 
-export default Summary;
+export default SummaryPage;

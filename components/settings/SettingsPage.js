@@ -1,6 +1,6 @@
-import styles from './Config.module.css';
+import styles from './SettingsPage.module.css';
 
-const Config = () => {
+const SettingsPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles['top-bar']}>
@@ -12,4 +12,4 @@ const Config = () => {
   );
 };
 
-export default Config;
+export default SettingsPage;

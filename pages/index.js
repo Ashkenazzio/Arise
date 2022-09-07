@@ -1,4 +1,4 @@
-const { default: Start } = require('components/start/Start');
+import Start from '@/start/Start';
 
 const GetStarted = () => {
   return <Start />;

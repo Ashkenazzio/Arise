@@ -3,9 +3,11 @@
     "baseUrl": ".",
     "paths": {
       "@/layout/*": ["components/layout/*"],
-      "@/get-started/*": ["components/get-started/*"],
+      "@/start/*": ["components/start/*"],
       "@/summary/*": ["components/summary/*"],
-      "@/queries/*": ["components/queries/*"],
+      "@/entries/*": ["components/entries/*"],
+      "@/flow/*": ["components/flow/*"],
+      "@/settings/*": ["components/settings/*"],
       "@/ui/*": ["components/ui/*"]
     }
   }

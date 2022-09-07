@@ -1,6 +1,6 @@
-const { default: QueryForm } = require('@/queries/QueryForm');
+import EntryForm from '@/entries/EntryForm';
 
-const NewQuery = () => {
+const AddEntry = () => {
   const addItemHandler = (queryData) => {
     let type;
 
@@ -23,7 +23,7 @@ const NewQuery = () => {
     });
   };
 
-  return <QueryForm onAddItem={addItemHandler} />;
+  return <EntryForm onAddItem={addItemHandler} />;
 };
 
-export default NewQuery;
+export default AddEntry;

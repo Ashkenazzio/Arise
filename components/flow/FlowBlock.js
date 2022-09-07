@@ -1,4 +1,4 @@
-import styles from './Block.module.css';
+import styles from './FlowBlock.module.css';
 import FlowItem from './FlowItem';
 
 const Block = (props) => {
@@ -9,7 +9,7 @@ const Block = (props) => {
     <div className={styles.container}>
       <div className={styles.list}>
         {props.queries.map((item) => (
-          <FlowItem key={item.id} icon={props.icon} var={props.var} {...item} />
+          <FlowItem key={item.id} icon={props.icon} {...item} />
         ))}
       </div>
       <span className={styles.overall}>Overall: ₪{overall}</span>

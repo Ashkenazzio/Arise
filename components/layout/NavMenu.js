@@ -15,14 +15,14 @@ const NavMenu = () => {
             <NavItem icon={String.fromCharCode(0xf05a)}>Get Started</NavItem>
           </a>
         </Link>
-        <Link href='/dashboard'>
+        <Link href='/summary'>
           <a>
             <NavItem icon={String.fromCharCode(0xf200)}>Summary</NavItem>
           </a>
         </Link>
-        <Link href='/new-query'>
+        <Link href='/add'>
           <a>
-            <NavItem icon={String.fromCharCode(0xf0ca)}>Add Items</NavItem>
+            <NavItem icon={String.fromCharCode(0xf0ca)}>Add Entries</NavItem>
           </a>
         </Link>
         <Link href='/flow'>

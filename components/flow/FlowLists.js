@@ -1,7 +1,7 @@
-import Block from './Block';
-import styles from './FlowList.module.css';
+import FlowBlock from './FlowBlock';
+import styles from './FlowLists.module.css';
 
-const FlowList = () => {
+const FlowLists = () => {
   const expenses = [
     {
       id: 'e1',
@@ -42,19 +42,11 @@ const FlowList = () => {
       </div>
 
       <div className={styles.view}>
-        <Block
-          queries={expenses}
-          icon={String.fromCharCode(0xf068)}
-          var={'var(--clr-error)'}
-        />
-        <Block
-          queries={incomes}
-          icon={String.fromCharCode(0x2b)}
-          var={'var(--clr-success)'}
-        />
+        <FlowBlock queries={expenses} icon={String.fromCharCode(0xf068)} />
+        <FlowBlock queries={incomes} icon={String.fromCharCode(0x2b)} />
       </div>
     </div>
   );
 };
 
-export default FlowList;
+export default FlowLists;

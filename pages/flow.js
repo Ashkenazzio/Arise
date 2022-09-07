@@ -1,7 +1,7 @@
-const { default: FlowList } = require('components/flow/FlowList');
+import FlowLists from '@/flow/FlowLists';
 
 const Flow = () => {
-  return <FlowList />;
+  return <FlowLists />;
 };
 
 export default Flow;

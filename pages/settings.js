@@ -1,7 +1,7 @@
-import Config from 'components/config/Config';
+import SettingsPage from '@/settings/SettingsPage';
 
 const Settings = (props) => {
-  return <Config />;
+  return <SettingsPage />;
 };
 
 export default Settings;
