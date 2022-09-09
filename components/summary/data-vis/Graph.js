@@ -1,37 +1,70 @@
 import styles from './Graph.module.css';
 
-// import pie from 'assets/images/Pie-Chart.svg';
 import 'chart.js/auto';
 import { Pie, Bar } from 'react-chartjs-2';
+import Select from '@/ui/Select';
 import Category from './Category';
+import { useState } from 'react';
 
 const Graph = (props) => {
-  const expenses = [
-    {
-      id: 'e1',
-      title: 'burger',
-      type: 'expense',
-      sum: 57,
-      date: '14/08/2022',
-      category: 'eating_out',
-      notes: 'was good',
-    },
-    {
-      id: 'e2',
-      title: 'electricity bill',
-      type: 'expense',
-      sum: 142.81,
-      date: '15/08/2022',
-      category: 'utilities',
-      notes: 'thieves',
-    },
+  const chartOpts = [
+    { key: 'c1', name: 'Pie Chart', value: 'pie' },
+    { key: 'c2', name: 'Bar Chart', value: 'bar' },
   ];
+
+  const [chartType, setChartType] = useState('pie');
+
+  const chartDataObj = {
+    labels: props.expensesByCategory.map((item) => {
+      return item.title;
+    }),
+    datasets: [
+      {
+        label: 'Expenses',
+        data: props.expensesByCategory.map((item) => {
+          return item.sum.toFixed();
+        }),
+        backgroundColor: [
+          '#97BFFF',
+          '#E4736A',
+          '#A1E87D',
+          '#F7B941',
+          '#9A88D8',
+          '#E89AEA',
+          '#E986AC',
+        ],
+      },
+    ],
+  };
+
+  const chartOptsObj = {
+    title: {
+      display: true,
+      text: 'Expense by Category',
+      fontSize: 25,
+    },
+    legend: {
+      display: false,
+      position: 'right',
+      labels: {
+        fontColor: '#000',
+      },
+    },
+    maintainAspectRatio: false,
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h3 className={`${styles.label} icon-before`}>Pie Chart</h3>
-        <div className={styles['rail-container']}>
+        <Select
+          // className={`${styles.label} icon-before`}
+
+          style={{ width: 'auto' }}
+          options={chartOpts}
+          state={[chartType, setChartType]}
+        />
+
+        {/* <div className={styles['rail-container']}>
           <i className='fa-solid fa-angle-left' />
           <div className={styles.rail}>
             <Category color={'#F46A6A'} icon={String.fromCharCode(0xf571)}>
@@ -48,36 +81,15 @@ const Graph = (props) => {
             </Category>
           </div>
           <i className='fa-solid fa-angle-right' />
-        </div>
+        </div> */}
       </div>
-      <div className={styles.img}>
-        <Pie
-          data={{
-            labels: expenses.map((item) => {
-              return item.category;
-            }),
-            datasets: [
-              {
-                label: 'Expenses',
-                data: expenses.map((item) => {
-                  return item.sum;
-                }),
-                backgroundColor: [
-                  '#A8DBD2',
-                  '#F59597',
-                  '#F9A485',
-                  '#BBDCAD',
-                  '#CEB3D6',
-                  '#F9F18C',
-                  '#A5C6E9',
-                ],
-              },
-            ],
-          }}
-          options={{
-            maintainAspectRatio: false,
-          }}
-        />
+      <div className={styles.chart}>
+        {chartType === 'pie' && (
+          <Pie data={chartDataObj} options={chartOptsObj} />
+        )}
+        {chartType === 'bar' && (
+          <Bar data={chartDataObj} options={chartOptsObj} />
+        )}
       </div>
     </div>
   );

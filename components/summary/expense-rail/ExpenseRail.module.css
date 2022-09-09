@@ -4,16 +4,30 @@
   padding: 0.75em 0.5em;
   gap: 0.5rem;
   border-radius: 1rem;
-  background-color: var(--clr-light);
-  box-shadow: var(--shadow-box);
+  /* background-color: var(--clr-light); */
+  /* box-shadow: var(--shadow-box); */
 }
 
 .rail {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   overflow-x: scroll;
   gap: 0.5em;
-  /* padding: 0 0.5rem; */
   scrollbar-width: none;
+}
+
+.rail > *::after {
+  content: '';
+  height: 80%;
+  width: 2px;
+  border-radius: 100vmax;
+  background-color: var(--clr-secondary-100);
+  margin-block: auto;
+}
+
+.rail > :last-child::after {
+  display: none;
 }
 
 .rail::-webkit-scrollbar {

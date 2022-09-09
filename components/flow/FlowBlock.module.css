@@ -5,8 +5,8 @@
   justify-content: space-between;
   align-items: center;
   background-color: var(--clr-light);
-  border-radius: 1rem;
   box-shadow: var(--shadow-box);
+  border-radius: 1rem;
   padding: 1.5rem 1rem;
   position: relative;
   min-height: 0;
@@ -21,7 +21,18 @@
 }
 
 .overall {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
   color: var(--clr-secondary-700);
   font: var(--font-h2);
-  align-self: flex-end;
+  text-align: end;
+}
+
+.overall::before {
+  content: '';
+  width: 100%;
+  height: 1px;
+  background-color: var(--clr-secondary-100);
 }

@@ -1,11 +1,17 @@
 import 'styles/globals.css';
 import Layout from '@/layout/Layout';
+import { DbProvider } from 'context/DbContext';
+import { ThemeProvider } from 'context/themeContext';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <ThemeProvider>
+      <Layout>
+        <DbProvider>
+          <Component {...pageProps} />
+        </DbProvider>
+      </Layout>
+    </ThemeProvider>
   );
 }
 

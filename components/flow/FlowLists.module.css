@@ -14,9 +14,9 @@
 
 .view {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr auto;
   height: 100%;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .view > * {

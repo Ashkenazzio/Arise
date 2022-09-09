@@ -6,7 +6,7 @@ const FlowItem = (props) => {
       <span className={`${styles.title} icon-before`} icon={props.icon}>
         {props.title}
       </span>
-      <span className={styles.sum}>₪ {props.sum}</span>
+      <span className={styles.sum}>₪ {props.sum.toLocaleString()}</span>
     </div>
   );
 };

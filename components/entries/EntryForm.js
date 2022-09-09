@@ -14,14 +14,14 @@ const EntryForm = (props) => {
   ];
 
   const categoryOpts = [
-    { key: 'c1', name: 'Eating Out', value: 'eating-out' },
-    { key: 'c2', name: 'Fun', value: 'fun' },
-    { key: 'c3', name: 'Groceries', value: 'groceries' },
-    { key: 'c4', name: 'Insurance', value: 'insurance' },
-    { key: 'c5', name: 'Pharma', value: 'pharma' },
-    { key: 'c6', name: 'Transport', value: 'transport' },
-    { key: 'c7', name: 'Utilities', value: 'utilities' },
-    { key: 'c8', name: 'Misc.', value: 'miscellaneous' },
+    { key: 'c1', name: '🍴 Eating Out', value: 'eating-out' },
+    { key: 'c2', name: '😊 Fun', value: 'fun' },
+    { key: 'c3', name: '🛒 Groceries', value: 'groceries' },
+    { key: 'c4', name: '📃 Insurance', value: 'insurance' },
+    { key: 'c5', name: '💊 Pharma', value: 'pharma' },
+    { key: 'c6', name: '🚌 Transport', value: 'transport' },
+    { key: 'c7', name: '⚡ Utilities', value: 'utilities' },
+    { key: 'c8', name: '♾ Misc.', value: 'miscellaneous' },
   ];
 
   const titleRef = useRef();
@@ -60,7 +60,7 @@ const EntryForm = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles['top-bar']}>
-        <h1 className={styles.title}>Add Entries</h1>
+        <h1 className={styles.title}>Entries</h1>
       </div>
 
       <div className={styles.view}>

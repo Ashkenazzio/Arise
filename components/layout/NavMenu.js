@@ -15,11 +15,6 @@ const NavMenu = () => {
             <NavItem icon={String.fromCharCode(0xf05a)}>Get Started</NavItem>
           </a>
         </Link>
-        <Link href='/summary'>
-          <a>
-            <NavItem icon={String.fromCharCode(0xf200)}>Summary</NavItem>
-          </a>
-        </Link>
         <Link href='/add'>
           <a>
             <NavItem icon={String.fromCharCode(0xf0ca)}>Add Entries</NavItem>
@@ -28,6 +23,11 @@ const NavMenu = () => {
         <Link href='/flow'>
           <a>
             <NavItem icon={String.fromCharCode(0xf24e)}>Flow</NavItem>
+          </a>
+        </Link>
+        <Link href='/summary'>
+          <a>
+            <NavItem icon={String.fromCharCode(0xf200)}>Summary</NavItem>
           </a>
         </Link>
       </div>

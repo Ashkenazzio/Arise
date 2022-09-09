@@ -12,7 +12,10 @@ const Block = (props) => {
           <FlowItem key={item.id} icon={props.icon} {...item} />
         ))}
       </div>
-      <span className={styles.overall}>Overall: ₪{overall}</span>
+      <span className={styles.overall}>
+        Overall: ₪
+        {overall.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+      </span>
     </div>
   );
 };
