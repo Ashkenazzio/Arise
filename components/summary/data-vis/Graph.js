@@ -51,14 +51,25 @@ const Graph = (props) => {
       },
     },
     maintainAspectRatio: false,
+    datalabels: {
+      formatter: (value, ctx) => {
+        let sum = 0;
+        let dataArr = ctx.chart.data.datasets[0].data;
+        dataArr.map((data) => {
+          sum += data;
+        });
+        let percentage = ((value * 100) / sum).toFixed(2) + '%';
+        return percentage;
+      },
+      color: '#fff',
+    },
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <Select
-          // className={`${styles.label} icon-before`}
-
+          className={styles.sort}
           style={{ width: 'auto' }}
           options={chartOpts}
           state={[chartType, setChartType]}

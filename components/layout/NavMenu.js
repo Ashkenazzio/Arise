@@ -17,7 +17,7 @@ const NavMenu = () => {
         </Link>
         <Link href='/add'>
           <a>
-            <NavItem icon={String.fromCharCode(0xf0ca)}>Add Entries</NavItem>
+            <NavItem icon={String.fromCharCode(0xf0ca)}>Add</NavItem>
           </a>
         </Link>
         <Link href='/flow'>

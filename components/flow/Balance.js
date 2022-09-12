@@ -7,10 +7,10 @@ const Balance = (props) => {
   let totalIncome = 0;
   let totalExpense = 0;
 
-  expenses.map((item) => (totalExpense = totalExpense + item.sum));
   incomes.map((item) => (totalIncome = totalIncome + item.sum));
+  expenses.map((item) => (totalExpense = totalExpense + item.sum));
 
-  const balance = totalIncome - totalExpense;
+  const balance = totalIncome.toFixed() - totalExpense.toFixed();
   const isPositive = balance >= 0;
 
   const liquidHeight = () => {
@@ -21,8 +21,6 @@ const Balance = (props) => {
     }
     return quotient * 50;
   };
-
-  console.log(liquidHeight());
 
   return (
     <div
@@ -42,9 +40,9 @@ const Balance = (props) => {
         </div>
       </div>
       <div className={styles['balance-container']}>
-        <span className={styles.balance}>{`${
-          isPositive ? '+' : ''
-        } ${balance.toLocaleString(undefined, {
+        <span className={styles.balance}>{`${isPositive ? '+' : '-'} ${Math.abs(
+          balance
+        ).toLocaleString(undefined, {
           maximumFractionDigits: 0,
         })}`}</span>
       </div>

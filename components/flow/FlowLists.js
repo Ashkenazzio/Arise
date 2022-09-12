@@ -14,8 +14,8 @@ const FlowLists = () => {
 
       <div className={styles.view}>
         <FlowBlock queries={expenses} icon={String.fromCharCode(0xf068)} />
-        <FlowBlock queries={incomes} icon={String.fromCharCode(0x2b)} />
         <Balance />
+        <FlowBlock queries={incomes} icon={String.fromCharCode(0x2b)} />
       </div>
     </div>
   );

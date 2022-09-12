@@ -1,18 +1,18 @@
 import EntryForm from '@/entries/EntryForm';
 
 const AddEntry = () => {
-  const addItemHandler = (queryData) => {
-    let type;
+  const addItemHandler = (queryData, enteredList) => {
+    let queryList;
 
-    if (queryData.type === 'expense') {
-      type = 'expenses';
+    if (enteredList === 'expense') {
+      queryList = 'expenses';
     }
 
-    if (queryData.type === 'income') {
-      type = 'incomes';
+    if (enteredList === 'income') {
+      queryList = 'incomes';
     }
 
-    let url = `https://arise-f6abb-default-rtdb.europe-west1.firebasedatabase.app/${type}.json`;
+    let url = `https://arise-f6abb-default-rtdb.europe-west1.firebasedatabase.app/${queryList}.json`;
 
     fetch(url, {
       method: 'POST',

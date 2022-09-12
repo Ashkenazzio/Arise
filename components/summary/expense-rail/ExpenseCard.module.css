@@ -3,9 +3,9 @@
   align-items: flex-start;
   justify-content: center;
   gap: 1rem;
-  padding: 0.75em;
-  background-color: var(--clr-light);
-  border-radius: 1rem;
+  padding: 0 0.5em;
+  /* background-color: var(--clr-light); */
+  /* border-radius: 1rem; */
   width: 100%;
   max-width: 12rem;
 }

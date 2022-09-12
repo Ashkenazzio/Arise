@@ -6,14 +6,8 @@ import ButtonAlt from '@/ui/ButtonAlt';
 import { useRef, useState } from 'react';
 
 const EntryForm = (props) => {
-  // useState();
-
-  const listOpts = [
-    { key: 'e', name: 'Expense', value: 'expense' },
-    { key: 'i', name: 'Income', value: 'income' },
-  ];
-
-  const categoryOpts = [
+  const [categoryOpts, setCategoryOpts] = useState([
+    { key: 'c0', name: 'Please choose a category...', value: '' },
     { key: 'c1', name: '🍴 Eating Out', value: 'eating-out' },
     { key: 'c2', name: '😊 Fun', value: 'fun' },
     { key: 'c3', name: '🛒 Groceries', value: 'groceries' },
@@ -22,7 +16,13 @@ const EntryForm = (props) => {
     { key: 'c6', name: '🚌 Transport', value: 'transport' },
     { key: 'c7', name: '⚡ Utilities', value: 'utilities' },
     { key: 'c8', name: '♾ Misc.', value: 'miscellaneous' },
-  ];
+  ]);
+
+  const [selectedVal, setSelectedVal] = useState({
+    key: 'c0',
+    name: '',
+    value: '',
+  });
 
   const titleRef = useRef();
   const listRef = useRef();
@@ -47,14 +47,13 @@ const EntryForm = (props) => {
 
     const queryData = {
       title: enteredTitle,
-      type: enteredList,
       sum: enteredSum,
       date: enteredDate,
       category: enteredCategory,
       notes: enteredNotes,
     };
 
-    props.onAddItem(queryData);
+    props.onAddItem(queryData, enteredList);
   };
 
   return (
@@ -71,16 +70,13 @@ const EntryForm = (props) => {
             title='Title'
             info='Choose a title.'
             type='text'
-            required
           />
 
           <FormField
             ref={listRef}
             title='Expense/Income'
             info='Choose to add an expense or income.'
-            type='select'
-            options={listOpts}
-            required
+            type='checkbox'
           />
 
           <FormField
@@ -88,7 +84,6 @@ const EntryForm = (props) => {
             title='Sum'
             info='Add the cost or gain in numbers.'
             type='number'
-            required
           />
 
           <FormField
@@ -96,7 +91,6 @@ const EntryForm = (props) => {
             title='Date'
             info='Pick a date.'
             type='date'
-            required
           />
 
           <FormField
@@ -105,7 +99,7 @@ const EntryForm = (props) => {
             info='Choose or create a category.'
             type='select'
             options={categoryOpts}
-            required
+            state={[selectedVal, setSelectedVal]}
           />
 
           <FormField
@@ -113,11 +107,10 @@ const EntryForm = (props) => {
             title='Notes'
             info='Add additional information.'
             type='textarea'
-            required
           />
           <div className={styles.actions}>
-            <ButtonAlt onClick={resetHandler}>Clear</ButtonAlt>
-            <Button onClick={submitHandler}>Add</Button>
+            <ButtonAlt onClick={resetHandler}>CLEAR</ButtonAlt>
+            <Button onClick={submitHandler}>ADD</Button>
           </div>
         </form>
       </div>

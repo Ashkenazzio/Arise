@@ -8,9 +8,10 @@ const Select = (props, ref) => {
       ref={ref}
       {...props}
       onChange={(e) => props.state[1](e.target.value)}
+      value={props.state[0].value}
     >
       {props.options.map((option) => (
-        <option key={option.key} value={option.value}>
+        <option className={styles.option} key={option.key} value={option.value}>
           {option.name}
         </option>
       ))}

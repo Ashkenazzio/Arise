@@ -1,4 +1,6 @@
 .header {
+  display: flex;
+  justify-content: space-between;
   background-color: var(--clr-secondary);
   padding: 0.5em 1em;
   box-shadow: var(--shadow-box);

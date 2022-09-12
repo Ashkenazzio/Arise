@@ -16,7 +16,10 @@
 
 .title::before {
   content: attr(icon);
-  color: attr(var);
   color: var(--clr-error);
   font-size: 1.5em;
+}
+
+.title[icon='+']::before {
+  color: var(--clr-success);
 }

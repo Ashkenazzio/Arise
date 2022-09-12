@@ -10,3 +10,7 @@
   border: none;
   resize: vertical;
 }
+
+.option[value=''] {
+  display: none;
+}
