@@ -4,6 +4,7 @@ import Button from './Button';
 const ButtonAlt = (props) => {
   return (
     <Button
+      {...props}
       onClick={props.onClick}
       className={`${styles['btn-alt']} ${props.className}`}
     >

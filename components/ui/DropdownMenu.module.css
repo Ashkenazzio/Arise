@@ -1,0 +1,41 @@
+.menu {
+  position: absolute;
+  top: 5rem;
+  right: 2.5rem;
+  background-color: var(--clr-light);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--clr-secondary-100);
+  z-index: 10;
+  box-shadow: var(--shadow-box);
+}
+
+.menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: 500ms ease;
+}
+
+.menu.inactive {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-1.5rem);
+  transition: 500ms ease;
+}
+
+.list {
+  list-style: none;
+}
+
+.list > * {
+  text-decoration: none;
+}
+
+.list > * li {
+  border-bottom: 1px solid var(--clr-secondary-100);
+}
+
+.list > :last-child li {
+  border-bottom: none;
+}

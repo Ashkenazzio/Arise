@@ -8,7 +8,10 @@ import Toggle from '@/ui/Toggle';
 
 const FormField = (props, ref) => {
   return (
-    <div className={styles.field}>
+    <div
+      type={props.type === 'textarea' && 'textarea'}
+      className={styles.field}
+    >
       <label className={styles.label} htmlFor=''>
         {props.title}
       </label>

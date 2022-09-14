@@ -1,0 +1,31 @@
+.item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem auto;
+  color: var(--clr-body);
+  transition: all 250ms;
+}
+
+.item::before {
+  content: attr(icon);
+}
+
+.item:hover {
+  transform: scale(1.05);
+  background-color: var(--clr-secondary-100);
+  border-radius: 0.5rem;
+  box-shadow: 0px 2px 6px 2px var(--clr-accent);
+}
+
+.item[icon=''] {
+  color: var(--clr-error-700);
+  border-radius: 0.5rem;
+}
+
+.item[icon='']:hover {
+  color: var(--clr-light);
+  background-color: var(--clr-error-700);
+}
