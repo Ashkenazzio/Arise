@@ -1,20 +1,21 @@
 .container {
   display: flex;
   align-items: center;
-  padding: 0.5em 0;
+  width: 100%;
+  padding: 0 0.5rem;
   gap: 0.5rem;
   border-radius: 1rem;
-  /* background-color: var(--clr-light); */
-  /* box-shadow: var(--shadow-box); */
+  box-shadow: var(--shadow-box);
+  background-color: var(--clr-light);
 }
 
 .rail {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
-  width: 100%;
-  overflow-x: scroll;
+  padding: 1.5rem 0.5rem;
   gap: 0.5em;
+  overflow-x: scroll;
   scrollbar-width: none;
 }
 

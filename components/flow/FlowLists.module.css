@@ -14,7 +14,7 @@
 
 .view {
   display: grid;
-  grid-template-columns: 1fr auto 1fr ;
+  grid-template-columns: 1fr;
   height: 100%;
   gap: 1rem;
 }
@@ -22,4 +22,10 @@
 .view > * {
   min-width: 0;
   min-height: 0;
+}
+
+@media (min-width: 37.5em) {
+  .view {
+    grid-template-columns: 1fr auto 1fr;
+  }
 }

@@ -5,10 +5,6 @@
   width: 100%;
 }
 
-/* .field[type='textarea'] {
-  grid-column: span 2;
-} */
-
 .label {
   width: 100%;
   font: var(--font-body);
@@ -19,4 +15,10 @@
   width: 100%;
   font: var(--font-small);
   color: var(--clr-subtle);
+}
+
+@media (min-width: 37.5em) {
+  .field[span='2'] {
+    grid-column: span 2;
+  }
 }

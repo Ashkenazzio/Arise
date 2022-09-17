@@ -4,7 +4,7 @@
   justify-content: center;
   gap: 1rem;
   padding: 0 0.5em;
-  /* background-color: var(--clr-light); */
+  background-color: var(--clr-light);
   /* border-radius: 1rem; */
   width: 100%;
   max-width: 12rem;

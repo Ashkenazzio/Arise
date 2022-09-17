@@ -10,7 +10,6 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: 100%;
-  height: 100%;
   width: min(100vw, 90rem);
   min-height: 0;
   position: relative;
@@ -29,5 +28,6 @@
   .main {
     padding: min(2rem, 1.66vw);
     grid-template-columns: 22% 1fr;
+    height: 100%;
   }
 }

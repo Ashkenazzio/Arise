@@ -5,6 +5,7 @@
       "@/public/*": ["public/*"],
       "@/images/*": ["assets/images/*"],
       "@/profile/*": ["components/profile/*"],
+      "@/login/*": ["components/login/*"],
       "@/layout/*": ["components/layout/*"],
       "@/start/*": ["components/start/*"],
       "@/summary/*": ["components/summary/*"],

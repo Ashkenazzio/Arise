@@ -1,13 +1,20 @@
 import styles from './Header.module.css';
 import logo from '@/public/logo.svg';
-import profile from '@/public/user-example.png';
+import fox from '@/public/avatars/fox.svg';
 import User from './User';
 
 const Header = () => {
+  const user = {
+    name: 'Eskandar',
+    email: 'XanderTIM@gmail.com',
+    password: '12345678',
+    avatar: 'fox',
+  };
+
   return (
     <div className={styles.header}>
       <img className={styles.logo} src={logo.src} alt='logo' />
-      <User img={profile.src} />
+      <User user={user} />
     </div>
   );
 };

@@ -3,11 +3,12 @@
   flex-direction: column;
   gap: 2em;
   align-items: center;
-  /* background-color: var(--clr-light); */
-  /* box-shadow: var(--shadow-box); */
+  background-color: var(--clr-light);
+  box-shadow: var(--shadow-box);
   border-radius: 1rem;
   padding: 1rem;
   position: relative;
+  height: 24rem;
   max-height: 32rem;
 }
 
@@ -86,6 +87,13 @@
   min-height: 0;
 }
 
+@media (min-width: 37.5em) {
+  .container {
+    height: auto;
+    max-height: auto;
+  }
+}
+
 @media (min-width: 75em) {
   .container {
     grid-column: span 2;
@@ -105,6 +113,6 @@
 
 @media (min-width: 82em) {
   .container {
-    /* padding: 2.5rem; */
+    padding: 2rem;
   }
 }

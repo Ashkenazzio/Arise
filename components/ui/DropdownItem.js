@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import styles from './DropdownItem.module.css';
-Link;
 
 const DropdownItem = (props) => {
   return (
-    <li className={`${styles.item} icon-before`} icon={props.icon}>
-      {props.children}
-    </li>
+    <Link href={props.href}>
+      <li className={`${styles.item}  icon-before`} icon={props.icon}>
+        {props.title}
+      </li>
+    </Link>
   );
 };
 

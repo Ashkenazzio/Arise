@@ -10,6 +10,7 @@
   font: var(--font-subtitle);
   font-size: clamp(0.75rem, 1.25vw, 1.5rem);
   transition: all 400ms ease;
+  cursor: pointer;
 }
 
 .item::before {
@@ -22,15 +23,37 @@
 .item:hover {
   background-color: var(--clr-secondary-100);
   color: var(--clr-dark);
+  transform: scale(1.05);
 }
 
 .item:hover::before {
   color: var(--clr-secondary);
 }
 
-.active {
+.item[icon=''] {
+  color: var(--clr-error-700);
+}
+
+.item[icon='']:hover {
+  color: var(--clr-light);
+  background-color: var(--clr-error-700);
+}
+
+.item[icon='']:hover::before {
+  color: var(--clr-light);
+}
+
+.item.active {
   color: var(--clr-light);
   background-color: var(--clr-secondary);
+}
+
+.item.active:hover {
+  transform: none;
+}
+
+.item.active::before {
+  color: var(--clr-primary);
 }
 
 .active::before {

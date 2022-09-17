@@ -1,43 +1,38 @@
-import Link from 'next/link';
 import styles from './NavMenu.module.css';
 
 import NavItem from './NavItem';
-import LogoutItem from './LogoutItem';
 
 const NavMenu = () => {
-  // const pushDown = { marginTop: 'auto' };
-
   return (
     <ul className={styles.nav}>
       <div className={styles['nav-routes']}>
-        <Link href='/'>
-          <a>
-            <NavItem icon={String.fromCharCode(0xf05a)}>Get Started</NavItem>
-          </a>
-        </Link>
-        <Link href='/add'>
-          <a>
-            <NavItem icon={String.fromCharCode(0xf0ca)}>Add</NavItem>
-          </a>
-        </Link>
-        <Link href='/flow'>
-          <a>
-            <NavItem icon={String.fromCharCode(0xf24e)}>Flow</NavItem>
-          </a>
-        </Link>
-        <Link href='/summary'>
-          <a>
-            <NavItem icon={String.fromCharCode(0xf200)}>Summary</NavItem>
-          </a>
-        </Link>
+        <NavItem
+          href='/'
+          title='Get Started'
+          icon={String.fromCharCode(0xf05a)}
+        />
+
+        <NavItem href='/add' title='Add' icon={String.fromCharCode(0xf0ca)} />
+
+        <NavItem href='/flow' title='Flow' icon={String.fromCharCode(0xf24e)} />
+
+        <NavItem
+          href='/summary'
+          title='Summary'
+          icon={String.fromCharCode(0xf200)}
+        />
       </div>
       <div className={styles['nav-actions']}>
-        <Link href='/settings'>
-          <a>
-            <NavItem icon={String.fromCharCode(0xf013)}>Settings</NavItem>
-          </a>
-        </Link>
-        <LogoutItem icon={String.fromCharCode(0xf2f5)}>Logout</LogoutItem>
+        <NavItem
+          href='/settings'
+          title='Settings'
+          icon={String.fromCharCode(0xf013)}
+        />
+        <NavItem
+          href='/logout'
+          title='Logout'
+          icon={String.fromCharCode(0xf2f5)}
+        />
       </div>
     </ul>
   );

@@ -5,7 +5,7 @@ import ExpenseCard from './ExpenseCard';
 const ExpenseRail = (props) => {
   return (
     <div className={styles.container}>
-      <i className={`${styles.arrow} fa-solid fa-angle-left`} />
+      {/* <i className={`${styles.arrow} fa-solid fa-angle-left`} /> */}
       <div className={styles.rail}>
         {props.expensesByCategory.map((category) => (
           <ExpenseCard
@@ -15,7 +15,7 @@ const ExpenseRail = (props) => {
           />
         ))}
       </div>
-      <i className={`${styles.arrow} fa-solid fa-angle-right`} />
+      {/* <i className={`${styles.arrow} fa-solid fa-angle-right`} /> */}
     </div>
   );
 };

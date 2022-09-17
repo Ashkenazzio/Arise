@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import styles from './FlowItem.module.css';
 
 import FormField from '@/entries/FormField';
@@ -6,7 +6,14 @@ import Button from '@/ui/Button';
 import ButtonAlt from '@/ui/ButtonAlt';
 
 const FlowItem = (props) => {
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = props.openState;
+
+  const toggle = () => {
+    if (edit === props.id) {
+      return setEdit(null);
+    }
+    setEdit(props.id);
+  };
 
   const titleRef = useRef(props.title);
   const sumRef = useRef(props.sum);
@@ -22,17 +29,16 @@ const FlowItem = (props) => {
     <div
       className={`${styles.container} icon-before`}
       icon={props.icon}
-      onClick={() => setEdit(!edit)}
+      onClick={toggle}
     >
-      {' '}
       <div className={styles.content}>
-        {!edit && (
+        {edit !== props.id && (
           <>
             <span className={styles.title}>{props.title}</span>
             <span className={styles.sum}>₪ {props.sum.toLocaleString()}</span>
           </>
         )}
-        {edit && (
+        {edit === props.id && (
           <form
             className={styles.form}
             onSubmit={submitHandler}
@@ -48,7 +54,7 @@ const FlowItem = (props) => {
               // options={categoryOpts}
               // state={[selectedVal, setSelectedVal]}
             />
-            <FormField ref={notesRef} title='Notes' type='textarea' />
+            <FormField ref={notesRef} span='2' title='Notes' type='textarea' />
 
             <div className={styles.actions}>
               <ButtonAlt btn='delete'>DELETE</ButtonAlt>

@@ -1,7 +1,7 @@
 .menu {
   position: absolute;
-  top: 5rem;
-  right: 2.5rem;
+  top: 4.5rem;
+  right: 1rem;
   background-color: var(--clr-light);
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
@@ -38,4 +38,31 @@
 
 .list > :last-child li {
   border-bottom: none;
+}
+
+.greetings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--clr-body);
+  font: var(--font-bold);
+}
+
+.greetings::after {
+  margin-top: 0.5rem;
+  content: '';
+  height: 1px;
+  width: 100%;
+  background-color: var(--clr-secondary-100);
+}
+
+.email {
+  font: var(--font-small);
+  color: var(--clr-subtle);
+}
+
+@media (min-width: 37.5em) {
+  .menu {
+    right: 3rem;
+  }
 }

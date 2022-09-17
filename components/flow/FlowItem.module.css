@@ -6,7 +6,7 @@
   padding: 0.5rem 1rem;
   font: var(--font-body);
   cursor: pointer;
-  /* transition: all 500ms ease; */
+  transition: all 500ms cubic-bezier(0, 1, 0, 1);
 }
 
 .container::before {
@@ -19,7 +19,7 @@
 .container[icon='+']::before {
   color: var(--clr-success);
 }
-    
+
 .container:hover,
 .container:focus {
   filter: brightness(0.985);
@@ -30,12 +30,13 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  transition: all 500ms cubic-bezier(0, 1, 0, 1);
 }
 
 .form {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1rem 2rem;
   padding: 1rem 0.5rem;
 }
@@ -45,14 +46,9 @@
   background-color: var(--clr-light);
 }
 
-.form > textarea {
-  grid-column: span 2;
-}
-
 .actions {
   display: flex;
   justify-content: end;
-  grid-column: span 2;
   gap: 1rem;
 }
 
@@ -66,17 +62,33 @@
 }
 
 .title {
-  display: flex;
-  gap: 1rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .sum {
   display: flex;
   justify-content: flex-end;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-.form {
-  display: grid;
-  width: 100%;
-  grid-template-columns: 1fr 1fr;
+@media (min-width: 37.5em) {
+  .form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form > textarea {
+    grid-column: span 2;
+  }
+
+  .actions {
+    grid-column: span 2;
+  }
 }

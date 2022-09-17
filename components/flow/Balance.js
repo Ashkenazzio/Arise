@@ -13,7 +13,7 @@ const Balance = (props) => {
   const balance = totalIncome.toFixed() - totalExpense.toFixed();
   const isPositive = balance >= 0;
 
-  const liquidHeight = () => {
+  const fill = () => {
     const quotient = totalIncome / totalExpense;
 
     if (quotient <= 0.5) {
@@ -35,7 +35,7 @@ const Balance = (props) => {
         >
           <div
             className={styles.liquid}
-            style={{ height: `${liquidHeight() + '%'}` }}
+            style={{ height: `${fill() + '%'}` }}
           ></div>
         </div>
       </div>

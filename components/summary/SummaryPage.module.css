@@ -34,10 +34,10 @@
   display: grid;
   grid-template-columns: 1fr;
   min-height: 0;
-  background-color: var(--clr-light);
-  box-shadow: var(--shadow-box);
+  /* background-color: var(--clr-light); */
+  /* box-shadow: var(--shadow-box); */
   border-radius: 1rem;
-  padding: 1rem;
+  /* padding: 1rem; */
   gap: 1rem;
 }
 

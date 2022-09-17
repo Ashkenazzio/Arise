@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 const ThemeContext = React.createContext();
 
 export function useTheme() {
-  return useContext(DbContext);
+  return useContext(ThemeContext);
 }
 
 export const ThemeProvider = ({ children }) => {
