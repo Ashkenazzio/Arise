@@ -51,13 +51,14 @@
   width: 100%;
   height: 100%;
   padding: 0.125rem;
-  background-color: var(--clr-error-100);
+  background-color: var(--clr-success-100);
   border-radius: 0.5rem;
   transition: all 400ms ease;
 }
 
 .liquid {
   height: 100%;
+  width: var(--liquid-fill);
   max-width: 98%;
   min-width: 2%;
   background-color: currentColor;
@@ -72,8 +73,8 @@
   transition: all 400ms ease;
 }
 
-.positiveBar {
-  background-color: var(--clr-success-100);
+.negativeBar {
+  background-color: var(--clr-error-100);
 }
 
 @keyframes glow {
@@ -105,6 +106,8 @@
 
   .liquid {
     width: 100%;
+    height: var(--liquid-fill);
+    height: -20%;
     max-height: 98%;
     min-height: 2%;
   }

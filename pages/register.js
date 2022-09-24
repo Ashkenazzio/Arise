@@ -1,7 +1,9 @@
-import RegPage from '@/login/RegPage';
+import RegPage from '@/auth/RegPage';
 
-const GetStarted = () => {
+const Register = () => {
   return <RegPage />;
 };
 
-export default GetStarted;
+export default Register;
+
+Register.getLayout = (page) => page;

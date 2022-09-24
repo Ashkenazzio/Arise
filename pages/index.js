@@ -1,7 +1,7 @@
-import Start from '@/start/Start';
+import { useRouter } from 'next/router';
 
-const GetStarted = () => {
-  return <Start />;
+const Index = () => {
+  return 'Hello World';
 };
 
-export default GetStarted;
+export default Index;

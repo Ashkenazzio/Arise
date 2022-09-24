@@ -1,16 +1,16 @@
 import styles from './User.module.css';
-import profilePic from '@/public/profile-pic.svg';
+import profilePic from '@/images/profile-pic.svg';
 import { useState, useRef, useEffect } from 'react';
-import DropdownMenu from '@/ui/DropdownMenu';
+import UserMenu from './UserMenu';
 
-import bear from '@/public/avatars/bear.svg';
-import cat from '@/public/avatars/cat.svg';
-import dog from '@/public/avatars/dog.svg';
-import fox from '@/public/avatars/fox.svg';
-import horse from '@/public/avatars/horse.svg';
-import owl from '@/public/avatars/owl.svg';
-import penguin from '@/public/avatars/penguin.svg';
-import pig from '@/public/avatars/pig.svg';
+import bear from '@/images/avatars/bear.svg';
+import cat from '@/images/avatars/cat.svg';
+import dog from '@/images/avatars/dog.svg';
+import fox from '@/images/avatars/fox.svg';
+import horse from '@/images/avatars/horse.svg';
+import owl from '@/images/avatars/owl.svg';
+import penguin from '@/images/avatars/penguin.svg';
+import pig from '@/images/avatars/pig.svg';
 
 const User = (props) => {
   const [isClicked, setIsClicked] = useState(false);
@@ -60,13 +60,9 @@ const User = (props) => {
         className={styles.img}
       />
       <i
-        className={'fa-solid fa-chevron-down'}
-        style={{
-          transform: isClicked ? 'scaleY(-1)' : '',
-          transition: '100ms',
-        }}
+        className={`${isClicked && styles.clicked} fa-solid fa-chevron-down`}
       ></i>
-      <DropdownMenu
+      <UserMenu
         name={props.user.name}
         email={props.user.email}
         state={[isClicked, setIsClicked]}

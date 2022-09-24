@@ -1,9 +1,14 @@
 import styles from './Header.module.css';
-import logo from '@/public/logo.svg';
-import fox from '@/public/avatars/fox.svg';
+import logo from '@/images/logo.svg';
 import User from './User';
+import { useEffect, useState } from 'react';
+import ButtonAlt from '@/ui/ButtonAlt';
+import Link from 'next/link';
+import { useSession } from 'context/SessionContext';
 
 const Header = () => {
+  const [localSession] = useSession();
+
   const user = {
     name: 'Eskandar',
     email: 'XanderTIM@gmail.com',
@@ -14,7 +19,17 @@ const Header = () => {
   return (
     <div className={styles.header}>
       <img className={styles.logo} src={logo.src} alt='logo' />
-      <User user={user} />
+      {!localSession && <User user={user} />}
+      {localSession && (
+        <div className={styles.actions}>
+          <Link href={'/login'}>
+            <ButtonAlt>Login</ButtonAlt>
+          </Link>
+          <Link href={'/register'}>
+            <ButtonAlt>Register</ButtonAlt>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

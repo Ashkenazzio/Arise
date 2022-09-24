@@ -7,13 +7,14 @@ const ExpenseRail = (props) => {
     <div className={styles.container}>
       {/* <i className={`${styles.arrow} fa-solid fa-angle-left`} /> */}
       <div className={styles.rail}>
-        {props.expensesByCategory.map((category) => (
-          <ExpenseCard
-            key={category.id}
-            title={category.title}
-            sum={category.sum}
-          />
-        ))}
+        {props.expensesByCategory.length !== 0 &&
+          props.expensesByCategory.map((category) => (
+            <ExpenseCard
+              key={category.id}
+              title={category.title}
+              sum={category.sum}
+            />
+          ))}
       </div>
       {/* <i className={`${styles.arrow} fa-solid fa-angle-right`} /> */}
     </div>

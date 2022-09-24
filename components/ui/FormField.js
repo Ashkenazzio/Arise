@@ -5,10 +5,11 @@ import Input from '@/ui/Input';
 import TextArea from '@/ui/TextArea';
 import Select from '@/ui/Select';
 import Toggle from '@/ui/Toggle';
+import Dropdown from './Dropdown';
 
 const FormField = (props, ref) => {
   return (
-    <div span={props.span === '2' && '2'} className={styles.field}>
+    <div span={props.span === '2' ? '2' : undefined} className={styles.field}>
       <label className={styles.label} htmlFor=''>
         {props.title}
       </label>
@@ -18,7 +19,9 @@ const FormField = (props, ref) => {
       {props.type !== 'textarea' &&
         props.type !== 'select' &&
         props.type !== 'checkbox' && <Input {...props} ref={ref} />}
-      <span className={styles.info}>{props.info}</span>
+      <span className={`${styles.info} ${props.error && styles.error}`}>
+        {props.info}
+      </span>
     </div>
   );
 };

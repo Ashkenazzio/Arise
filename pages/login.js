@@ -1,7 +1,9 @@
-import LoginPage from '@/login/LoginPage';
+import LoginPage from '@/auth/LoginPage';
 
-const GetStarted = () => {
+const Login = () => {
   return <LoginPage />;
 };
 
-export default GetStarted;
+export default Login;
+
+Login.getLayout = (page) => page;

@@ -7,7 +7,7 @@ const NavMenu = () => {
     <ul className={styles.nav}>
       <div className={styles['nav-routes']}>
         <NavItem
-          href='/'
+          href='/start'
           title='Get Started'
           icon={String.fromCharCode(0xf05a)}
         />

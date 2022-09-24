@@ -4,8 +4,7 @@
     "paths": {
       "@/public/*": ["public/*"],
       "@/images/*": ["assets/images/*"],
-      "@/profile/*": ["components/profile/*"],
-      "@/login/*": ["components/login/*"],
+      "@/auth/*": ["components/auth/*"],
       "@/layout/*": ["components/layout/*"],
       "@/start/*": ["components/start/*"],
       "@/summary/*": ["components/summary/*"],

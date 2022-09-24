@@ -22,6 +22,7 @@
   height: 1em;
   width: 1em;
   font-size: 1.5em;
+  box-shadow: none;
 }
 
 .title {

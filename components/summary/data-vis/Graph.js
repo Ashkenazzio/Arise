@@ -1,10 +1,10 @@
 import styles from './Graph.module.css';
 
-import 'chart.js/auto';
-import { Pie, Bar } from 'react-chartjs-2';
-import Select from '@/ui/Select';
-import Category from './Category';
 import { useState } from 'react';
+import 'chart.js/auto';
+import { Pie, Bar, Doughnut } from 'react-chartjs-2';
+import Dropdown from '@/ui/Dropdown';
+// import Category from './Category';
 
 const Graph = (props) => {
   const chartOpts = [
@@ -12,7 +12,11 @@ const Graph = (props) => {
     { key: 'c2', name: 'Bar Chart', value: 'bar' },
   ];
 
-  const [chartType, setChartType] = useState('pie');
+  const [chartType, setChartType] = useState({
+    key: 'c1',
+    name: 'Pie Chart',
+    value: 'pie',
+  });
 
   const chartDataObj = {
     labels: props.expensesByCategory.map((item) => {
@@ -46,6 +50,7 @@ const Graph = (props) => {
     legend: {
       display: false,
       position: 'right',
+      align: 'end',
       labels: {
         fontColor: '#000',
       },
@@ -68,7 +73,7 @@ const Graph = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Select
+        <Dropdown
           className={styles.sort}
           style={{ width: 'auto' }}
           options={chartOpts}
@@ -95,10 +100,13 @@ const Graph = (props) => {
         </div> */}
       </div>
       <div className={styles.chart}>
-        {chartType === 'pie' && (
-          <Pie data={chartDataObj} options={chartOptsObj} />
+        {chartType.value === 'pie' && (
+          <>
+            <Doughnut data={chartDataObj} options={chartOptsObj} />
+            {/* <span className={styles.chartitle}>YEs</span> */}
+          </>
         )}
-        {chartType === 'bar' && (
+        {chartType.value === 'bar' && (
           <Bar data={chartDataObj} options={chartOptsObj} />
         )}
       </div>

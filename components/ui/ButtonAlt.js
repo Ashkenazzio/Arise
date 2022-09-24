@@ -3,13 +3,12 @@ import Button from './Button';
 
 const ButtonAlt = (props) => {
   return (
-    <Button
+    <button
       {...props}
-      onClick={props.onClick}
-      className={`${styles['btn-alt']} ${props.className}`}
+      className={`${styles.btn} ${styles['btn-alt']} ${props.className}`}
     >
       {props.children}
-    </Button>
+    </button>
   );
 };
 

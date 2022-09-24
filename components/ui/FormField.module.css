@@ -17,6 +17,10 @@
   color: var(--clr-subtle);
 }
 
+.error {
+  color: var(--clr-error);
+}
+
 @media (min-width: 37.5em) {
   .field[span='2'] {
     grid-column: span 2;

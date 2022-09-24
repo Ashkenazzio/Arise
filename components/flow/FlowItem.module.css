@@ -25,6 +25,10 @@
   filter: brightness(0.985);
 }
 
+.container.open {
+  padding: 1rem;
+}
+
 .content {
   padding: 0 0.5rem;
   width: 100%;
@@ -38,7 +42,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem 2rem;
-  padding: 1rem 0.5rem;
+  padding: 0 0.5rem;
 }
 
 .form input,

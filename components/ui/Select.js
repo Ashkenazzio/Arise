@@ -4,11 +4,11 @@ import styles from './Input.module.css';
 const Select = (props, ref) => {
   return (
     <select
-      className={styles.input}
+      className={`${styles.input} ${!!props.error && styles.invalid} ${
+        !!props.valid && styles.valid
+      }`}
       ref={ref}
       {...props}
-      onChange={(e) => props.state[1](e.target.value)}
-      value={props.state[0].value}
     >
       {props.options.map((option) => (
         <option className={styles.option} key={option.key} value={option.value}>

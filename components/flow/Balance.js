@@ -2,7 +2,7 @@ import { useDb } from 'context/DbContext';
 import styles from './Balance.module.css';
 
 const Balance = (props) => {
-  const [expenses, incomes] = useDb();
+  const [expenses, incomes] = props.queries;
 
   let totalIncome = 0;
   let totalExpense = 0;
@@ -11,14 +11,23 @@ const Balance = (props) => {
   expenses.map((item) => (totalExpense = totalExpense + item.sum));
 
   const balance = totalIncome.toFixed() - totalExpense.toFixed();
-  const isPositive = balance >= 0;
+  const isNegative = balance < 0;
 
   const fill = () => {
     const quotient = totalIncome / totalExpense;
 
+    if (totalExpense === 0 && totalIncome === 0) {
+      return 50;
+    }
+
+    if (totalExpense === 0) {
+      return 100;
+    }
+
     if (quotient <= 0.5) {
       return 0;
     }
+
     return quotient * 50;
   };
 
@@ -26,25 +35,26 @@ const Balance = (props) => {
     <div
       className={styles.container}
       style={{
-        color: isPositive ? 'var(--clr-success)' : 'var(--clr-error)',
+        color: isNegative ? 'var(--clr-error)' : 'var(--clr-success)',
       }}
     >
       <div className={styles.thermo}>
         <div
-          className={`${styles.glass} ${isPositive ? styles.positiveBar : ''}`}
+          className={`${styles.glass} ${isNegative ? styles.negativeeBar : ''}`}
         >
           <div
             className={styles.liquid}
-            style={{ height: `${fill() + '%'}` }}
+            style={{ '--liquid-fill': `${fill() + '%'}` }}
           ></div>
         </div>
       </div>
       <div className={styles['balance-container']}>
-        <span className={styles.balance}>{`${isPositive ? '+' : '-'} ${Math.abs(
-          balance
-        ).toLocaleString(undefined, {
-          maximumFractionDigits: 0,
-        })}`}</span>
+        <span className={styles.balance}>
+          {balance !== 0 && isNegative ? '+' : '-'}
+          {Math.abs(balance).toLocaleString(undefined, {
+            maximumFractionDigits: 0,
+          })}
+        </span>
       </div>
     </div>
   );

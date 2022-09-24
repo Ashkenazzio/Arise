@@ -7,8 +7,33 @@
   font: inherit;
   box-shadow: var(--shadow-inset);
   outline: none;
-  border: none;
   resize: vertical;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.input:focus {
+  border: 1px solid var(--clr-secondary);
+  box-shadow: 0px 0px 0px 4px rgba(69, 71, 227, 0.2);
+  background-color: var(--clr-light);
+}
+
+.input.valid {
+  border: 1px solid var(--clr-success);
+  box-shadow: 0px 0px 0px 4px rgba(49, 208, 170, 0.2);
+  background-color: var(--clr-light);
+}
+
+.input.invalid {
+  border: 1px solid var(--clr-error);
+  box-shadow: 0px 0px 0px 4px rgba(240, 56, 56, 0.2);
+  background-color: var(--clr-light);
+}
+
+.input.disabled {
+  color: var(--clr-subtle);
+  box-shadow: none;
+  cursor: not-allowed;
 }
 
 .option[value=''] {

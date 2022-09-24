@@ -1,15 +1,19 @@
 import EntryForm from '@/entries/EntryForm';
+import { useLayout } from 'context/LayoutContext';
+import { useSession } from 'context/SessionContext';
 
 const AddEntry = () => {
-  const addItemHandler = (queryData, enteredList) => {
-    let queryList;
+  const [localSession] = useSession();
 
-    if (enteredList === 'expense') {
-      queryList = 'expenses';
-    }
+  const addItemHandler = (queryData, queryList) => {
+    if (localSession) {
+      const currentLocalJson = localStorage.getItem(queryList);
 
-    if (enteredList === 'income') {
-      queryList = 'incomes';
+      localStorage.setItem(
+        queryList,
+        currentLocalJson + JSON.stringify(queryData)
+      );
+      return;
     }
 
     let url = `https://arise-f6abb-default-rtdb.europe-west1.firebasedatabase.app/${queryList}.json`;
@@ -22,6 +26,10 @@ const AddEntry = () => {
       },
     });
   };
+
+  const [title, setTitle, sort, setSort] = useLayout();
+  setTitle('Entries');
+  setSort(false);
 
   return <EntryForm onAddItem={addItemHandler} />;
 };

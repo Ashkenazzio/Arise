@@ -12,6 +12,7 @@
   cursor: pointer;
   outline: none;
   border: none;
+  box-shadow: var(--shadow-inner);
 }
 
 .btn-alt {
@@ -26,4 +27,18 @@
 
 .btn:active {
   transform: scale(0.96);
+}
+
+.btn:disabled {
+  background-color: var(--clr-subtle);
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover,
+.btn:disabled:focus {
+  filter: none;
+}
+
+.btn:disabled:active {
+  transform: none;
 }

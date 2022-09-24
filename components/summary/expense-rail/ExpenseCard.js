@@ -1,6 +1,9 @@
 import styles from './ExpenseCard.module.css';
+import { useCurrency } from 'context/CurrencyContext';
 
 const ExpenseCard = (props) => {
+  const [currency] = useCurrency();
+
   const categoryIcons = {
     Food: 'fa-solid fa-utensils',
     Fun: 'fa-solid fa-face-smile-beam',
@@ -25,7 +28,10 @@ const ExpenseCard = (props) => {
       <i className={`${styles.icon} ${chooseIcon()}`}></i>
       <div className={styles.details}>
         <span className={styles.label}>{props.title}</span>
-        <span className={styles.amount}>₪{props.sum.toFixed()}</span>
+        <span className={styles.amount}>
+          {currency}
+          {props.sum.toFixed()}
+        </span>
 
         <span className={`${styles.trend} icon-before`}>-120%</span>
       </div>

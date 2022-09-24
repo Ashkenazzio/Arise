@@ -1,8 +1,8 @@
-import styles from './DropdownMenu.module.css';
+import styles from './UserMenu.module.css';
 
-import DropdownItem from './DropdownItem';
+import UserItem from './UserItem';
 
-const DropdownMenu = (props) => {
+const UserMenu = (props) => {
   const [open, setOpen] = props.state;
 
   return (
@@ -16,28 +16,28 @@ const DropdownMenu = (props) => {
             <span>Hello {props.name}!</span>
             <span className={styles.email}>{props.email}</span>
           </div>
-          <DropdownItem
+          <UserItem
             key='1'
             href='/profile'
             icon={String.fromCharCode(0xf044)}
             title={'Edit Profile'}
           />
 
-          <DropdownItem
+          <UserItem
             key='2'
             href='/'
             icon={String.fromCharCode(0xf05a)}
             title={'Help'}
           />
 
-          <DropdownItem
+          <UserItem
             key='3'
             href='/settings'
             icon={String.fromCharCode(0xf013)}
             title={'Settings'}
           />
 
-          <DropdownItem
+          <UserItem
             key='4'
             href='/logout'
             icon={String.fromCharCode(0xf2f5)}
@@ -49,4 +49,4 @@ const DropdownMenu = (props) => {
   );
 };
 
-export default DropdownMenu;
+export default UserMenu;

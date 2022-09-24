@@ -3,11 +3,11 @@
   align-items: flex-start;
   justify-content: center;
   gap: 1rem;
-  padding: 0 0.5em;
-  background-color: var(--clr-light);
-  /* border-radius: 1rem; */
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--clr-accent);
   width: 100%;
-  max-width: 12rem;
+  /* max-width: 12rem; */
 }
 
 .icon {
@@ -16,7 +16,7 @@
   justify-content: center;
   padding: 1rem;
   font-size: clamp(1.5em, 1.75vw, 2rem);
-  background-color: var(--clr-accent);
+  background-color: var(--clr-light);
   border-radius: 100vmax;
   color: var(--clr-secondary);
 }
