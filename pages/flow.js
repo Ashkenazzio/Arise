@@ -1,7 +1,7 @@
 import FlowLists from '@/flow/FlowLists';
-import { useLayout } from 'context/LayoutContext';
+import { useLayoutEffect } from 'react';
 
-const Flow = () => {
+const Flow = (props) => {
   const onUpdateItem = (props) => {
     console.log(props);
   };
@@ -10,9 +10,11 @@ const Flow = () => {
     console.log(props);
   };
 
-  const [title, setTitle, sort, setSort] = useLayout();
-  setTitle('Flow');
-  setSort(true);
+  useLayoutEffect(() => {
+    const [setTitle, setFilter] = props.layout;
+    setTitle('Flow');
+    setFilter(true);
+  }, []);
 
   return <FlowLists />;
 };

@@ -124,6 +124,19 @@ body::-webkit-scrollbar-thumb {
   font: var(--fa-font-solid);
 }
 
+[dark-theme='true'] {
+  --clr-primary: #ffce00;
+  --clr-secondary: #4547e3;
+  --clr-secondary-700: #575ae6;
+  --clr-secondary-100: #ededfc;
+  --clr-secondary-50: #f6f6fe;
+  --clr-body: #ecf1f4;
+  --clr-subtle: #8c8ca1;
+  --clr-dark: #fbfcfd;
+  --clr-accent: #4a4a68;
+  --clr-light: #0e0e2c;
+}
+
 @media (min-width: 75em) {
   #__next {
     max-height: 100vh;

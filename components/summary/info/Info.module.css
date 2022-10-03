@@ -6,6 +6,7 @@
   box-shadow: var(--shadow-box);
   border-radius: 1rem;
   padding: 1.5rem;
+  position: relative;
 }
 
 .label {
@@ -27,6 +28,28 @@
 
 .rail::-webkit-scrollbar {
   display: none;
+}
+
+.placeholder {
+  position: absolute;
+  display: grid;
+  place-content: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 1rem;
+  z-index: 11;
+  pointer-events: none;
+}
+
+.empty {
+  font: var(--font-subtitle);
+  color: var(--clr-light);
+  text-shadow: var(--shadow-box);
+  text-align: center;
 }
 
 @media (min-width: 75em) {

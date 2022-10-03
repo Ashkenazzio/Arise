@@ -1,11 +1,9 @@
 import styles from './SummaryPage.module.css';
-import { useEffect } from 'react';
 
 import ExpenseRail from './expense-rail/ExpenseRail';
 import Graph from './data-vis/Graph';
 import Info from './info/Info';
-import { useDb } from 'context/DbContext';
-import { useSession } from 'context/SessionContext';
+import { useEffect, useState } from 'react';
 
 const DUMMY_EXP = [
   {
@@ -41,31 +39,21 @@ const DUMMY_EXP = [
 ];
 
 const SummaryPage = (props) => {
-  const [localSession] = useSession();
-  const [dbExpenses] = useDb();
+  const expenses = props.expenses;
+  const [empty, setEmpty] = useState(false);
 
-  let expenses = [];
-
-  if (localSession) {
-    useEffect(() => {
-      if (localSession) {
-        const localExpensesJSON = localStorage.getItem('expenses');
-
-        if (localExpensesJSON) {
-          expenses = [JSON.parse(localExpensesJSON)];
-        }
-      }
-    }, []);
-  } else {
-    expenses = [...dbExpenses];
-  }
+  useEffect(() => {
+    if (expenses.length === 0) {
+      setEmpty(true);
+    }
+  }, [expenses]);
 
   const totalExpensesByCategory = Object.entries(
     expenses.reduce((acc, curr) => {
-      if (!acc[curr.category]) {
-        acc[curr.category] = curr.sum;
+      if (!acc[curr.category.title]) {
+        acc[curr.category.title] = curr.sum;
       } else {
-        acc[curr.category] = +acc[curr.category] + curr.sum;
+        acc[curr.category.title] = +acc[curr.category.title] + curr.sum;
       }
       return acc;
     }, {})
@@ -75,23 +63,16 @@ const SummaryPage = (props) => {
     <div className={styles.view}>
       {expenses.length === 0 && (
         <div className={styles.placeholder}>
-          <p className={styles.empty}>No entries to show yet!</p>
+          <p className={styles.empty}>No Entries to Show Yet!</p>
         </div>
       )}
       <ExpenseRail
-        expensesByCategory={
-          expenses.length !== 0 ? totalExpensesByCategory : DUMMY_EXP
-        }
+        expensesByCategory={empty ? DUMMY_EXP : totalExpensesByCategory}
       />
-      <Graph
-        expensesByCategory={
-          expenses.length !== 0 ? totalExpensesByCategory : DUMMY_EXP
-        }
-      />
+      <Graph expensesByCategory={empty ? DUMMY_EXP : totalExpensesByCategory} />
       <Info
-        expensesByCategory={
-          expenses.length !== 0 ? totalExpensesByCategory : DUMMY_EXP
-        }
+        expensesByCategory={empty ? DUMMY_EXP : totalExpensesByCategory}
+        empty={empty}
       />
     </div>
   );

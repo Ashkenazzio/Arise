@@ -1,29 +1,43 @@
-import Select from '@/ui/Select';
+import Dropdown from '@/ui/Dropdown';
 import DarkToggle from '@/ui/DarkToggle';
 import styles from './SettingsPage.module.css';
 import { useCurrency } from 'context/CurrencyContext';
 import { useTheme } from 'context/ThemeContext';
+import { useEffect } from 'react';
 
 const SettingsPage = () => {
+  const [darkTheme, toggleTheme] = useTheme();
+
   const [currency, setCurrency] = useCurrency();
 
   const currencyOpts = [
-    { id: 1, name: '$ - USD', value: '$' },
-    { id: 2, name: '€ - EUR', value: '€' },
-    { id: 2, name: '₪ - ILS', value: '₪' },
+    { id: 'c1', name: '$ - USD', value: '$' },
+    { id: 'c2', name: '€ - EUR', value: '€' },
+    { id: 'c3', name: '₪ - ILS', value: '₪' },
   ];
 
-  // const [darkTheme, toggleTheme] = useTheme();
+  useEffect(() => {
+    localStorage.setItem('preferences', [darkTheme, JSON.stringify(currency)]);
+  }, [darkTheme, currency]);
 
   return (
     <div className={styles.view}>
       <div className={styles.setting}>
         <span className={styles.label}>Dark Mode:</span>
-        <DarkToggle className={styles.dark} />
+        <DarkToggle
+          className={styles.dark}
+          checked={darkTheme}
+          onChange={toggleTheme}
+        />
       </div>
       <div className={styles.setting}>
         <span className={styles.label}>Currency:</span>
-        <Select state={[currency, setCurrency]} options={currencyOpts} />
+        <Dropdown
+          className={styles.input}
+          state={[currency, setCurrency]}
+          options={currencyOpts}
+          value={currency}
+        />
       </div>
     </div>
   );

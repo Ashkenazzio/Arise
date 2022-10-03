@@ -74,8 +74,7 @@ const Graph = (props) => {
     <div className={styles.container}>
       <div className={styles.header}>
         <Dropdown
-          className={styles.sort}
-          style={{ width: 'auto' }}
+          className={styles.dropdown}
           options={chartOpts}
           state={[chartType, setChartType]}
         />

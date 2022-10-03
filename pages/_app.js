@@ -1,45 +1,40 @@
 import 'styles/globals.css';
 import Layout from '@/layout/Layout';
-import { DbProvider } from 'context/DbContext';
-import { ThemeProvider } from 'context/themeContext';
-import { CurrencyProvider } from 'context/CurrencyContext';
-import { LayoutProvider } from 'context/LayoutContext';
 import AlterLayout from '@/layout/AlterLayout';
-import { SessionProvider } from 'context/SessionContext';
+import { DbProvider } from 'context/DbContext';
+import { ThemeProvider } from 'context/ThemeContext';
+import { CurrencyProvider } from 'context/CurrencyContext';
+import { AnonymousProvider } from 'context/AnonymousContext';
 
 function MyApp({ Component, pageProps }) {
   if (Component.getLayout) {
     return Component.getLayout(
-      <SessionProvider>
+      <AnonymousProvider>
         <ThemeProvider>
-          <LayoutProvider>
-            <AlterLayout>
-              <DbProvider>
-                <CurrencyProvider>
-                  <Component {...pageProps} />
-                </CurrencyProvider>
-              </DbProvider>
-            </AlterLayout>
-          </LayoutProvider>
+          <DbProvider>
+            <CurrencyProvider>
+              <AlterLayout>
+                <Component {...pageProps} />
+              </AlterLayout>
+            </CurrencyProvider>
+          </DbProvider>
         </ThemeProvider>
-      </SessionProvider>
+      </AnonymousProvider>
     );
   }
 
   return (
-    <SessionProvider>
+    <AnonymousProvider>
       <ThemeProvider>
-        <LayoutProvider>
-          <Layout>
-            <DbProvider>
-              <CurrencyProvider>
-                <Component {...pageProps} />
-              </CurrencyProvider>
-            </DbProvider>
-          </Layout>
-        </LayoutProvider>
+        <DbProvider>
+          <CurrencyProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </CurrencyProvider>
+        </DbProvider>
       </ThemeProvider>
-    </SessionProvider>
+    </AnonymousProvider>
   );
 }
 

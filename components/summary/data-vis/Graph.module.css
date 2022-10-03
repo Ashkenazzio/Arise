@@ -63,8 +63,16 @@
   content: '\f51e';
 }
 
-div.sort {
-  color: var(--clr-secondary);
+div.dropdown {
+  display: flex;
+  width: max-content;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: var(--clr-dark);
+  font-size: 1.33rem;
+  z-index: 10;
+  box-shadow: none;
 }
 
 .chart {

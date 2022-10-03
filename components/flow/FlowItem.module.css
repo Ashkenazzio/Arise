@@ -22,7 +22,7 @@
 
 .container:hover,
 .container:focus {
-  filter: brightness(0.985);
+  filter: brightness(0.975);
 }
 
 .container.open {
@@ -51,13 +51,11 @@
 }
 
 .actions {
-  display: flex;
-  justify-content: end;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: flex-end;
   gap: 1rem;
-}
-
-.actions > :last-child {
-  flex-grow: 0.5;
 }
 
 .actions *[btn='delete'] {

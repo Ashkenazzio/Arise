@@ -5,9 +5,9 @@ const ExpenseCard = (props) => {
   const [currency] = useCurrency();
 
   const categoryIcons = {
-    Food: 'fa-solid fa-utensils',
+    'Eating Out': 'fa-solid fa-utensils',
     Fun: 'fa-solid fa-face-smile-beam',
-    Groceries: 'fa-basket-shopping',
+    Groceries: 'fa-solid fa-basket-shopping',
     Insurance: 'fa-solid fa-house-chimney-crack',
     Pharma: 'fa-solid fa-prescription-bottle-medical',
     Transport: 'fa-solid fa-bus',
@@ -29,7 +29,7 @@ const ExpenseCard = (props) => {
       <div className={styles.details}>
         <span className={styles.label}>{props.title}</span>
         <span className={styles.amount}>
-          {currency}
+          {currency.value}
           {props.sum.toFixed()}
         </span>
 

@@ -1,16 +1,15 @@
-.dropdown {
-  display: flex;
-  width: max-content;
-  align-items: flex-end;
-  margin: 0 0.5rem;
-  padding: 0.5rem 1rem;
+.input {
+  background-color: var(--clr-accent);
+  color: var(--clr-body);
   border-radius: 0.5rem;
-  position: relative;
+  padding: 0.75em 1em;
+  font: inherit;
+  box-shadow: var(--shadow-inset);
+  outline: none;
+  border: 1px solid transparent;
   background-clip: padding-box;
-  color: var(--clr-dark);
-  font: var(--font-bold);
-  font-size: 1.33rem;
-  z-index: 10;
+  position: relative;
+  font-weight: 500;
 }
 
 .trigger {
@@ -41,6 +40,7 @@
   overflow-y: scroll;
   scrollbar-width: none;
   border-radius: 0.5rem;
+  z-index: 10;
 }
 
 .content::-webkit-scrollbar {
@@ -48,6 +48,7 @@
 }
 
 .option {
+  width: 100%;
   padding: 0.75em 0.5em;
   background-color: var(--clr-light);
   font-weight: normal;
@@ -81,4 +82,8 @@
   color: var(--clr-subtle);
   box-shadow: none;
   cursor: not-allowed;
+}
+
+.option[value=''] {
+  display: none;
 }

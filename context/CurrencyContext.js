@@ -7,7 +7,11 @@ export function useCurrency() {
 }
 
 export const CurrencyProvider = ({ children }) => {
-  const [currency, setCurrency] = useState('$');
+  const [currency, setCurrency] = useState({
+    id: 'c1',
+    name: '$ - USD',
+    value: '$',
+  });
 
   return (
     <CurrencyContext.Provider value={[currency, setCurrency]}>

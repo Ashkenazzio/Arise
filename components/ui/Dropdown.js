@@ -23,11 +23,11 @@ const Dropdown = (props) => {
 
   return (
     <div
-      className={`${styles.dropdown} ${!!props.error && styles.invalid} ${
+      className={`${styles.input} ${!!props.error && styles.invalid} ${
         !!props.valid && styles.valid
       } ${props.className}`}
       ref={dropdownRef}
-      // value={selected.value}
+      value={selected.value}
     >
       <div
         className={`${styles.trigger} ${
@@ -45,8 +45,9 @@ const Dropdown = (props) => {
                   setIsActive(false);
                 }}
                 className={styles.option}
-                key={option.key}
+                key={option.id}
                 value={option.value}
+                obj={option}
               >
                 {option.name}
               </div>

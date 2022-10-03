@@ -27,3 +27,16 @@
   font: var(--font-subtitle);
   font-weight: bold;
 }
+
+.input {
+  background-color: var(--clr-accent);
+  color: var(--clr-body);
+  border-radius: 0.5rem;
+  padding: 0.75em 1em;
+  font: inherit;
+  box-shadow: var(--shadow-inset);
+  outline: none;
+  resize: vertical;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}

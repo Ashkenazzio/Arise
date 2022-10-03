@@ -1,15 +1,139 @@
-import { useRef } from 'react';
+import { useCurrency } from 'context/CurrencyContext';
 import styles from './FlowItem.module.css';
 
 import FormField from '@/ui/FormField';
 import Button from '@/ui/Button';
 import ButtonAlt from '@/ui/ButtonAlt';
-import { useCurrency } from 'context/CurrencyContext';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import useInput from 'hooks/use-input';
+
+const isNotEmpty = (value) => value.trim() !== '';
 
 const FlowItem = (props) => {
+  const [expenseCategories, setExpenseCategories] = useState([
+    {
+      id: '0',
+      title: 'Choose a category...',
+      value: '',
+    },
+    { id: 'ex1', title: 'Eating Out', value: 'eating-out' },
+    { id: 'ex2', title: 'Fun', value: 'fun' },
+    { id: 'ex3', title: 'Groceries', value: 'groceries' },
+    { id: 'ex4', title: 'Insurance', value: 'insurance' },
+    { id: 'ex5', title: 'Pharma', value: 'pharma' },
+    { id: 'ex6', title: 'Transport', value: 'transport' },
+    { id: 'ex7', title: 'Utilities', value: 'utilities' },
+    { id: 'ex8', title: 'Misc.', value: 'miscellaneous' },
+  ]);
+
+  const [incomeCategories, setIncomeCategories] = useState([
+    {
+      id: '0',
+      title: 'Choose a category...',
+      value: '',
+    },
+    { id: 'in1', title: 'Salary', value: 'salary' },
+    { id: 'in2', title: 'Misc.', value: 'miscellaneous' },
+  ]);
+
   const [currency] = useCurrency();
 
   const [edit, setEdit] = props.openState;
+
+  const [checked, setChecked] = useState(false);
+
+  const {
+    value: enteredTitle,
+    isValid: titleIsValid,
+    hasError: titleInputInvalid,
+    valueChangeHandler: titleChangeHandler,
+    inputBlurHandler: titleBlurHandler,
+    reset: resetTitleInput,
+  } = useInput(isNotEmpty);
+
+  const {
+    value: enteredSum,
+    isValid: sumIsValid,
+    hasError: sumInputInvalid,
+    valueChangeHandler: sumChangeHandler,
+    inputBlurHandler: sumBlurHandler,
+    reset: resetSumInput,
+  } = useInput(isNotEmpty);
+
+  const {
+    value: enteredDate,
+    isValid: dateIsValid,
+    hasError: dateInputInvalid,
+    valueChangeHandler: dateChangeHandler,
+    inputBlurHandler: dateBlurHandler,
+    reset: resetDateInput,
+  } = useInput(isNotEmpty);
+
+  const {
+    value: selectedCategory,
+    isValid: categoryIsValid,
+    hasError: categoryInputInvalid,
+    valueChangeHandler: categoryChangeHandler,
+    inputBlurHandler: categoryBlurHandler,
+    reset: resetCategoryInput,
+  } = useInput(isNotEmpty);
+
+  const {
+    value: enteredNotes,
+    isValid: notesIsValid,
+    hasError: notesInputInvalid,
+    valueChangeHandler: notesChangeHandler,
+    inputBlurHandler: notesBlurHandler,
+    reset: resetNotesInput,
+  } = useInput(isNotEmpty);
+
+  useEffect(() => {
+    const derivedState = { type: 'update-input', value: '', payload: null };
+
+    const derivedTitle = { ...derivedState, value: props.title };
+    const derivedSum = { ...derivedState, value: props.sum.toString() };
+    const derivedDate = { ...derivedState, value: props.date };
+    const derivedCategory = {
+      type: 'update-category',
+      value: props.category.id,
+      payload: props.category,
+    };
+    const derivedNotes = {
+      ...derivedState,
+      value: props.notes ? props.notes : '',
+    };
+
+    titleChangeHandler(derivedTitle);
+    sumChangeHandler(derivedSum);
+    dateChangeHandler(derivedDate);
+    categoryChangeHandler(derivedCategory);
+    notesChangeHandler(derivedNotes);
+  }, []);
+
+  console.log(props);
+
+  let formIsValid = false;
+
+  if (
+    titleIsValid &&
+    sumIsValid &&
+    dateIsValid &&
+    notesIsValid &&
+    categoryIsValid
+  ) {
+    formIsValid = true;
+  }
+
+  const resetHandler = (event) => {
+    if (event) {
+      event.preventDefault();
+    }
+    resetTitleInput();
+    resetSumInput();
+    resetDateInput();
+    resetCategoryInput();
+    resetNotesInput();
+  };
 
   const toggle = () => {
     if (edit === props.id) {
@@ -18,24 +142,28 @@ const FlowItem = (props) => {
     setEdit(props.id);
   };
 
-  const titleRef = useRef(props.title);
-  const sumRef = useRef(props.sum);
-  const dateRef = useRef(props.date);
-  const categoryRef = useRef(props.category);
-  const notesRef = useRef(props.notes);
-
   const updateHandler = (e) => {
     e.preventDefault();
-    console.log('update');
 
-    // props.onUpdateItem(queryData, enteredList);
+    const queryData = {
+      title: enteredTitle.value,
+      sum: +enteredSum.value,
+      date: enteredDate.value,
+      category: selectedCategory.payload,
+      notes: enteredNotes.value,
+    };
+
+    const itemId = props.id;
+    props.onUpdateItem(itemId, queryData);
+
+    resetHandler();
   };
 
   const deleteHandler = (e) => {
     e.preventDefault();
-    console.log('delete');
 
-    // props.onDeleteItem(queryData, enteredList);
+    const itemId = props.id;
+    props.onDeleteItem(itemId);
   };
 
   return (
@@ -51,33 +179,84 @@ const FlowItem = (props) => {
           <>
             <span className={styles.title}>{props.title}</span>
             <span className={styles.sum}>
-              {currency}{props.sum.toLocaleString()}
+              {currency.value}
+              {props.sum.toLocaleString()}
             </span>
           </>
         )}
         {edit === props.id && (
-          <form
-            className={styles.form}
-            // onSubmit={updateHandler}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <FormField ref={titleRef} title='Title' type='text' />
-            <FormField ref={sumRef} title='Sum' type='number' />
-            <FormField ref={dateRef} title='Date' type='date' />
+          <form className={styles.form} onClick={(e) => e.stopPropagation()}>
             <FormField
-              ref={categoryRef}
-              title='Category'
-              // type='select'
-              // options={categoryOpts}
-              // state={[selectedVal, setSelectedVal]}
+              title='Title'
+              id='title'
+              type='text'
+              placeholder={props.title}
+              value={enteredTitle.value}
+              onChange={titleChangeHandler}
+              onBlur={titleBlurHandler}
+              error={titleInputInvalid ? titleInputInvalid : undefined}
+              valid={titleIsValid ? titleIsValid : undefined}
             />
-            <FormField ref={notesRef} span='2' title='Notes' type='textarea' />
+
+            <FormField
+              title='Sum'
+              id='sum'
+              type='number'
+              placeholder={props.sum}
+              value={enteredSum.value}
+              onChange={sumChangeHandler}
+              onBlur={sumBlurHandler}
+              error={sumInputInvalid ? sumInputInvalid : undefined}
+              valid={sumIsValid ? sumIsValid : undefined}
+            />
+
+            <FormField
+              title='Date'
+              id='date'
+              type='date'
+              placeholder={props.date}
+              value={enteredDate.value}
+              onChange={dateChangeHandler}
+              onBlur={dateBlurHandler}
+              error={dateInputInvalid ? dateInputInvalid : undefined}
+              valid={dateIsValid ? dateIsValid : undefined}
+            />
+
+            <FormField
+              title='Category'
+              id='category'
+              type='select'
+              placeholder={props.category.id}
+              options={!checked ? expenseCategories : incomeCategories}
+              value={selectedCategory.value}
+              onChange={categoryChangeHandler}
+              onBlur={categoryBlurHandler}
+              error={categoryInputInvalid ? categoryInputInvalid : undefined}
+              valid={categoryIsValid ? categoryIsValid : undefined}
+              style={{ backgroundColor: 'var(--clr-light)' }}
+            />
+
+            <FormField
+              title='Notes'
+              id='notes'
+              span='2'
+              type='textarea'
+              // placeholder={props.notes}
+              value={enteredNotes.value}
+              onChange={notesChangeHandler}
+              onBlur={notesBlurHandler}
+              error={notesInputInvalid ? notesInputInvalid : undefined}
+              valid={notesIsValid ? notesIsValid : undefined}
+            />
 
             <div className={styles.actions}>
               <ButtonAlt onClick={deleteHandler} btn='delete'>
                 DELETE
               </ButtonAlt>
-              <Button onClick={updateHandler}>EDIT</Button>
+              <ButtonAlt onClick={resetHandler}>CLEAR</ButtonAlt>
+              <Button disabled={!formIsValid} onClick={updateHandler}>
+                EDIT
+              </Button>
             </div>
           </form>
         )}

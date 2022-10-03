@@ -1,10 +1,12 @@
 import ProfilePage from '@/auth/ProfilePage';
-import { useLayout } from 'context/LayoutContext';
+import { useLayoutEffect } from 'react';
 
 const Profile = () => {
-  const [title, setTitle, sort, setSort] = useLayout();
-  setTitle('Profile');
-  setSort(false);
+  useLayoutEffect(() => {
+    const [setTitle, setFilter] = props.layout;
+    setTitle('Profile');
+    setFilter(false);
+  }, []);
 
   return <ProfilePage />;
 };

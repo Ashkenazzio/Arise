@@ -40,7 +40,7 @@ const Balance = (props) => {
     >
       <div className={styles.thermo}>
         <div
-          className={`${styles.glass} ${isNegative ? styles.negativeeBar : ''}`}
+          className={`${styles.glass} ${isNegative ? styles.negativeBar : ''}`}
         >
           <div
             className={styles.liquid}
@@ -50,7 +50,7 @@ const Balance = (props) => {
       </div>
       <div className={styles['balance-container']}>
         <span className={styles.balance}>
-          {balance !== 0 && isNegative ? '+' : '-'}
+          {balance !== 0 && isNegative ? '-' : '+'}
           {Math.abs(balance).toLocaleString(undefined, {
             maximumFractionDigits: 0,
           })}

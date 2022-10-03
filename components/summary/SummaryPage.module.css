@@ -26,12 +26,14 @@
   background-color: rgba(0, 0, 0, 0.75);
   border-radius: 1rem;
   z-index: 11;
+  pointer-events: none;
 }
 
 .empty {
   font: var(--font-subtitle);
   color: var(--clr-light);
   text-shadow: var(--shadow-box);
+  text-align: center;
 }
 
 @media (min-width: 37.5em) {

@@ -1,10 +1,12 @@
 import SettingsPage from '@/settings/SettingsPage';
-import { useLayout } from 'context/LayoutContext';
+import { useLayoutEffect } from 'react';
 
 const Settings = (props) => {
-  const [title, setTitle, sort, setSort] = useLayout();
-  setTitle('Settings');
-  setSort(false);
+  useLayoutEffect(() => {
+    const [setTitle, setFilter] = props.layout;
+    setTitle('Settings');
+    setFilter(false);
+  }, []);
 
   return <SettingsPage />;
 };

@@ -3,28 +3,33 @@ import styles from './Layout.module.css';
 import Header from './Header';
 import NavMenu from './NavMenu';
 import Dropdown from '@/ui/Dropdown';
-// import { useTheme } from 'context/ThemeContext';
-import { useLayout } from 'context/LayoutContext';
-import { useLayoutEffect, useState } from 'react';
-import { useSession } from 'context/SessionContext';
+import React, { useLayoutEffect, useState } from 'react';
+import { useAnonymousUser } from 'context/AnonymousContext';
+import { useTheme } from 'context/ThemeContext';
 
 function Layout(props) {
-  const [localSession, setLocalSession] = useSession();
+  const [anonyUser, setAnonyUser] = useAnonymousUser();
 
   useLayoutEffect(() => {
     if (localStorage.getItem('anonymous')) {
-      setLocalSession(true);
+      setAnonyUser(true);
     }
   }, []);
 
-  // const [darkTheme, toggleTheme] = useTheme();
-  const [title, setTitle, sort, setSort] = useLayout();
+  const [darkTheme] = useTheme();
+
+  useLayoutEffect(() => {
+    document.body.setAttribute('dark-theme', darkTheme);
+  }, [darkTheme]);
+
+  const [title, setTitle] = useState('');
+  const [filterElement, setFilterElement] = useState(false);
 
   const filterOpts = [
-    { key: '1', name: 'Today', value: 'today' },
-    { key: '2', name: 'Last 7 days', value: 'last-7' },
-    { key: '3', name: 'Last 30 days', value: 'last-30' },
-    { key: '4', name: 'This Year', value: 'last-y' },
+    { id: '1', name: 'Today', value: 'today' },
+    { id: '2', name: 'Last 7 days', value: 'last-7' },
+    { id: '3', name: 'Last 30 days', value: 'last-30' },
+    { id: '4', name: 'This Year', value: 'last-y' },
   ];
 
   const [filter, setFilter] = useState({
@@ -41,17 +46,20 @@ function Layout(props) {
         <div className={styles.container}>
           <div className={styles['top-bar']}>
             <h1 className={styles.title}>{title}</h1>
-            {sort && (
+            {filterElement && !anonyUser && (
               <Dropdown
-                className={styles.sort}
+                className={styles.dropdown}
                 state={[filter, setFilter]}
                 options={filterOpts}
               />
             )}
           </div>
-          {props.children}
+          {React.cloneElement(props.children, {
+            layout: [setTitle, setFilterElement],
+          })}
         </div>
       </main>
+      {/* <p className={styles.copyrights}>&copy; Omri Ashkenazi </p> */}
     </div>
   );
 }

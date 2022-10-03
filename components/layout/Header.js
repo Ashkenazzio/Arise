@@ -4,10 +4,10 @@ import User from './User';
 import { useEffect, useState } from 'react';
 import ButtonAlt from '@/ui/ButtonAlt';
 import Link from 'next/link';
-import { useSession } from 'context/SessionContext';
+import { useAnonymousUser } from 'context/AnonymousContext';
 
 const Header = () => {
-  const [localSession] = useSession();
+  const [anonyUser] = useAnonymousUser();
 
   const user = {
     name: 'Eskandar',
@@ -17,10 +17,10 @@ const Header = () => {
   };
 
   return (
-    <div className={styles.header}>
+    <div className={`${styles.header} ${styles.dark}`}>
       <img className={styles.logo} src={logo.src} alt='logo' />
-      {!localSession && <User user={user} />}
-      {localSession && (
+      {!anonyUser && <User user={user} />}
+      {anonyUser && (
         <div className={styles.actions}>
           <Link href={'/login'}>
             <ButtonAlt>Login</ButtonAlt>

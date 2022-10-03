@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useInput = (validateValue) => {
+const useUpdate = (validateValue) => {
   const [enteredValue, setEnteredValue] = useState({
     value: '',
     payload: null,
@@ -18,19 +18,6 @@ const useInput = (validateValue) => {
       setEnteredValue(state);
       return;
     }
-
-    if (e?.type === 'update-input') {
-      const state = { value: e?.value, payload: null };
-      setEnteredValue(state);
-      return;
-    }
-
-    if (e?.type === 'update-category') {
-      const state = { value: e?.value, payload: e.payload };
-      setEnteredValue(state);
-      return;
-    }
-
     const state = { value: e?.target?.value, payload: null };
     setEnteredValue(state);
   };
@@ -55,4 +42,4 @@ const useInput = (validateValue) => {
   };
 };
 
-export default useInput;
+export default useUpdate;

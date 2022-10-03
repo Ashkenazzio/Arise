@@ -1,10 +1,12 @@
 import Start from '@/start/Start';
-import { useLayout } from 'context/LayoutContext';
+import { useLayoutEffect } from 'react';
 
-const GetStarted = () => {
-  const [title, setTitle, sort, setSort] = useLayout();
-  setTitle('Start');
-  setSort(false);
+const GetStarted = (props) => {
+  useLayoutEffect(() => {
+    const [setTitle, setFilter] = props.layout;
+    setTitle('Start');
+    setFilter(false);
+  }, []);
 
   return <Start />;
 };
