@@ -1,19 +1,20 @@
-import { useDb } from 'context/DbContext';
-import { useAnonymousUser } from 'context/AnonymousContext';
-import { useLayoutEffect, useState } from 'react';
-import Balance from './Balance';
-import FlowBlock from './FlowBlock';
 import styles from './FlowLists.module.css';
+import FlowList from './FlowList';
+import Balance from './Balance';
+
+import { useDb } from 'context/DbContext';
+import { useLayoutEffect, useState } from 'react';
+import { useAuthUser } from 'context/AuthContext';
 
 const FlowLists = () => {
-  const [anonyUser] = useAnonymousUser();
+  const [authUser] = useAuthUser();
   const [dbExpenses, dbIncomes] = useDb();
 
   const [expenses, setExpenses] = useState(dbExpenses);
   const [incomes, setIncomes] = useState(dbIncomes);
 
   useLayoutEffect(() => {
-    if (anonyUser) {
+    if (!authUser) {
       const localExpensesJSON = localStorage.getItem('expenses');
       const localIncomesJSON = localStorage.getItem('incomes');
 
@@ -30,37 +31,58 @@ const FlowLists = () => {
     }
   }, []);
 
-  const onUpdateItem = (itemId, queryData) => {
-    setExpenses(
+  const onUpdateItem = (itemId, list, queryData) => {
+    if (list === 'Expenses') {
       expenses.map((item) => {
         if (item.id === itemId) {
           return { ...item, queryData };
         }
         return item;
-      })
-    );
+      });
+      setExpenses([...expenses]);
+      return;
+    }
+
+    incomes.map((item) => {
+      if (item.id === itemId) {
+        return { ...item, queryData };
+      }
+      return item;
+    });
+    setIncomes([...incomes]);
   };
 
-  const onDeleteItem = (itemId) => {
-    const item = expenses.find((i) => i.id === itemId);
-    const itemIndex = expenses.indexOf(item);
+  const onDeleteItem = (itemId, list) => {
+    if (list === 'Expenses') {
+      const item = expenses.find((i) => i.id === itemId);
+      const itemIndex = expenses.indexOf(item);
+
+      if (itemIndex > -1) {
+        expenses.splice(itemIndex, 1);
+        setExpenses([...expenses]);
+      }
+    }
+    const item = incomes.find((i) => i.id === itemId);
+    const itemIndex = incomes.indexOf(item);
+
     if (itemIndex > -1) {
-      setExpenses(expenses.splice(itemIndex, 1));
+      incomes.splice(itemIndex, 1);
+      setIncomes([...incomes]);
     }
   };
 
   return (
     <div className={styles.view}>
-      <FlowBlock
+      <FlowList
+        list='Expenses'
         queries={expenses}
-        icon={String.fromCharCode(0xf068)}
         onUpdateItem={onUpdateItem}
         onDeleteItem={onDeleteItem}
       />
       <Balance queries={[expenses, incomes]} />
-      <FlowBlock
+      <FlowList
+        list='Incomes'
         queries={incomes}
-        icon={String.fromCharCode(0x2b)}
         onUpdateItem={onUpdateItem}
         onDeleteItem={onDeleteItem}
       />

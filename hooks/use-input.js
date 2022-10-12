@@ -8,7 +8,7 @@ const useInput = (validateValue) => {
 
   const [isTouched, setIsTouched] = useState(false);
 
-  const valueIsValid = validateValue(enteredValue.value) && isTouched;
+  const valueIsValid = validateValue(enteredValue.value);
 
   const hasError = !valueIsValid && isTouched;
 

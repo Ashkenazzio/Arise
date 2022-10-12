@@ -24,6 +24,10 @@
   font: var(--font-small);
 }
 
+.dark {
+  background-color: var(--clr-light);
+}
+
 @media (min-width: 37.5em) {
 }
 

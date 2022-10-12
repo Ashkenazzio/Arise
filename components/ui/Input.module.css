@@ -37,3 +37,14 @@
 .option[id='0'] {
   display: none;
 }
+
+.container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.add {
+  font-size: 2rem;
+  color: var(--clr-success-700);
+}

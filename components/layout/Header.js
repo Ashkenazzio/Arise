@@ -1,26 +1,22 @@
 import styles from './Header.module.css';
 import logo from '@/images/logo.svg';
 import User from './User';
-import { useEffect, useState } from 'react';
 import ButtonAlt from '@/ui/ButtonAlt';
 import Link from 'next/link';
-import { useAnonymousUser } from 'context/AnonymousContext';
+import { useTheme } from 'context/ThemeContext';
+import { useAuthUser } from 'context/AuthContext';
 
 const Header = () => {
-  const [anonyUser] = useAnonymousUser();
+  const [darkTheme] = useTheme();
+  const [authUser] = useAuthUser();
 
-  const user = {
-    name: 'Eskandar',
-    email: 'XanderTIM@gmail.com',
-    password: '12345678',
-    avatar: 'fox',
-  };
+  console.log(authUser);
 
   return (
-    <div className={`${styles.header} ${styles.dark}`}>
+    <div className={`${styles.header} ${darkTheme && styles.dark}`}>
       <img className={styles.logo} src={logo.src} alt='logo' />
-      {!anonyUser && <User user={user} />}
-      {anonyUser && (
+      {authUser && <User user={authUser} />}
+      {!authUser && (
         <div className={styles.actions}>
           <Link href={'/login'}>
             <ButtonAlt>Login</ButtonAlt>

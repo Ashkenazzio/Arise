@@ -1,6 +1,7 @@
+import { forwardRef } from 'react';
 import styles from './AvatarOption.module.css';
 
-const AvatarOption = (props) => {
+const AvatarOption = (props, ref) => {
   const { avatar, img } = props;
 
   return (
@@ -8,9 +9,9 @@ const AvatarOption = (props) => {
       <label htmlFor={avatar}>
         <img className={styles.badge} src={img.src}></img>
       </label>
-      <input type='radio' name='avatar' id={avatar} value={avatar} />
+      <input type='radio' name='avatar' ref={ref} id={avatar} value={avatar} />
     </div>
   );
 };
 
-export default AvatarOption;
+export default forwardRef(AvatarOption);

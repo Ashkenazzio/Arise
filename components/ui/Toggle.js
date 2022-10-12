@@ -7,8 +7,9 @@ const Toggle = (props, ref) => {
       <input
         type='checkbox'
         className={styles.checkbox}
-        ref={ref}
         onChange={props.onChange}
+        checked={props.checked}
+        ref={ref}
       />
       <span onClick={props.onClick} className={styles.slider}></span>
     </label>

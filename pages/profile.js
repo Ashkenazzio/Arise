@@ -1,14 +1,18 @@
 import ProfilePage from '@/auth/ProfilePage';
 import { useLayoutEffect } from 'react';
 
-const Profile = () => {
+const Profile = (props) => {
+  const onChangeCredential = () => {
+    console.log('onChangeCredential');
+  };
+
   useLayoutEffect(() => {
     const [setTitle, setFilter] = props.layout;
     setTitle('Profile');
     setFilter(false);
   }, []);
 
-  return <ProfilePage />;
+  return <ProfilePage onChangeCredential={onChangeCredential} />;
 };
 
 export default Profile;

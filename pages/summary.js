@@ -1,16 +1,16 @@
 import SummaryPage from '@/summary/SummaryPage';
 import { useDb } from 'context/DbContext';
-import { useAnonymousUser } from 'context/AnonymousContext';
 import { useLayoutEffect, useState } from 'react';
+import { useAuthUser } from 'context/AuthContext';
 
 const Summary = (props) => {
-  const [anonyUser] = useAnonymousUser();
+  const [authUser] = useAuthUser();
   const [dbExpenses] = useDb();
 
   const [expenses, setExpenses] = useState(dbExpenses);
 
   useLayoutEffect(() => {
-    if (anonyUser) {
+    if (!authUser) {
       const localExpensesJSON = localStorage.getItem('expenses');
 
       if (localExpensesJSON) {

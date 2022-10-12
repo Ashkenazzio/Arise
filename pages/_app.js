@@ -5,11 +5,12 @@ import { DbProvider } from 'context/DbContext';
 import { ThemeProvider } from 'context/ThemeContext';
 import { CurrencyProvider } from 'context/CurrencyContext';
 import { AnonymousProvider } from 'context/AnonymousContext';
+import { AuthProvider } from 'context/AuthContext';
 
 function MyApp({ Component, pageProps }) {
   if (Component.getLayout) {
     return Component.getLayout(
-      <AnonymousProvider>
+      <AuthProvider>
         <ThemeProvider>
           <DbProvider>
             <CurrencyProvider>
@@ -19,12 +20,12 @@ function MyApp({ Component, pageProps }) {
             </CurrencyProvider>
           </DbProvider>
         </ThemeProvider>
-      </AnonymousProvider>
+      </AuthProvider>
     );
   }
 
   return (
-    <AnonymousProvider>
+    <AuthProvider>
       <ThemeProvider>
         <DbProvider>
           <CurrencyProvider>
@@ -34,7 +35,7 @@ function MyApp({ Component, pageProps }) {
           </CurrencyProvider>
         </DbProvider>
       </ThemeProvider>
-    </AnonymousProvider>
+    </AuthProvider>
   );
 }
 

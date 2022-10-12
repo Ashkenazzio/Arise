@@ -1,14 +1,14 @@
-import { useAnonymousUser } from 'context/AnonymousContext';
+import { useAuthUser } from 'context/AuthContext';
 import styles from './Info.module.css';
 
 import Note from './Note';
 
 const Info = (props) => {
-  const [anonyUser] = useAnonymousUser();
+  const [authUser] = useAuthUser();
 
   return (
     <div className={styles.container}>
-      {anonyUser && !props.empty && (
+      {!authUser && !props.empty && (
         <div className={styles.placeholder}>
           <p className={styles.empty}>
             This Feature Is Not Yet Available In Anonymous Sessions

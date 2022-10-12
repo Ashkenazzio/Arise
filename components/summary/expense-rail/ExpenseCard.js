@@ -12,7 +12,7 @@ const ExpenseCard = (props) => {
     Pharma: 'fa-solid fa-prescription-bottle-medical',
     Transport: 'fa-solid fa-bus',
     Utilities: 'fa-solid fa-file-invoice-dollar',
-    Miscellaneous: 'fa-solid fa-ellipsis',
+    'Misc.': 'fa-solid fa-ellipsis',
   };
 
   const chooseIcon = () => {
@@ -33,7 +33,9 @@ const ExpenseCard = (props) => {
           {props.sum.toFixed()}
         </span>
 
-        <span className={`${styles.trend} icon-before`}>-120%</span>
+        {props.trend && (
+          <span className={`${styles.trend} icon-before`}>-120%</span>
+        )}
       </div>
     </div>
   );

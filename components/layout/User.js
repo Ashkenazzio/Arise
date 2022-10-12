@@ -1,6 +1,8 @@
 import styles from './User.module.css';
-import profilePic from '@/images/profile-pic.svg';
+// import profilePic from '@/images/profile-pic.svg';
 import { useState, useRef, useEffect } from 'react';
+import { useAuthUser } from 'context/AuthContext';
+import Image from 'next/image';
 import UserMenu from './UserMenu';
 
 import bear from '@/images/avatars/bear.svg';
@@ -12,39 +14,41 @@ import owl from '@/images/avatars/owl.svg';
 import penguin from '@/images/avatars/penguin.svg';
 import pig from '@/images/avatars/pig.svg';
 
+
+const pickAvatar = (key) => {
+  const avatarOptions = {
+    bear: bear,
+    cat: cat,
+    dog: dog,
+    fox: fox,
+    horse: horse,
+    owl: owl,
+    penguin: penguin,
+    pig: pig,
+  };
+
+  return avatarOptions[key];
+};
+
 const User = (props) => {
+  const [authUser] = useAuthUser();
   const [isClicked, setIsClicked] = useState(false);
 
   let menuRef = useRef();
 
   useEffect(() => {
-    let handler = (e) => {
+    let mousedownHandler = (e) => {
       if (!menuRef.current.contains(e.target)) {
         setIsClicked(false);
       }
     };
 
-    document.addEventListener('mousedown', handler);
+    document.addEventListener('mousedown', mousedownHandler);
 
     return () => {
-      document.removeEventListener('mousedown', handler);
+      document.removeEventListener('mousedown', mousedownHandler);
     };
   });
-
-  const pickAvatar = () => {
-    const avatarOptions = {
-      bear: bear,
-      cat: cat,
-      dog: dog,
-      fox: fox,
-      horse: horse,
-      owl: owl,
-      penguin: penguin,
-      pig: pig,
-    };
-
-    return avatarOptions[props.user.avatar].src;
-  };
 
   return (
     <div
@@ -54,10 +58,11 @@ const User = (props) => {
       }}
       ref={menuRef}
     >
-      <img
-        src={props.user.avatar ? pickAvatar() : profilePic.src}
-        alt='profile picture'
+      <Image
+        src={pickAvatar(authUser.avatar)}
         className={styles.img}
+        width='50'
+        height='50'
       />
       <i
         className={`${isClicked && styles.clicked} fa-solid fa-chevron-down`}

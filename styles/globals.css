@@ -48,6 +48,7 @@
   --clr-secondary-100: #ededfc;
   --clr-secondary-50: #f6f6fe;
   --clr-success: #31d0aa;
+  --clr-success-700: #59D9BA;
   --clr-success-100: #cbf3ea;
   --clr-error: #f03838;
   --clr-error-700: #f46a6a;
@@ -129,7 +130,7 @@ body::-webkit-scrollbar-thumb {
   --clr-secondary: #4547e3;
   --clr-secondary-700: #575ae6;
   --clr-secondary-100: #ededfc;
-  --clr-secondary-50: #f6f6fe;
+  --clr-secondary-50: #262636;
   --clr-body: #ecf1f4;
   --clr-subtle: #8c8ca1;
   --clr-dark: #fbfcfd;

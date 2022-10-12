@@ -1,7 +1,9 @@
 import styles from './Layout.module.css';
-import logo from '@/images/logo.svg';
-import Link from 'next/link';
 import { useTheme } from 'context/ThemeContext';
+import { useLayoutEffect } from 'react';
+import Link from 'next/link';
+
+import logo from '@/images/logo.svg';
 
 function AlterLayout(props) {
   const [darkTheme] = useTheme();

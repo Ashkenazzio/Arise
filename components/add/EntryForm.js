@@ -3,40 +3,72 @@ import FormField from '@/ui/FormField';
 import Button from '@/ui/Button';
 import ButtonAlt from '@/ui/ButtonAlt';
 
-import { useState } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import useInput from 'hooks/use-input';
+import AddCategory from './AddCategory';
+import { useAuthUser } from 'context/AuthContext';
 
-const isNotEmpty = (value) => value?.trim() !== '';
+const stringIsNotEmpty = (value) => value?.trim() !== '';
+const numIsNotZero = (value) => value !== '' && value !== 0;
 const positiveNumber = (value) => +value > 0;
 
 const EntryForm = (props) => {
   const [expenseCategories, setExpenseCategories] = useState([
     {
-      id: '0',
+      id: 0,
       title: 'Choose a category...',
-      value: '',
     },
-    { id: 'ex1', title: 'Eating Out', value: 'eating-out' },
-    { id: 'ex2', title: 'Fun', value: 'fun' },
-    { id: 'ex3', title: 'Groceries', value: 'groceries' },
-    { id: 'ex4', title: 'Insurance', value: 'insurance' },
-    { id: 'ex5', title: 'Pharma', value: 'pharma' },
-    { id: 'ex6', title: 'Transport', value: 'transport' },
-    { id: 'ex7', title: 'Utilities', value: 'utilities' },
-    { id: 'ex8', title: 'Misc.', value: 'miscellaneous' },
+    { id: 111, title: 'Eating Out' },
+    { id: 112, title: 'Fun' },
+    { id: 113, title: 'Groceries' },
+    { id: 114, title: 'Insurance' },
+    { id: 115, title: 'Pharma' },
+    { id: 116, title: 'Transport' },
+    { id: 117, title: 'Utilities' },
+    { id: 118, title: 'Misc.' },
   ]);
 
   const [incomeCategories, setIncomeCategories] = useState([
     {
-      id: '0',
+      id: 0,
       title: 'Choose a category...',
-      value: '',
     },
-    { id: 'in1', title: 'Salary', value: 'salary' },
-    { id: 'in2', title: 'Misc.', value: 'miscellaneous' },
+    { id: 121, title: 'Salary' },
+    { id: 122, title: 'Misc.' },
   ]);
 
   const [checked, setChecked] = useState(false);
+  const [addCategory, setAddCategoty] = useState(false);
+  const [authUser] = useAuthUser();
+
+  const showModalHandler = () => {
+    setAddCategoty(true);
+  };
+
+  const hideModalHandler = () => {
+    setAddCategoty(false);
+  };
+
+  if (authUser) {
+    console.log('set categories');
+    // setExpenseCategories(...);
+    // setIncomeCategories(...);
+  }
+
+  useLayoutEffect(() => {
+    if (!authUser) {
+      const localExpCategoriesJSON = localStorage.getItem('expense-categories');
+      const localIncCategoriesJSON = localStorage.getItem('income-categories');
+
+      if (localExpCategoriesJSON) {
+        setExpenseCategories(JSON.parse(localExpCategoriesJSON));
+      }
+
+      if (localIncCategoriesJSON) {
+        setIncomeCategories(JSON.parse(localIncCategoriesJSON));
+      }
+    }
+  }, []);
 
   const {
     value: enteredTitle,
@@ -45,7 +77,7 @@ const EntryForm = (props) => {
     valueChangeHandler: titleChangeHandler,
     inputBlurHandler: titleBlurHandler,
     reset: resetTitleInput,
-  } = useInput(isNotEmpty);
+  } = useInput(stringIsNotEmpty);
 
   const {
     value: enteredSum,
@@ -63,7 +95,7 @@ const EntryForm = (props) => {
     valueChangeHandler: dateChangeHandler,
     inputBlurHandler: dateBlurHandler,
     reset: resetDateInput,
-  } = useInput(isNotEmpty);
+  } = useInput(stringIsNotEmpty);
 
   const {
     value: selectedCategory,
@@ -72,14 +104,11 @@ const EntryForm = (props) => {
     valueChangeHandler: categoryChangeHandler,
     inputBlurHandler: categoryBlurHandler,
     reset: resetCategoryInput,
-  } = useInput(isNotEmpty);
+  } = useInput(numIsNotZero);
 
   const {
     value: enteredNotes,
-    isValid: notesIsValid,
-    hasError: notesInputInvalid,
     valueChangeHandler: notesChangeHandler,
-    inputBlurHandler: notesBlurHandler,
     reset: resetNotesInput,
   } = useInput(() => true);
 
@@ -102,6 +131,8 @@ const EntryForm = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+
+    console.log(selectedCategory);
 
     const queryData = {
       title: enteredTitle.value,
@@ -136,7 +167,7 @@ const EntryForm = (props) => {
         <FormField
           title='Expense/Income'
           id='list'
-          info='Choose to add an expense or income.'
+          info='Choose to add an expense or an income.'
           type='checkbox'
           onChange={() => setChecked(!checked)}
         />
@@ -144,7 +175,7 @@ const EntryForm = (props) => {
         <FormField
           title='Sum'
           id='sum'
-          info='Add the cost or gain in numbers.'
+          info='Add the cost or gain in positive numbers.'
           type='number'
           min='0'
           value={enteredSum.value}
@@ -177,6 +208,7 @@ const EntryForm = (props) => {
           onBlur={categoryBlurHandler}
           error={categoryInputInvalid ? categoryInputInvalid : undefined}
           valid={categoryIsValid ? categoryIsValid : undefined}
+          onAddCategory={showModalHandler}
         />
 
         <FormField
@@ -186,9 +218,6 @@ const EntryForm = (props) => {
           type='textarea'
           value={enteredNotes.value}
           onChange={notesChangeHandler}
-          onBlur={notesBlurHandler}
-          error={notesInputInvalid ? notesInputInvalid : undefined}
-          valid={notesIsValid ? notesIsValid : undefined}
         />
         <div className={styles.actions}>
           <ButtonAlt onClick={resetHandler}>CLEAR</ButtonAlt>
@@ -196,6 +225,13 @@ const EntryForm = (props) => {
             ADD
           </Button>
         </div>
+        {addCategory && (
+          <AddCategory
+            onClose={hideModalHandler}
+            expenseCategories={[expenseCategories, setExpenseCategories]}
+            incomeCategories={[incomeCategories, setIncomeCategories]}
+          />
+        )}
       </form>
     </div>
   );

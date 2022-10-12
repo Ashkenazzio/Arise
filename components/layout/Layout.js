@@ -4,19 +4,24 @@ import Header from './Header';
 import NavMenu from './NavMenu';
 import Dropdown from '@/ui/Dropdown';
 import React, { useLayoutEffect, useState } from 'react';
-import { useAnonymousUser } from 'context/AnonymousContext';
 import { useTheme } from 'context/ThemeContext';
+import { useAuthUser } from 'context/AuthContext';
 
 function Layout(props) {
-  const [anonyUser, setAnonyUser] = useAnonymousUser();
-
-  useLayoutEffect(() => {
-    if (localStorage.getItem('anonymous')) {
-      setAnonyUser(true);
-    }
-  }, []);
-
+  const [authUser, setAuthUser] = useAuthUser();
   const [darkTheme] = useTheme();
+
+  // useLayoutEffect(() => {
+  //   setAuthUser(
+  //     //...Db
+  //     {
+  //       name: 'Eskandar',
+  //       email: 'XanderTIM@gmail.com',
+  //       password: '12345678',
+  //       avatar: 'fox',
+  //     }
+  //   );
+  // }, []);
 
   useLayoutEffect(() => {
     document.body.setAttribute('dark-theme', darkTheme);
@@ -46,7 +51,7 @@ function Layout(props) {
         <div className={styles.container}>
           <div className={styles['top-bar']}>
             <h1 className={styles.title}>{title}</h1>
-            {filterElement && !anonyUser && (
+            {filterElement && authUser && (
               <Dropdown
                 className={styles.dropdown}
                 state={[filter, setFilter]}

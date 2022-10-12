@@ -50,11 +50,9 @@ const SummaryPage = (props) => {
 
   const totalExpensesByCategory = Object.entries(
     expenses.reduce((acc, curr) => {
-      if (!acc[curr.category.title]) {
-        acc[curr.category.title] = curr.sum;
-      } else {
-        acc[curr.category.title] = +acc[curr.category.title] + curr.sum;
-      }
+      !acc[curr.category.title]
+        ? (acc[curr.category.title] = curr.sum)
+        : (acc[curr.category.title] = +acc[curr.category.title] + curr.sum);
       return acc;
     }, {})
   ).map(([k, v]) => ({ id: k, title: k, sum: v }));

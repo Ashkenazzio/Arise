@@ -1,12 +1,12 @@
 import EntryForm from 'components/add/EntryForm';
-import { useAnonymousUser } from 'context/AnonymousContext';
+import { useAuthUser } from 'context/AuthContext';
 import { useLayoutEffect } from 'react';
 
 const AddEntry = (props) => {
-  const [anonyUser] = useAnonymousUser();
+  const [authUser] = useAuthUser();
 
   const addItemHandler = (queryData, queryList) => {
-    if (anonyUser) {
+    if (!authUser) {
       const currentLocalJSON = localStorage.getItem(queryList);
       if (!currentLocalJSON) {
         localStorage.setItem(

@@ -6,15 +6,21 @@
   gap: 0.5rem;
   font-size: 1rem;
   color: var(--clr-secondary-100);
+  position: relative;
+  height: 100%;
+  width: 6rem;
 }
 
 .img {
   display: flex;
-  height: 75%;
+  height: 100%;
+  width: auto;
   aspect-ratio: 1/1;
   border-radius: 100vmax;
   object-fit: cover;
-  box-shadow: var(--shadow-box);
+  /* box-shadow: var(--shadow-box); */
+  padding: 10rem;
+  
 }
 
 .clicked {

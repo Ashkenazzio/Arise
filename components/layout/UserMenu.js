@@ -25,7 +25,7 @@ const UserMenu = (props) => {
 
           <UserItem
             key='2'
-            href='/'
+            href='/start'
             icon={String.fromCharCode(0xf05a)}
             title={'Help'}
           />
