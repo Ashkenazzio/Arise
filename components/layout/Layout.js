@@ -6,10 +6,21 @@ import Dropdown from '@/ui/Dropdown';
 import React, { useLayoutEffect, useState } from 'react';
 import { useTheme } from 'context/ThemeContext';
 import { useAuthUser } from 'context/AuthContext';
+import { useCurrency } from 'context/CurrencyContext';
 
 function Layout(props) {
+  const [darkTheme, toggleTheme, setDarkTheme] = useTheme();
+  const [currency, setCurrency] = useCurrency();
   const [authUser, setAuthUser] = useAuthUser();
-  const [darkTheme] = useTheme();
+
+  useLayoutEffect(() => {
+    const preferences = JSON.parse(localStorage.getItem('preferences'));
+
+    if (preferences) {
+      setDarkTheme(preferences.darkTheme);
+      setCurrency(preferences.currency);
+    }
+  }, []);
 
   // useLayoutEffect(() => {
   //   setAuthUser(

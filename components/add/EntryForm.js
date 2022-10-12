@@ -41,12 +41,8 @@ const EntryForm = (props) => {
   const [addCategory, setAddCategoty] = useState(false);
   const [authUser] = useAuthUser();
 
-  const showModalHandler = () => {
-    setAddCategoty(true);
-  };
-
-  const hideModalHandler = () => {
-    setAddCategoty(false);
+  const categoryModalHandler = () => {
+    setAddCategoty(!addCategory);
   };
 
   if (authUser) {
@@ -208,7 +204,7 @@ const EntryForm = (props) => {
           onBlur={categoryBlurHandler}
           error={categoryInputInvalid ? categoryInputInvalid : undefined}
           valid={categoryIsValid ? categoryIsValid : undefined}
-          onAddCategory={showModalHandler}
+          onAddCategory={categoryModalHandler}
         />
 
         <FormField
@@ -227,7 +223,7 @@ const EntryForm = (props) => {
         </div>
         {addCategory && (
           <AddCategory
-            onClose={hideModalHandler}
+            onClose={categoryModalHandler}
             expenseCategories={[expenseCategories, setExpenseCategories]}
             incomeCategories={[incomeCategories, setIncomeCategories]}
           />

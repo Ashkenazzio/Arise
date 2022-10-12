@@ -6,8 +6,8 @@ export default class MyDocument extends Document {
       <Html>
         <Head />
         <body>
-          <Main />
           <div id='overlays' />
+          <Main />
           <NextScript />
         </body>
       </Html>

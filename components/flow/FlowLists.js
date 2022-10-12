@@ -32,42 +32,55 @@ const FlowLists = () => {
   }, []);
 
   const onUpdateItem = (itemId, list, queryData) => {
-    if (list === 'Expenses') {
-      expenses.map((item) => {
+    if (!authUser) {
+      if (list === 'Expenses') {
+        const updatedExpenses = expenses.map((item) => {
+          if (item.id === itemId) {
+            return { ...item, ...queryData };
+          }
+          return item;
+        });
+        setExpenses(updatedExpenses);
+        localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
+        return;
+      }
+
+      const updatedIncomes = incomes.map((item) => {
         if (item.id === itemId) {
-          return { ...item, queryData };
+          return { ...queryData };
         }
         return item;
       });
-      setExpenses([...expenses]);
-      return;
+      setIncomes(updatedIncomes);
+      localStorage.setItem('incomes', JSON.stringify(updatedIncomes));
+    } else {
+      console.log('Update to Database');
     }
-
-    incomes.map((item) => {
-      if (item.id === itemId) {
-        return { ...item, queryData };
-      }
-      return item;
-    });
-    setIncomes([...incomes]);
   };
 
   const onDeleteItem = (itemId, list) => {
-    if (list === 'Expenses') {
-      const item = expenses.find((i) => i.id === itemId);
-      const itemIndex = expenses.indexOf(item);
+    if (!authUser) {
+      if (list === 'Expenses') {
+        const item = expenses.find((i) => i.id === itemId);
+        const itemIndex = expenses.indexOf(item);
+
+        if (itemIndex > -1) {
+          expenses.splice(itemIndex, 1);
+          setExpenses([...expenses]);
+          localStorage.setItem('expenses', JSON.stringify(expenses));
+        }
+        return;
+      }
+      const item = incomes.find((i) => i.id === itemId);
+      const itemIndex = incomes.indexOf(item);
 
       if (itemIndex > -1) {
-        expenses.splice(itemIndex, 1);
-        setExpenses([...expenses]);
+        incomes.splice(itemIndex, 1);
+        setIncomes([...incomes]);
+        localStorage.setItem('incomes', JSON.stringify(incomes));
       }
-    }
-    const item = incomes.find((i) => i.id === itemId);
-    const itemIndex = incomes.indexOf(item);
-
-    if (itemIndex > -1) {
-      incomes.splice(itemIndex, 1);
-      setIncomes([...incomes]);
+    } else {
+      console.log('Delete from Database');
     }
   };
 

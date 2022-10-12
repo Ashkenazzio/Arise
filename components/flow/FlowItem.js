@@ -3,9 +3,6 @@ import FlowForm from './FlowForm';
 
 import { useCurrency } from 'context/CurrencyContext';
 
-const isNotEmpty = (value) => value.trim() !== '';
-const positiveNumber = (value) => +value > 0;
-
 const FlowItem = (props) => {
   const [edit, setEdit] = props.openState;
   const [currency] = useCurrency();

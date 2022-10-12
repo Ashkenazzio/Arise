@@ -7,6 +7,7 @@ import { useLayoutEffect, useState } from 'react';
 import { useAuthUser } from 'context/AuthContext';
 import useInput from 'hooks/use-input';
 import AddCategory from '@/add/AddCategory';
+import DeletePrompt from './DeletePrompt';
 
 const stringIsNotEmpty = (value) => value?.trim() !== '';
 const numIsNotZero = (value) => value !== '' && value !== 0;
@@ -37,15 +38,21 @@ const FlowForm = (props) => {
     { id: 122, title: 'Misc.' },
   ]);
 
-  const [addCategory, setAddCategoty] = useState(false);
   const [authUser] = useAuthUser();
+  const [edit, setEdit] = props.openState;
+  const [addCategory, setAddCategory] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
 
-  const showModalHandler = () => {
-    setAddCategoty(true);
+  const categoryModalHandler = (e) => {
+    e.preventDefault();
+
+    setAddCategory(!addCategory);
   };
 
-  const hideModalHandler = () => {
-    setAddCategoty(false);
+  const deleteModalHandler = (e) => {
+    e.preventDefault();
+
+    setDeleteModal(!deleteModal);
   };
 
   if (authUser) {
@@ -227,7 +234,7 @@ const FlowForm = (props) => {
         onBlur={categoryBlurHandler}
         error={categoryInputInvalid ? categoryInputInvalid : undefined}
         valid={categoryIsValid ? categoryIsValid : undefined}
-        addcategory={showModalHandler}
+        onAddCategory={categoryModalHandler}
         style={{ backgroundColor: 'var(--clr-light)' }}
       />
 
@@ -242,7 +249,7 @@ const FlowForm = (props) => {
       />
 
       <div className={styles.actions}>
-        <ButtonAlt onClick={deleteHandler} btn='delete'>
+        <ButtonAlt onClick={deleteModalHandler} btn='delete'>
           DELETE
         </ButtonAlt>
         <ButtonAlt onClick={resetHandler}>CLEAR</ButtonAlt>
@@ -253,10 +260,14 @@ const FlowForm = (props) => {
 
       {addCategory && (
         <AddCategory
-          onClose={hideModalHandler}
+          onClose={categoryModalHandler}
           expenseCategories={[expenseCategories, setExpenseCategories]}
           incomeCategories={[incomeCategories, setIncomeCategories]}
         />
+      )}
+
+      {deleteModal && (
+        <DeletePrompt onClose={deleteModalHandler} onDelete={deleteHandler} />
       )}
     </form>
   );

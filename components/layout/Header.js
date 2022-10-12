@@ -10,8 +10,6 @@ const Header = () => {
   const [darkTheme] = useTheme();
   const [authUser] = useAuthUser();
 
-  console.log(authUser);
-
   return (
     <div className={`${styles.header} ${darkTheme && styles.dark}`}>
       <img className={styles.logo} src={logo.src} alt='logo' />

@@ -1,31 +1,20 @@
 .backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
   height: 100vh;
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.33);
 }
 
 .modal {
-  position: fixed;
-  top: 20vh;
-  left: 5%;
-  width: 90%;
   background-color: var(--clr-light);
-  padding: 1rem;
   border-radius: 1rem;
   box-shadow: var(--shadow-box);
   z-index: 11;
   animation: slide-down 300ms ease-out forwards;
-}
-
-@media (min-width: 768px) {
-  .modal {
-    width: 40rem;
-    left: calc(50% - 20rem);
-  }
 }
 
 @keyframes slide-down {
