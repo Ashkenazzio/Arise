@@ -9,6 +9,7 @@
   z-index: 10;
   box-shadow: var(--shadow-box);
   max-width: 12rem;
+  min-width: max-content;
   /* display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;

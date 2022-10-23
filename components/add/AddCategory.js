@@ -1,6 +1,5 @@
 import styles from './AddCategory.module.css';
-import { useState } from 'react';
-import { useAuthUser } from 'context/AuthContext';
+import { useState, useRef } from 'react';
 import useInput from 'hooks/use-input';
 
 import Modal from '@/ui/Modal';
@@ -11,11 +10,18 @@ import Button from '@/ui/Button';
 const isNotEmpty = (value) => value?.trim() !== '';
 
 const AddCategory = (props) => {
-  const [authUser] = useAuthUser();
-  const [expenseCategories, setExpenseCategories] = props.expenseCategories;
-  const [incomeCategories, setIncomeCategories] = props.incomeCategories;
-
   const [checked, setChecked] = useState(false);
+
+  const addCategoryHandler = (e) => {
+    e.preventDefault();
+
+    const label = enteredCategory.value;
+    const type = checked ? 'income' : 'expense';
+    const icon = '💸';
+
+    props.onAddCategory(label, type, icon);
+    props.onClose();
+  };
 
   const {
     value: enteredCategory,
@@ -25,50 +31,19 @@ const AddCategory = (props) => {
     inputBlurHandler: categoryBlurHandler,
   } = useInput(isNotEmpty);
 
-  const addCategoryHandler = (e) => {
-    e.preventDefault();
-
-    const newCategory = enteredCategory;
-    const enteredList = checked ? 'incomes' : 'expenses';
-
-    if (authUser) {
-      // db...
-    } else {
-      if (enteredList === 'expenses') {
-        localStorage.setItem(
-          'expense-categories',
-          JSON.stringify([
-            ...expenseCategories,
-            { id: Date.now(), title: enteredCategory.value },
-          ])
-        );
-
-        setExpenseCategories(
-          JSON.parse(localStorage.getItem('expense-categories'))
-        );
-      } else {
-        localStorage.setItem(
-          'income-categories',
-          JSON.stringify([
-            ...incomeCategories,
-            { id: Date.now(), title: enteredCategory.value },
-          ])
-        );
-
-        setIncomeCategories(
-          JSON.parse(localStorage.getItem('income-categories'))
-        );
-      }
-    }
-
-    props.onClose();
-    // props.onAddItem(newCategory, enteredList);
-  };
+  const [emoji, setEmoji] = useState('💸');
+  const emojiPicker = useRef();
 
   return (
     <Modal className={styles.container} onClose={props.onClose}>
       <h3 className={styles.title}>Add a new category:</h3>
       <div className={styles.input}>
+        <div className={styles.picker}>
+          <span className={styles['emoji-title']}>Emoji:</span>
+          <div ref={emojiPicker} className={styles.emoji}>
+            {emoji}
+          </div>
+        </div>
         <FormField
           title='Category Title:'
           id='add-category'

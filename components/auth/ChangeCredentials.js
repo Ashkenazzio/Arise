@@ -1,5 +1,4 @@
 import styles from './ChangeCredentials.module.css';
-import { useAuthUser } from 'context/AuthContext';
 import useInput from 'hooks/use-input';
 
 import Modal from '@/ui/Modal';

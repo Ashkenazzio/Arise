@@ -1,14 +1,28 @@
 import Start from '@/start/Start';
-import { useLayoutEffect } from 'react';
+import Head from 'next/head';
+import { useEffect } from 'react';
 
 const GetStarted = (props) => {
-  useLayoutEffect(() => {
+  useEffect(() => {
     const [setTitle, setFilter] = props.layout;
     setTitle('Start');
     setFilter(false);
   }, []);
 
-  return <Start />;
+  return (
+    <>
+      <Head>
+        <title>Arise | Start</title>
+        <meta name='description' content='The Best Budget Tracking App!' />
+        <link
+          rel='icon'
+          type='image/x-icon'
+          href='public/favicon.ico'
+        />
+      </Head>
+      <Start />
+    </>
+  );
 };
 
 export default GetStarted;

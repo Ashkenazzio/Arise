@@ -47,4 +47,16 @@
 .add {
   font-size: 2rem;
   color: var(--clr-success);
+  cursor: pointer;
+}
+
+.reveal {
+  font-size: 1.25rem;
+  width: 1em;
+  height: 1em;
+}
+
+.content {
+  display: flex;
+  gap: 1rem;
 }

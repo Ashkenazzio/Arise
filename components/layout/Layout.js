@@ -1,19 +1,36 @@
-import styles from './Layout.module.css';
+import { useEffect, useState, cloneElement } from 'react';
+import { useTheme } from 'context/ThemeContext';
+import { useCurrency } from 'context/CurrencyContext';
+import { useAnonymousUser } from 'context/AnonymousContext';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
+import styles from './Layout.module.css';
 import Header from './Header';
 import NavMenu from './NavMenu';
 import Dropdown from '@/ui/Dropdown';
-import React, { useLayoutEffect, useState } from 'react';
-import { useTheme } from 'context/ThemeContext';
-import { useAuthUser } from 'context/AuthContext';
-import { useCurrency } from 'context/CurrencyContext';
 
 function Layout(props) {
-  const [darkTheme, toggleTheme, setDarkTheme] = useTheme();
+  const [anonyUser, setAnonyUser] = useAnonymousUser();
+  const { status } = useSession();
+  const { darkTheme, setDarkTheme } = useTheme();
   const [currency, setCurrency] = useCurrency();
-  const [authUser, setAuthUser] = useAuthUser();
+  const router = useRouter();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    const anonymous = localStorage.getItem('arise-anonymous');
+    if (anonymous == 'true') {
+      setAnonyUser(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (status === 'unauthenticated' && !anonyUser) {
+      router.push('/login');
+    }
+  }, [status, anonyUser]);
+
+  useEffect(() => {
     const preferences = JSON.parse(localStorage.getItem('preferences'));
 
     if (preferences) {
@@ -22,19 +39,7 @@ function Layout(props) {
     }
   }, []);
 
-  // useLayoutEffect(() => {
-  //   setAuthUser(
-  //     //...Db
-  //     {
-  //       name: 'Eskandar',
-  //       email: 'XanderTIM@gmail.com',
-  //       password: '12345678',
-  //       avatar: 'fox',
-  //     }
-  //   );
-  // }, []);
-
-  useLayoutEffect(() => {
+  useEffect(() => {
     document.body.setAttribute('dark-theme', darkTheme);
   }, [darkTheme]);
 
@@ -62,20 +67,15 @@ function Layout(props) {
         <div className={styles.container}>
           <div className={styles['top-bar']}>
             <h1 className={styles.title}>{title}</h1>
-            {filterElement && authUser && (
-              <Dropdown
-                className={styles.dropdown}
-                state={[filter, setFilter]}
-                options={filterOpts}
-              />
-            )}
           </div>
-          {React.cloneElement(props.children, {
+          {cloneElement(props.children, {
             layout: [setTitle, setFilterElement],
           })}
         </div>
       </main>
-      {/* <p className={styles.copyrights}>&copy; Omri Ashkenazi </p> */}
+      <p className={styles.credit}>
+        &copy; Designed and developed by Omri Ashkenazi
+      </p>
     </div>
   );
 }

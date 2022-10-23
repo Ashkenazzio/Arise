@@ -36,8 +36,10 @@ function FlowList(props) {
               queries={block[1]}
               list={props.list}
               openState={[selected, setSelected]}
+              categories={props.categories}
               onUpdateItem={props.onUpdateItem}
               onDeleteItem={props.onDeleteItem}
+              onAddCategory={props.onAddCategory}
             />
           ))}
 

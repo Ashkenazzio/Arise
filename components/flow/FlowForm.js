@@ -1,51 +1,30 @@
+import { useEffect, useState } from 'react';
+import useInput from 'hooks/use-input';
+import AddCategory from '@/add/AddCategory';
+import DeletePrompt from './DeletePrompt';
+
 import styles from './FlowForm.module.css';
 import FormField from '@/ui/FormField';
 import Button from '@/ui/Button';
 import ButtonAlt from '@/ui/ButtonAlt';
-
-import { useLayoutEffect, useState } from 'react';
-import { useAuthUser } from 'context/AuthContext';
-import useInput from 'hooks/use-input';
-import AddCategory from '@/add/AddCategory';
-import DeletePrompt from './DeletePrompt';
 
 const stringIsNotEmpty = (value) => value?.trim() !== '';
 const numIsNotZero = (value) => value !== '' && value !== 0;
 const positiveNumber = (value) => +value > 0;
 
 const FlowForm = (props) => {
-  const [expenseCategories, setExpenseCategories] = useState([
-    {
-      id: 0,
-      title: 'Choose a category...',
-    },
-    { id: 111, title: 'Eating Out' },
-    { id: 112, title: 'Fun' },
-    { id: 113, title: 'Groceries' },
-    { id: 114, title: 'Insurance' },
-    { id: 115, title: 'Pharma' },
-    { id: 116, title: 'Transport' },
-    { id: 117, title: 'Utilities' },
-    { id: 118, title: 'Misc.' },
-  ]);
+  const expenseCategories = props.categories.filter(
+    (category) => category.type === 'expense'
+  );
+  const incomeCategories = props.categories.filter(
+    (category) => category.type === 'income'
+  );
 
-  const [incomeCategories, setIncomeCategories] = useState([
-    {
-      id: 0,
-      title: 'Choose a category...',
-    },
-    { id: 121, title: 'Salary' },
-    { id: 122, title: 'Misc.' },
-  ]);
-
-  const [authUser] = useAuthUser();
   const [edit, setEdit] = props.openState;
   const [addCategory, setAddCategory] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const categoryModalHandler = (e) => {
-    e.preventDefault();
-
+  const categoryModalHandler = () => {
     setAddCategory(!addCategory);
   };
 
@@ -54,27 +33,6 @@ const FlowForm = (props) => {
 
     setDeleteModal(!deleteModal);
   };
-
-  if (authUser) {
-    console.log('set categories');
-    // setExpenseCategories(...);
-    // setIncomeCategories(...);
-  }
-
-  useLayoutEffect(() => {
-    if (!authUser) {
-      const localExpCategoriesJSON = localStorage.getItem('expense-categories');
-      const localIncCategoriesJSON = localStorage.getItem('income-categories');
-
-      if (localExpCategoriesJSON) {
-        setExpenseCategories(JSON.parse(localExpCategoriesJSON));
-      }
-
-      if (localIncCategoriesJSON) {
-        setIncomeCategories(JSON.parse(localIncCategoriesJSON));
-      }
-    }
-  }, []);
 
   const {
     value: enteredTitle,
@@ -118,7 +76,7 @@ const FlowForm = (props) => {
     reset: resetNotesInput,
   } = useInput(() => true);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const derivedState = { type: 'update-input', value: '', payload: null };
 
     const derivedTitle = { ...derivedState, value: props.title };
@@ -127,9 +85,17 @@ const FlowForm = (props) => {
     const derivedNotes = { ...derivedState, value: props.notes };
     const derivedCategory = {
       type: 'update-category',
-      value: props.category.id,
+      value: props.category.id.toString(),
       payload: props.category,
     };
+
+    // console.log('derived', {
+    //   derivedTitle,
+    //   derivedSum,
+    //   derivedDate,
+    //   derivedNotes,
+    //   derivedCategory,
+    // });
 
     titleChangeHandler(derivedTitle);
     sumChangeHandler(derivedSum);
@@ -166,8 +132,10 @@ const FlowForm = (props) => {
       notes: enteredNotes.value,
     };
 
+    console.log(queryData);
+
     const itemId = props.id;
-    const list = props.list;
+    const list = props.list === 'Expenses' ? 'expenses' : 'incomes';
     props.onUpdateItem(itemId, list, queryData);
 
     setEdit(null);
@@ -176,8 +144,17 @@ const FlowForm = (props) => {
   const deleteHandler = (e) => {
     e.preventDefault();
 
-    props.onDeleteItem(props.id, props.list);
+    const list = props.list === 'Expenses' ? 'expenses' : 'incomes';
+    props.onDeleteItem(props.id, list);
   };
+
+  // console.log('entered', {
+  //   enteredTitle,
+  //   enteredSum,
+  //   enteredDate,
+  //   enteredNotes,
+  //   selectedCategory,
+  // });
 
   return (
     <form
@@ -261,8 +238,7 @@ const FlowForm = (props) => {
       {addCategory && (
         <AddCategory
           onClose={categoryModalHandler}
-          expenseCategories={[expenseCategories, setExpenseCategories]}
-          incomeCategories={[incomeCategories, setIncomeCategories]}
+          onAddCategory={props.onAddCategory}
         />
       )}
 

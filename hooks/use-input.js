@@ -13,25 +13,27 @@ const useInput = (validateValue) => {
   const hasError = !valueIsValid && isTouched;
 
   const valueChangeHandler = (e) => {
-    if (e?.type === 'select-one') {
-      const state = { value: e?.value, payload: e.payload };
+    if (e.type === 'select-one') {
+      const state = { value: e.value, payload: e.payload };
+      // console.log('state from select-one', state);
       setEnteredValue(state);
       return;
     }
 
-    if (e?.type === 'update-input') {
-      const state = { value: e?.value, payload: null };
+    if (e.type === 'update-input') {
+      const state = { value: e.value, payload: null };
       setEnteredValue(state);
       return;
     }
 
-    if (e?.type === 'update-category') {
-      const state = { value: e?.value, payload: e.payload };
+    if (e.type === 'update-category') {
+      const state = { value: e.value, payload: e.payload };
+      // console.log('state from update-category', state);
       setEnteredValue(state);
       return;
     }
 
-    const state = { value: e?.target?.value, payload: null };
+    const state = { value: e.target.value, payload: null };
     setEnteredValue(state);
   };
 

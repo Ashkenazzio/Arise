@@ -1,9 +1,19 @@
-import styles from './UserMenu.module.css';
+import { useSession, signOut } from 'next-auth/react';
 
+import styles from './UserMenu.module.css';
 import UserItem from './UserItem';
 
 const UserMenu = (props) => {
+  const { status } = useSession();
+
   const [open, setOpen] = props.state;
+
+  const logoutHandler = () => {
+    if (status === 'authenticated') {
+      signOut();
+    }
+    localStorage.setItem('arise-anonymous', false);
+  };
 
   return (
     <div className={styles.container} onClick={() => setOpen(!open)}>
@@ -39,7 +49,7 @@ const UserMenu = (props) => {
 
           <UserItem
             key='4'
-            href='/logout'
+            onClick={logoutHandler}
             icon={String.fromCharCode(0xf2f5)}
             title={'Logout'}
           />

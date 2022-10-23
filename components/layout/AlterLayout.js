@@ -1,16 +1,18 @@
 import styles from './Layout.module.css';
 import { useTheme } from 'context/ThemeContext';
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
 
 import logo from '@/images/logo.svg';
+import { useSession } from 'next-auth/react';
 
 function AlterLayout(props) {
-  const [darkTheme] = useTheme();
+  const { darkTheme } = useTheme();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     document.body.setAttribute('dark-theme', darkTheme);
   }, [darkTheme]);
+
 
   return (
     <div className={styles.app}>

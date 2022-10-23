@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 
-const AnonymousContext = React.createContext();
+const AnonymousContext = createContext();
 
 export function useAnonymousUser() {
   return useContext(AnonymousContext);

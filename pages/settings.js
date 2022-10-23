@@ -1,14 +1,24 @@
 import SettingsPage from '@/settings/SettingsPage';
-import { useLayoutEffect } from 'react';
+import Head from 'next/head';
+import { useEffect } from 'react';
 
 const Settings = (props) => {
-  useLayoutEffect(() => {
+  useEffect(() => {
     const [setTitle, setFilter] = props.layout;
     setTitle('Settings');
     setFilter(false);
   }, []);
 
-  return <SettingsPage />;
+  return (
+    <>
+      <Head>
+        <title>Arise | Settings</title>
+        <meta name='description' content='The Best Budget Tracking App!' />
+        <link rel='shortcut icon' href='public/favicon.ico' />
+      </Head>
+      <SettingsPage />
+    </>
+  );
 };
 
 export default Settings;

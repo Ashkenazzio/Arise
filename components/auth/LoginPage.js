@@ -1,15 +1,30 @@
+import { useRouter } from 'next/router';
+import { useRef } from 'react';
+
 import FormField from '@/ui/FormField';
 import Button from '@/ui/Button';
 import ButtonAlt from '@/ui/ButtonAlt';
 import Link from 'next/link';
 import styles from './LoginPage.module.css';
-import { useRouter } from 'next/router';
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   const router = useRouter();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+
+    const userData = {
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
+
+    props.onUserLogin(userData);
+  };
 
   const proceedAnonHandler = () => {
-    localStorage.setItem('anonymous', true);
+    localStorage.setItem('arise-anonymous', true);
 
     router.push('/start');
   };
@@ -19,10 +34,10 @@ const LoginPage = () => {
       <div className={styles.login}>
         <h1 className={styles.title}>Login</h1>
         <form className={styles.form}>
-          <FormField title='Email' type='email' />
-          <FormField title='Password' type='text' />
+          <FormField title='Email' type='email' ref={emailRef} />
+          <FormField title='Password' type='password' ref={passwordRef} />
           <div className={styles.actions}>
-            <Button>Login</Button>
+            <Button onClick={loginHandler}>Login</Button>
             <Link href='/register'>
               <a className={styles.link}>
                 Don't have an account? Click here to register

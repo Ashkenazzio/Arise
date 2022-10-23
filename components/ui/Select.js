@@ -15,20 +15,22 @@ const Select = (props, ref) => {
           !!props.valid && styles.valid
         }`}
         ref={ref}
-        {...props}
+        // {...props}
         onChange={onChangeHandler}
       >
+        <option className={styles.option} key={0} id={0} value={0}>
+          Choose a category...
+        </option>
         {props.options.map((option) => (
           <option
-            className={styles.option}
+            className={`${styles.option} icon-before`}
             key={option.id}
             id={option.id}
             value={option.id}
           >
-            {option.title}
+            {`${option.icon} ${option.label}`}
           </option>
         ))}
-        ;
       </select>
       <i
         onClick={props.onAddCategory}

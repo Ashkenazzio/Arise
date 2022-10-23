@@ -9,9 +9,23 @@ const NavItem = (props) => {
   const isCurrentPath =
     router.pathname === props.href || router.asPath === props.href;
 
-  return (
-    <Link href={props.href}>
+  if (props.href) {
+    return (
+      <Link href={props.href}>
+        <li
+          className={`${styles.item} ${
+            isCurrentPath && styles.active
+          } icon-before`}
+          icon={props.icon}
+        >
+          {props.title}
+        </li>
+      </Link>
+    );
+  } else {
+    return (
       <li
+        onClick={props.onClick}
         className={`${styles.item} ${
           isCurrentPath && styles.active
         } icon-before`}
@@ -19,8 +33,8 @@ const NavItem = (props) => {
       >
         {props.title}
       </li>
-    </Link>
-  );
+    );
+  }
 };
 
 export default NavItem;

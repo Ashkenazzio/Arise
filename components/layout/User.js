@@ -1,7 +1,6 @@
 import styles from './User.module.css';
-// import profilePic from '@/images/profile-pic.svg';
 import { useState, useRef, useEffect } from 'react';
-import { useAuthUser } from 'context/AuthContext';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import UserMenu from './UserMenu';
 
@@ -13,7 +12,6 @@ import horse from '@/images/avatars/horse.svg';
 import owl from '@/images/avatars/owl.svg';
 import penguin from '@/images/avatars/penguin.svg';
 import pig from '@/images/avatars/pig.svg';
-
 
 const pickAvatar = (key) => {
   const avatarOptions = {
@@ -31,7 +29,7 @@ const pickAvatar = (key) => {
 };
 
 const User = (props) => {
-  const [authUser] = useAuthUser();
+  const user = useSession().data.user;
   const [isClicked, setIsClicked] = useState(false);
 
   let menuRef = useRef();
@@ -59,7 +57,7 @@ const User = (props) => {
       ref={menuRef}
     >
       <Image
-        src={pickAvatar(authUser.avatar)}
+        src={pickAvatar(user.avatar)}
         className={styles.img}
         width='50'
         height='50'

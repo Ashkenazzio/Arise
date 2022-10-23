@@ -1,6 +1,6 @@
 import styles from './RegPage.module.css';
+import { useState } from 'react';
 import useInput from 'hooks/use-input';
-import { useRouter } from 'next/router';
 
 import FormField from '@/ui/FormField';
 import Button from '@/ui/Button';
@@ -20,8 +20,8 @@ const isNotEmpty = (value) => value.trim() !== '';
 const isEmail = (value) => value.includes('@');
 const eightCharacters = (value) => value?.trim().length >= 8;
 
-const RegPage = () => {
-  const router = useRouter();
+const RegPage = (props) => {
+  const [avatarValue, setAvatarValue] = useState(null);
 
   const {
     value: enteredName,
@@ -61,10 +61,8 @@ const RegPage = () => {
     reset: resetConfirmedPasswordInput,
   } = useInput(isEquelToPassword);
 
-  let avatarValue = null;
-
   const changeAvatarValue = (e) => {
-    avatarValue = e.target.value;
+    setAvatarValue(e.target.value);
   };
 
   let formIsValid = false;
@@ -73,7 +71,8 @@ const RegPage = () => {
     nameIsValid &&
     emailIsValid &&
     passwordIsValid &&
-    confirmedPasswordIsValid
+    confirmedPasswordIsValid &&
+    avatarValue
   ) {
     formIsValid = true;
   }
@@ -86,19 +85,13 @@ const RegPage = () => {
     }
 
     const userData = {
-      name: enteredName,
-      email: enteredEmail,
-      password: enteredPassword,
-      avatar: avatarValue,
+      enteredName: enteredName.value,
+      enteredEmail: enteredEmail.value,
+      enteredPassword: enteredPassword.value,
+      enteredAvatar: avatarValue,
     };
 
-    resetNameInput();
-    resetEmailInput();
-    resetPasswordInput();
-    resetConfirmedPasswordInput();
-
-    console.log({ ...userData });
-    router.push('/login');
+    props.onAddUser(userData);
   };
 
   return (
@@ -114,8 +107,10 @@ const RegPage = () => {
               value={enteredName.value}
               onChange={nameChangeHandler}
               onBlur={nameBlurHandler}
-              error={!!nameInputInvalid ? nameInputInvalid : undefined}
-              valid={!!nameIsValid ? nameIsValid : undefined}
+              error={
+                !!nameInputInvalid ? nameInputInvalid.toString() : undefined
+              }
+              valid={!!nameIsValid ? nameIsValid.toString() : undefined}
             />
             <FormField
               title='Email'
@@ -124,8 +119,10 @@ const RegPage = () => {
               value={enteredEmail.value}
               onChange={emailChangeHandler}
               onBlur={emailBlurHandler}
-              error={emailInputInvalid ? emailInputInvalid : undefined}
-              valid={emailIsValid ? emailIsValid : undefined}
+              error={
+                emailInputInvalid ? emailInputInvalid.toString() : undefined
+              }
+              valid={emailIsValid ? emailIsValid.toString() : undefined}
             />
             <FormField
               title='Password'
@@ -134,8 +131,12 @@ const RegPage = () => {
               value={enteredPassword.value}
               onChange={passwordChangeHandler}
               onBlur={passwordBlurHandler}
-              error={passwordInputInvalid ? passwordInputInvalid : undefined}
-              valid={passwordIsValid ? passwordIsValid : undefined}
+              error={
+                passwordInputInvalid
+                  ? passwordInputInvalid.toString()
+                  : undefined
+              }
+              valid={passwordIsValid ? passwordIsValid.toString() : undefined}
             />
 
             <FormField
@@ -145,8 +146,16 @@ const RegPage = () => {
               value={enteredConfirmedPassword.value}
               onChange={confirmedPasswordChangeHandler}
               onBlur={confirmedPasswordBlurHandler}
-              error={confirmedPasswordInputInvalid}
-              valid={confirmedPasswordIsValid}
+              error={
+                confirmedPasswordInputInvalid
+                  ? confirmedPasswordInputInvalid.toString()
+                  : undefined
+              }
+              valid={
+                confirmedPasswordIsValid
+                  ? confirmedPasswordIsValid.toString()
+                  : undefined
+              }
             />
           </div>
 

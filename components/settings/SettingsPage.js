@@ -3,10 +3,10 @@ import DarkToggle from '@/ui/DarkToggle';
 import styles from './SettingsPage.module.css';
 import { useCurrency } from 'context/CurrencyContext';
 import { useTheme } from 'context/ThemeContext';
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 
 const SettingsPage = () => {
-  const [darkTheme, toggleTheme, setDarkTheme] = useTheme();
+  const { darkTheme, toggleTheme, setDarkTheme } = useTheme();
   const [currency, setCurrency] = useCurrency();
 
   const currencyOpts = [
@@ -15,7 +15,7 @@ const SettingsPage = () => {
     { id: 'c3', name: '₪ - ILS', value: '₪' },
   ];
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     localStorage.setItem(
       'preferences',
       JSON.stringify({

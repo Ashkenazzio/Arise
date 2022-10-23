@@ -21,8 +21,10 @@ const FlowBlock = (props) => {
             key={item.id}
             list={props.list}
             openState={props.openState}
+            categories={props.categories}
             onUpdateItem={props.onUpdateItem}
             onDeleteItem={props.onDeleteItem}
+            onAddCategory={props.onAddCategory}
           />
         ))}
       </ul>

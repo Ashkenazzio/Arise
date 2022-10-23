@@ -1,33 +1,61 @@
 import SummaryPage from '@/summary/SummaryPage';
-import { useDb } from 'context/DbContext';
-import { useLayoutEffect, useState } from 'react';
-import { useAuthUser } from 'context/AuthContext';
+import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import Head from 'next/head';
+import { useAnonymousUser } from 'context/AnonymousContext';
 
 const Summary = (props) => {
-  const [authUser] = useAuthUser();
-  const [dbExpenses] = useDb();
+  const { status } = useSession();
+  const [anonyUser] = useAnonymousUser();
+  const [expenses, setExpenses] = useState([]);
 
-  const [expenses, setExpenses] = useState(dbExpenses);
+  const fetchExpensesAPI = async () => {
+    try {
+      const res = await fetch('/api/expenses');
 
-  useLayoutEffect(() => {
-    if (!authUser) {
-      const localExpensesJSON = localStorage.getItem('expenses');
-
-      if (localExpensesJSON) {
-        setExpenses(JSON.parse(localExpensesJSON));
-      } else {
-        setExpenses([]);
-      }
+      const response = await res.json();
+      setExpenses(response);
+    } catch (error) {
+      throw new Error(error.message);
     }
-  }, []);
+  };
 
-  useLayoutEffect(() => {
+  const fetchExpensesLocal = () => {
+    const localExpensesJSON = localStorage.getItem('expenses');
+
+    if (localExpensesJSON) {
+      setExpenses(JSON.parse(localExpensesJSON));
+    } else {
+      setExpenses([]);
+    }
+  };
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      fetchExpensesAPI();
+    }
+
+    if (status === 'unauthenticated' && anonyUser) {
+      fetchExpensesLocal();
+    }
+  }, [status, anonyUser]);
+
+  useEffect(() => {
     const [setTitle, setFilter] = props.layout;
     setTitle('Summary');
     setFilter(true);
   }, []);
 
-  return <SummaryPage expenses={expenses} />;
+  return (
+    <>
+      <Head>
+        <title>Arise | Summary</title>
+        <meta name='description' content='The Best Budget Tracking App!' />
+        <link rel='shortcut icon' href='public/favicon.ico' />
+      </Head>
+      <SummaryPage expenses={expenses} />
+    </>
+  );
 };
 
 export default Summary;

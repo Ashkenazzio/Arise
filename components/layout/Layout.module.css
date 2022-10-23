@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .header {
@@ -67,12 +68,15 @@ div.dropdown {
   color: var(--clr-secondary);
 }
 
-.copyrights {
+.credit {
   width: 100%;
   padding: 0.5rem 1rem;
   text-align: right;
-  color: var(--clr-secondary);
+  color: var(--clr-body);
   font: var(--font-small);
+
+  /* position: absolute; */
+  bottom: 0;
 }
 
 @media (min-width: 37.5em) {
@@ -86,5 +90,15 @@ div.dropdown {
     padding: min(2rem, 1.66vw);
     grid-template-columns: 22% 1fr;
     height: 100%;
+  }
+
+  .credit {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    text-align: right;
+    color: var(--clr-body);
+    font: var(--font-small);
+    /* position: absolute; */
+    bottom: 0;
   }
 }

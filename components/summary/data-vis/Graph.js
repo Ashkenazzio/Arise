@@ -18,6 +18,8 @@ const Graph = (props) => {
     value: 'pie',
   });
 
+
+
   const chartDataObj = {
     labels: props.expensesByCategory.map((item) => {
       return item.title;
@@ -42,17 +44,20 @@ const Graph = (props) => {
   };
 
   const chartOptsObj = {
-    title: {
-      display: true,
-      text: 'Expense by Category',
-      fontSize: 25,
-    },
-    legend: {
-      display: false,
-      position: 'right',
-      align: 'end',
-      labels: {
-        fontColor: '#000',
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'center',
+        align: 'end',
+        labels: {
+          fontColor: '#000',
+        },
+        title: {
+          display: true,
+          text: 'Expenses by Category',
+          fontSize: 25,
+        },
       },
     },
     maintainAspectRatio: false,

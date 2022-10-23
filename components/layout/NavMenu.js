@@ -1,8 +1,20 @@
-import styles from './NavMenu.module.css';
+import { useSession, signOut } from 'next-auth/react';
 
+
+import styles from './NavMenu.module.css';
 import NavItem from './NavItem';
 
 const NavMenu = () => {
+  const { status } = useSession();
+
+
+  const logoutHandler = () => {
+    if (status === 'authenticated') {
+      signOut();
+    }
+    localStorage.setItem('arise-anonymous', false);
+  };
+
   return (
     <ul className={styles.nav}>
       <div className={styles['nav-routes']}>
@@ -29,7 +41,7 @@ const NavMenu = () => {
           icon={String.fromCharCode(0xf013)}
         />
         <NavItem
-          href='/logout'
+          onClick={logoutHandler}
           title='Logout'
           icon={String.fromCharCode(0xf2f5)}
         />

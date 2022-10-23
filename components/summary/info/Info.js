@@ -1,10 +1,10 @@
-import { useAuthUser } from 'context/AuthContext';
+import { useSession } from 'next-auth/react';
 import styles from './Info.module.css';
 
 import Note from './Note';
 
 const Info = (props) => {
-  const [authUser] = useAuthUser();
+  const authUser = useSession()?.data?.user?.isLoggedIn;
 
   return (
     <div className={styles.container}>

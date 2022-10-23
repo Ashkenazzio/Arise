@@ -1,70 +1,26 @@
 import styles from './EntryForm.module.css';
-import FormField from '@/ui/FormField';
+import { useState } from 'react';
+import useInput from 'hooks/use-input';
+
 import Button from '@/ui/Button';
 import ButtonAlt from '@/ui/ButtonAlt';
-
-import { useState, useLayoutEffect } from 'react';
-import useInput from 'hooks/use-input';
+import FormField from '@/ui/FormField';
 import AddCategory from './AddCategory';
-import { useAuthUser } from 'context/AuthContext';
 
 const stringIsNotEmpty = (value) => value?.trim() !== '';
 const numIsNotZero = (value) => value !== '' && value !== 0;
 const positiveNumber = (value) => +value > 0;
 
 const EntryForm = (props) => {
-  const [expenseCategories, setExpenseCategories] = useState([
-    {
-      id: 0,
-      title: 'Choose a category...',
-    },
-    { id: 111, title: 'Eating Out' },
-    { id: 112, title: 'Fun' },
-    { id: 113, title: 'Groceries' },
-    { id: 114, title: 'Insurance' },
-    { id: 115, title: 'Pharma' },
-    { id: 116, title: 'Transport' },
-    { id: 117, title: 'Utilities' },
-    { id: 118, title: 'Misc.' },
-  ]);
-
-  const [incomeCategories, setIncomeCategories] = useState([
-    {
-      id: 0,
-      title: 'Choose a category...',
-    },
-    { id: 121, title: 'Salary' },
-    { id: 122, title: 'Misc.' },
-  ]);
-
   const [checked, setChecked] = useState(false);
   const [addCategory, setAddCategoty] = useState(false);
-  const [authUser] = useAuthUser();
 
-  const categoryModalHandler = () => {
-    setAddCategoty(!addCategory);
-  };
-
-  if (authUser) {
-    console.log('set categories');
-    // setExpenseCategories(...);
-    // setIncomeCategories(...);
-  }
-
-  useLayoutEffect(() => {
-    if (!authUser) {
-      const localExpCategoriesJSON = localStorage.getItem('expense-categories');
-      const localIncCategoriesJSON = localStorage.getItem('income-categories');
-
-      if (localExpCategoriesJSON) {
-        setExpenseCategories(JSON.parse(localExpCategoriesJSON));
-      }
-
-      if (localIncCategoriesJSON) {
-        setIncomeCategories(JSON.parse(localIncCategoriesJSON));
-      }
-    }
-  }, []);
+  const expenseCategories = props.categories.filter(
+    (category) => category.type === 'expense'
+  );
+  const incomeCategories = props.categories.filter(
+    (category) => category.type === 'income'
+  );
 
   const {
     value: enteredTitle,
@@ -114,6 +70,10 @@ const EntryForm = (props) => {
     formIsValid = true;
   }
 
+  const categoryModalHandler = () => {
+    setAddCategoty(!addCategory);
+  };
+
   const resetHandler = (event) => {
     if (event) {
       event.preventDefault();
@@ -128,8 +88,6 @@ const EntryForm = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    console.log(selectedCategory);
-
     const queryData = {
       title: enteredTitle.value,
       sum: +enteredSum.value,
@@ -140,8 +98,8 @@ const EntryForm = (props) => {
 
     const enteredList = checked ? 'incomes' : 'expenses';
 
-    resetHandler();
     props.onAddItem(queryData, enteredList);
+    resetHandler();
   };
 
   return (
@@ -224,8 +182,7 @@ const EntryForm = (props) => {
         {addCategory && (
           <AddCategory
             onClose={categoryModalHandler}
-            expenseCategories={[expenseCategories, setExpenseCategories]}
-            incomeCategories={[incomeCategories, setIncomeCategories]}
+            onAddCategory={props.onAddCategory}
           />
         )}
       </form>
@@ -234,12 +191,3 @@ const EntryForm = (props) => {
 };
 
 export default EntryForm;
-
-// { key: 'c1', name: '🍴 Eating Out', value: 'eating-out' },
-// { key: 'c2', name: '😊 Fun', value: 'fun' },
-// { key: 'c3', name: '🛒 Groceries', value: 'groceries' },
-// { key: 'c4', name: '📃 Insurance', value: 'insurance' },
-// { key: 'c5', name: '💊 Pharma', value: 'pharma' },
-// { key: 'c6', name: '🚌 Transport', value: 'transport' },
-// { key: 'c7', name: '⚡ Utilities', value: 'utilities' },
-// { key: 'c8', name: '♾ Misc.', value: 'miscellaneous' },

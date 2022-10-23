@@ -1,86 +1,91 @@
+import { useEffect, useState } from 'react';
+import { INIT_CATEGORIES } from 'lib/initData';
+import { useSession } from 'next-auth/react';
+import { useAnonymousUser } from 'context/AnonymousContext';
+
 import styles from './FlowLists.module.css';
 import FlowList from './FlowList';
 import Balance from './Balance';
 
-import { useDb } from 'context/DbContext';
-import { useLayoutEffect, useState } from 'react';
-import { useAuthUser } from 'context/AuthContext';
+const FlowLists = (props) => {
+  const { expenses, incomes } = props.queries;
+  const [categories, setCategories] = useState(INIT_CATEGORIES);
 
-const FlowLists = () => {
-  const [authUser] = useAuthUser();
-  const [dbExpenses, dbIncomes] = useDb();
+  const { status } = useSession();
+  const [anonyUser] = useAnonymousUser();
 
-  const [expenses, setExpenses] = useState(dbExpenses);
-  const [incomes, setIncomes] = useState(dbIncomes);
+  const fetchCategoriesAPI = async () => {
+    try {
+      const response = await fetch('/api/categories');
+      const categories = await response.json();
 
-  useLayoutEffect(() => {
-    if (!authUser) {
-      const localExpensesJSON = localStorage.getItem('expenses');
-      const localIncomesJSON = localStorage.getItem('incomes');
-
-      if (localExpensesJSON) {
-        setExpenses(JSON.parse(localExpensesJSON));
-      } else {
-        setExpenses([]);
-      }
-      if (localIncomesJSON) {
-        setIncomes(JSON.parse(localIncomesJSON));
-      } else {
-        setIncomes([]);
-      }
-    }
-  }, []);
-
-  const onUpdateItem = (itemId, list, queryData) => {
-    if (!authUser) {
-      if (list === 'Expenses') {
-        const updatedExpenses = expenses.map((item) => {
-          if (item.id === itemId) {
-            return { ...item, ...queryData };
-          }
-          return item;
-        });
-        setExpenses(updatedExpenses);
-        localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
-        return;
-      }
-
-      const updatedIncomes = incomes.map((item) => {
-        if (item.id === itemId) {
-          return { ...queryData };
-        }
-        return item;
-      });
-      setIncomes(updatedIncomes);
-      localStorage.setItem('incomes', JSON.stringify(updatedIncomes));
-    } else {
-      console.log('Update to Database');
+      setCategories(categories);
+    } catch (error) {
+      throw new Error(error.message);
     }
   };
 
-  const onDeleteItem = (itemId, list) => {
-    if (!authUser) {
-      if (list === 'Expenses') {
-        const item = expenses.find((i) => i.id === itemId);
-        const itemIndex = expenses.indexOf(item);
+  const fetchCategoriesLocal = () => {
+    const localCategoriesJSON = localStorage.getItem('categories');
 
-        if (itemIndex > -1) {
-          expenses.splice(itemIndex, 1);
-          setExpenses([...expenses]);
-          localStorage.setItem('expenses', JSON.stringify(expenses));
-        }
-        return;
-      }
-      const item = incomes.find((i) => i.id === itemId);
-      const itemIndex = incomes.indexOf(item);
+    if (localCategoriesJSON) {
+      setCategories(JSON.parse(localCategoriesJSON));
+    }
+  };
 
-      if (itemIndex > -1) {
-        incomes.splice(itemIndex, 1);
-        setIncomes([...incomes]);
-        localStorage.setItem('incomes', JSON.stringify(incomes));
-      }
-    } else {
-      console.log('Delete from Database');
+  useEffect(() => {
+    if (status === 'authenticated') {
+      fetchCategoriesAPI();
+    }
+    if (status === 'unauthenticated' && anonyUser) {
+      fetchCategoriesLocal();
+    }
+  }, []);
+
+  const addCategoryAPI = async (label, type, icon) => {
+    try {
+      const response = await fetch('/api/categories', {
+        method: 'POST',
+        body: JSON.stringify({
+          label: label,
+          type: type,
+          icon: icon,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+      setCategories(data.categories);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  const addCategoryLocal = (label, type, icon) => {
+    localStorage.setItem(
+      'categories',
+      JSON.stringify([
+        ...categories,
+        {
+          id: Date.now(),
+          label: label,
+          type: type,
+          icon: icon,
+        },
+      ])
+    );
+
+    setCategories(JSON.parse(localStorage.getItem('categories')));
+  };
+
+  const addCategoryHandler = (label, type, icon) => {
+    if (status === 'unauthenticated' && anonyUser) {
+      addCategoryLocal(label, type, icon);
+    }
+    if (status === 'authenticated') {
+      addCategoryAPI(label, type, icon);
     }
   };
 
@@ -89,15 +94,19 @@ const FlowLists = () => {
       <FlowList
         list='Expenses'
         queries={expenses}
-        onUpdateItem={onUpdateItem}
-        onDeleteItem={onDeleteItem}
+        categories={categories}
+        onUpdateItem={props.onUpdateItem}
+        onDeleteItem={props.onDeleteItem}
+        onAddCategory={addCategoryHandler}
       />
-      <Balance queries={[expenses, incomes]} />
+      <Balance queries={{ expenses, incomes }} />
       <FlowList
         list='Incomes'
         queries={incomes}
-        onUpdateItem={onUpdateItem}
-        onDeleteItem={onDeleteItem}
+        categories={categories}
+        onUpdateItem={props.onUpdateItem}
+        onDeleteItem={props.onDeleteItem}
+        onAddCategory={addCategoryHandler}
       />
     </div>
   );

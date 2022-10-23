@@ -1,6 +1,6 @@
 import styles from './ProfilePage.module.css';
 import { useState } from 'react';
-import { useAuthUser } from 'context/AuthContext';
+import { useSession } from 'next-auth/react';
 
 import Button from '@/ui/Button';
 import ButtonAlt from '@/ui/ButtonAlt';
@@ -11,10 +11,10 @@ import ChangePassword from './ChangePassword';
 import ChangeCredentials from './ChangeCredentials';
 
 const ProfilePage = (props) => {
-  const [authUser] = useAuthUser();
+  const { data: session, status } = useSession();
 
   const [changeUser, setChangeUser] = useState({
-    user: { ...authUser },
+    user: { ...session.user },
     change: false,
   });
 
@@ -45,14 +45,14 @@ const ProfilePage = (props) => {
     }
 
     setChangeUser({
-      user: { ...authUser },
+      user: { ...session.user },
       change: false,
     });
   };
 
   return (
     <div className={styles.view}>
-      <h2 className={styles.title}>Hello {authUser.name} </h2>
+      <h2 className={styles.title}>Hello {session.user.name} </h2>
       <div className={styles.credentials}>
         <div className={styles.container}>
           <span className={styles.label}>Email:</span>

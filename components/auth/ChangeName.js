@@ -27,7 +27,6 @@ const ChangeName = (props) => {
       change: true,
     });
     props.onClose();
-    console.log(changeUser);
   };
 
   return (

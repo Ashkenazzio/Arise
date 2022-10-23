@@ -47,15 +47,6 @@ const ChangePassword = (props) => {
     <Modal className={styles.container} onClose={props.onClose}>
       <h3 className={styles.title}>Change Password</h3>
       <div className={styles.input}>
-        <i
-          onClick={() => {
-            setShowInput(!showInput);
-          }}
-          className={`fa-solid ${!showInput ? 'fa-eye' : 'fa-eye-slash'} ${
-            styles.reveal
-          }`}
-        ></i>
-
         <FormField
           title='New Password:'
           id='change-password'
