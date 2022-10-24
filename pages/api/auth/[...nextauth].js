@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 
 import CredentialsProvider from 'next-auth/providers/credentials';
-import pool from 'lib/db-connection';
+import pool from 'lib/dbConnection';
 import bcrypt from 'bcryptjs';
 
 export const authOptions = {

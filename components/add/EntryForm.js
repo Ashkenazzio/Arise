@@ -123,7 +123,10 @@ const EntryForm = (props) => {
           id='list'
           info='Choose to add an expense or an income.'
           type='checkbox'
-          onChange={() => setChecked(!checked)}
+          onChange={() => {
+            resetCategoryInput();
+            setChecked(!checked);
+          }}
         />
 
         <FormField

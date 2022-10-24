@@ -13,8 +13,6 @@ const Settings = (props) => {
     <>
       <Head>
         <title>Arise | Settings</title>
-        <meta name='description' content='The Best Budget Tracking App!' />
-        <link rel='shortcut icon' href='public/favicon.ico' />
       </Head>
       <SettingsPage />
     </>

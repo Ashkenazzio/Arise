@@ -1,11 +1,12 @@
-import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useAnonymousUser } from 'context/AnonymousContext';
 import { unstable_getServerSession } from 'next-auth/next';
 import { authOptions } from './api/auth/[...nextauth]';
 
+import Head from 'next/head';
 import FlowLists from '@/flow/FlowLists';
+import { INIT_CATEGORIES } from 'lib/initData';
 
 const Flow = (props) => {
   const { status } = useSession();
@@ -14,8 +15,7 @@ const Flow = (props) => {
 
   const [expenses, setExpenses] = useState(fetchedExpenses);
   const [incomes, setIncomes] = useState(fetchedIncomes);
-
-  // console.log('queries', { expenses, incomes });
+  const [categories, setCategories] = useState(props.categories);
 
   const fetchEntriesLocal = () => {
     const localExpensesJSON = localStorage.getItem('expenses');
@@ -39,52 +39,60 @@ const Flow = (props) => {
     }
   }, [status, anonyUser]);
 
-  const addCategoryAPI = (enteredCategory, list) => {
-    let url = `/api/${list}`;
+  const fetchCategoriesLocal = () => {
+    const localCategoriesJSON = localStorage.getItem('categories');
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({ title: enteredCategory.value, userId: userId }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  };
-
-  const addCategoryLocal = (enteredCategory, list) => {
-    if (list === 'expenses') {
-      localStorage.setItem(
-        'expense-categories',
-        JSON.stringify([
-          ...expenseCategories,
-          { id: Date.now(), title: enteredCategory.value },
-        ])
-      );
-
-      setExpenseCategories(
-        JSON.parse(localStorage.getItem('expense-categories'))
-      );
-    } else {
-      localStorage.setItem(
-        'income-categories',
-        JSON.stringify([
-          ...incomeCategories,
-          { id: Date.now(), title: enteredCategory.value },
-        ])
-      );
-
-      setIncomeCategories(
-        JSON.parse(localStorage.getItem('income-categories'))
-      );
+    if (localCategoriesJSON) {
+      setCategories(JSON.parse(localCategoriesJSON));
     }
   };
 
-  const addCategoryHandler = (enteredCategory, list) => {
+  useEffect(() => {
+    if (status === 'unauthenticated' && anonyUser) {
+      fetchCategoriesLocal();
+    }
+  }, [status, anonyUser]);
+
+  const addCategoryAPI = async (queryData) => {
+    try {
+      const res = await fetch('/api/categories', {
+        method: 'POST',
+        body: JSON.stringify(queryData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const parsedResponse = await res.json();
+      if (res.ok) {
+        setCategories(parsedResponse.data);
+      }
+      console.log(parsedResponse.message);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const addCategoryLocal = (queryData) => {
+    const { label, type, icon } = queryData;
+
+    localStorage.setItem(
+      'categories',
+      JSON.stringify([
+        ...categories,
+        { id: Date.now(), label: label, type: type, icon: icon },
+      ])
+    );
+
+    setCategories(JSON.parse(localStorage.getItem('categories')));
+  };
+
+  const addCategoryHandler = (queryData) => {
     if (status === 'authenticated') {
-      addCategoryAPI(enteredCategory, list);
+      addCategoryAPI(queryData);
     }
     if (status === 'unauthenticated' && anonyUser) {
-      addCategoryLocal(enteredCategory, list);
+      addCategoryLocal(queryData);
     }
   };
 
@@ -150,22 +158,27 @@ const Flow = (props) => {
 
   const deleteItemAPI = async (itemId, list) => {
     let url = `/api/${list}`;
+    try {
+      const res = await fetch(url, {
+        method: 'DELETE',
+        body: JSON.stringify({ itemId }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    const res = await fetch(url, {
-      method: 'DELETE',
-      body: JSON.stringify({ itemId }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const parsedResponse = await res.json();
-
-    if (list === 'expenses') {
-      setExpenses(parsedResponse.data);
-      return;
+      const parsedResponse = await res.json();
+      if (res.ok) {
+        if (list === 'expenses') {
+          setExpenses(parsedResponse.data);
+          return;
+        }
+        setIncomes(parsedResponse.data);
+      }
+      console.log(parsedResponse.message);
+    } catch (error) {
+      console.log(error.message);
     }
-    setIncomes(parsedResponse.data);
   };
 
   const deleteItemLocal = (itemId, list) => {
@@ -211,11 +224,10 @@ const Flow = (props) => {
     <>
       <Head>
         <title>Arise | Flow</title>
-        <meta name='description' content='The Best Budget Tracking App!' />
-        <link rel='shortcut icon' href='public/favicon.ico' />
       </Head>
       <FlowLists
         queries={{ expenses, incomes }}
+        categories={categories}
         onUpdateItem={updateItemHandler}
         onDeleteItem={deleteItemHandler}
         onAddCategory={addCategoryHandler}
@@ -229,6 +241,7 @@ export async function getServerSideProps({ req, res }) {
 
   let fetchedExpenses = [];
   let fetchedIncomes = [];
+  let fetchedCategories = INIT_CATEGORIES;
 
   if (session) {
     try {
@@ -253,11 +266,24 @@ export async function getServerSideProps({ req, res }) {
     } catch (error) {
       throw new Error(error.message);
     }
+
+    try {
+      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`, {
+        headers: {
+          cookie: req.headers.cookie,
+        },
+      });
+
+      fetchedCategories = await res.json();
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
   return {
     props: {
       queries: { fetchedExpenses, fetchedIncomes },
+      categories: fetchedCategories,
     },
   };
 }

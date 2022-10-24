@@ -3,6 +3,7 @@ import { useCurrency } from 'context/CurrencyContext';
 
 const ExpenseCard = (props) => {
   const [currency] = useCurrency();
+  const trend = props.trend;
 
   const categoryIcons = {
     'Eating Out': 'fa-solid fa-utensils',
@@ -33,8 +34,19 @@ const ExpenseCard = (props) => {
           {props.sum.toFixed()}
         </span>
 
-        {props.trend && (
-          <span className={`${styles.trend} icon-before`}>-120%</span>
+        {trend && (
+          <div
+            className={`${styles.trend} ${
+              trend > 0 ? styles.negative : undefined
+            }`}
+          >
+            <span className={styles.change}>{trend.toFixed()}%</span>
+            <i
+              className={`fa-solid ${
+                trend > 0 ? 'fa-arrow-up-long' : 'fa-arrow-down-long'
+              }`}
+            />
+          </div>
         )}
       </div>
     </div>

@@ -25,14 +25,12 @@ const Login = () => {
     <>
       <Head>
         <title>Arise | Login</title>
-        <meta name='description' content='The Best Budget Tracking App!' />
-        <link rel='shortcut icon' href='public/favicon/favicon.ico' />
       </Head>
       <LoginPage onUserLogin={userLoginHandler} />
     </>
   );
 };
 
-export default Login;
-
 Login.getLayout = (page) => page;
+
+export default Login;

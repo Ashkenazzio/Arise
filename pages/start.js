@@ -13,12 +13,6 @@ const GetStarted = (props) => {
     <>
       <Head>
         <title>Arise | Start</title>
-        <meta name='description' content='The Best Budget Tracking App!' />
-        <link
-          rel='icon'
-          type='image/x-icon'
-          href='public/favicon.ico'
-        />
       </Head>
       <Start />
     </>

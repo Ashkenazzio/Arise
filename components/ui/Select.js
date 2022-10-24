@@ -15,7 +15,6 @@ const Select = (props, ref) => {
           !!props.valid && styles.valid
         }`}
         ref={ref}
-        // {...props}
         onChange={onChangeHandler}
       >
         <option className={styles.option} key={0} id={0} value={0}>

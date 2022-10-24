@@ -39,19 +39,25 @@
 }
 
 .trend {
-  margin-top: 0.66em;
   display: flex;
   align-items: center;
   gap: 0.2em;
   font: var(--font-bold);
-  padding: 0.25em;
-  background-color: var(--clr-success-100);
   color: var(--clr-success);
-  border-radius: 0.5em;
   align-self: end;
 }
 
-.trend::after {
-  font-size: 0.75em;
-  content: '\f063';
+.change {
+  background-color: var(--clr-success-100);
+  padding: 0.25em;
+  border-radius: 0.5em;
+}
+
+.negative {
+  color: var(--clr-error);
+}
+
+.negative span {
+  background-color: var(--clr-error-100);
+  color: var(--clr-error);
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState, cloneElement } from 'react';
+import { useEffect, useState, Children, cloneElement } from 'react';
 import { useTheme } from 'context/ThemeContext';
 import { useCurrency } from 'context/CurrencyContext';
 import { useAnonymousUser } from 'context/AnonymousContext';
@@ -46,17 +46,26 @@ function Layout(props) {
   const [title, setTitle] = useState('');
   const [filterElement, setFilterElement] = useState(false);
 
+  const now = new Date();
+  const thisMonth = now.getUTCMonth();
+  const thisYear = now.getUTCFullYear();
+  // const lastFiveYear = now => now.getUTCFullYear()
+
   const filterOpts = [
-    { id: '1', name: 'Today', value: 'today' },
-    { id: '2', name: 'Last 7 days', value: 'last-7' },
-    { id: '3', name: 'Last 30 days', value: 'last-30' },
-    { id: '4', name: 'This Year', value: 'last-y' },
+    { id: 1, name: 'All', value: 0 },
+    { id: 2, name: 'Today', value: 0 },
+    { id: 3, name: 'Last 7 days', value: 6 },
+    { id: 4, name: 'Last 30 days', value: 29 },
+    { id: 5, name: 'Last 90 days', value: 89 },
+    { id: 6, name: 'This Month', value: thisMonth },
+    { id: 7, name: 'This Year', value: thisYear },
+    // { id: 8, name: 'Last 5 Years', value: thisYear },
   ];
 
   const [filter, setFilter] = useState({
-    key: '2',
+    id: 2,
     name: 'Last 7 days',
-    value: 'last-7',
+    value: 6,
   });
 
   return (
@@ -67,9 +76,19 @@ function Layout(props) {
         <div className={styles.container}>
           <div className={styles['top-bar']}>
             <h1 className={styles.title}>{title}</h1>
+            {filterElement && !anonyUser && (
+              <Dropdown
+                className={styles.dropdown}
+                state={[filter, setFilter]}
+                options={filterOpts}
+              />
+            )}
           </div>
-          {cloneElement(props.children, {
-            layout: [setTitle, setFilterElement],
+          {Children.map(props.children, (child) => {
+            return cloneElement(child, {
+              layout: [setTitle, setFilterElement],
+              filter: filter,
+            });
           })}
         </div>
       </main>

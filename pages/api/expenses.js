@@ -1,4 +1,4 @@
-import pool from 'lib/db-connection';
+import pool from 'lib/dbConnection';
 import { unstable_getServerSession } from 'next-auth/next';
 import { authOptions } from './auth/[...nextauth]';
 
@@ -94,7 +94,7 @@ async function handler(req, res) {
       const expenses = await getExpenses(userId);
       res.status(200).json(expenses);
     } catch (error) {
-      res.status(500).json(error);
+      res.status(500).json({ error, message: 'Fetching Failed' });
     }
   }
 
@@ -105,7 +105,7 @@ async function handler(req, res) {
         .status(201)
         .json({ message: 'Expense Stored Successfully', data: expenses });
     } catch (error) {
-      res.status(500).json(error);
+      res.status(500).json({ error, message: 'Adding Failed' });
     }
   }
 
@@ -116,7 +116,7 @@ async function handler(req, res) {
         .status(201)
         .json({ message: 'Expense Updated Successfully', data: expenses });
     } catch (error) {
-      res.status(500).json(error);
+      res.status(500).json({ error, message: 'Updating Failed' });
     }
   }
 
@@ -127,7 +127,7 @@ async function handler(req, res) {
         .status(201)
         .json({ message: 'Expense Deleted Successfully', data: expenses });
     } catch (error) {
-      res.status(500).json(error);
+      res.status(500).json({ error, message: 'Deleting Failed' });
     }
   }
 }

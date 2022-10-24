@@ -42,8 +42,32 @@
 }
 
 .body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
   font: var(--font-body);
   color: var(--clr-body);
+  line-height: 150%;
+}
+
+.category {
+  font: var(--font-bold);
+  color: var(--clr-secondary);
+}
+
+.good {
+  font: var(--font-bold);
+  color: var(--clr-success);
+}
+
+.bad {
+  font: var(--font-bold);
+  color: var(--clr-error);
+}
+
+.advice {
+  font: var(--font-bold);
+  font-size: 1.1rem;
 }
 
 @media (min-width: 75em) {

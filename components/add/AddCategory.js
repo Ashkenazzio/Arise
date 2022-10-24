@@ -15,11 +15,13 @@ const AddCategory = (props) => {
   const addCategoryHandler = (e) => {
     e.preventDefault();
 
-    const label = enteredCategory.value;
-    const type = checked ? 'income' : 'expense';
-    const icon = '💸';
+    const queryData = {
+      label: enteredCategory.value,
+      type: checked ? 'income' : 'expense',
+      icon: '💸',
+    };
 
-    props.onAddCategory(label, type, icon);
+    props.onAddCategory(queryData);
     props.onClose();
   };
 

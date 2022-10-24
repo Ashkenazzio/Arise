@@ -77,25 +77,25 @@ const FlowForm = (props) => {
   } = useInput(() => true);
 
   useEffect(() => {
-    const derivedState = { type: 'update-input', value: '', payload: null };
+    const derivedState = { value: '', payload: null, type: 'update-input' };
 
     const derivedTitle = { ...derivedState, value: props.title };
     const derivedSum = { ...derivedState, value: props.sum.toString() };
     const derivedDate = { ...derivedState, value: props.date };
     const derivedNotes = { ...derivedState, value: props.notes };
     const derivedCategory = {
-      type: 'update-category',
       value: props.category.id.toString(),
       payload: props.category,
+      type: 'update-category',
     };
 
-    // console.log('derived', {
-    //   derivedTitle,
-    //   derivedSum,
-    //   derivedDate,
-    //   derivedNotes,
-    //   derivedCategory,
-    // });
+    console.log('derived', {
+      derivedTitle,
+      derivedSum,
+      derivedDate,
+      derivedNotes,
+      derivedCategory,
+    });
 
     titleChangeHandler(derivedTitle);
     sumChangeHandler(derivedSum);

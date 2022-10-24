@@ -18,7 +18,6 @@ const Register = () => {
 
       const response = await res.json();
 
-
       router.push('/login');
     } catch (error) {
       throw new Error(error.message);
@@ -29,14 +28,13 @@ const Register = () => {
     <>
       <Head>
         <title>Arise | Register</title>
-        <meta name='description' content='The Best Budget Tracking App!' />
-        <link rel='shortcut icon' href='public/favicon.ico' />
       </Head>
       <RegPage onAddUser={addUserHandler} />
     </>
   );
 };
 
+Register.getLayout = (page) => page;
+
 export default Register;
 
-Register.getLayout = (page) => page;

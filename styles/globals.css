@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'Euclid Circular B';
   src: local('Euclid Circular B Medium'), local('EuclidCircularB-Medium'),
-    url('../assets/webfonts/fonts/EuclidCircularB-Medium.woff2') format('woff2'),
-    url('../assets/webfonts/fonts/EuclidCircularB-Medium.woff2') format('woff');
+    url('../public/webfonts/fonts/EuclidCircularB-Medium.woff2') format('woff2'),
+    url('../public/webfonts/fonts/EuclidCircularB-Medium.woff2') format('woff');
   font-weight: 500;
   font-style: normal;
 }
@@ -10,9 +10,9 @@
 @font-face {
   font-family: 'Euclid Circular B';
   src: local('Euclid Circular B SemiBold'), local('EuclidCircularB-SemiBold'),
-    url('../assets/webfonts/fonts/EuclidCircularB-SemiBold.woff2')
+    url('../public/webfonts/fonts/EuclidCircularB-SemiBold.woff2')
       format('woff2'),
-    url('../assets/webfonts/fonts/EuclidCircularB-SemiBold.woff') format('woff');
+    url('../public/webfonts/fonts/EuclidCircularB-SemiBold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
 }
@@ -21,9 +21,9 @@
   font-family: 'Euclid Circular B';
   src: local('Euclid Circular B SemiBold Italic'),
     local('EuclidCircularB-SemiBoldItalic'),
-    url('../assets/webfonts/fonts/EuclidCircularB-SemiBoldItalic.woff2')
+    url('../public/webfonts/fonts/EuclidCircularB-SemiBoldItalic.woff2')
       format('woff2'),
-    url('../assets/webfonts/fonts/EuclidCircularB-SemiBoldItalic.woff')
+    url('../public/webfonts/fonts/EuclidCircularB-SemiBoldItalic.woff')
       format('woff');
   font-weight: 600;
   font-style: italic;
@@ -32,14 +32,14 @@
 @font-face {
   font-family: 'Euclid Circular B';
   src: local('Euclid Circular B Regular'), local('EuclidCircularB-Regular'),
-    url('../assets/webfonts/fonts/EuclidCircularB-Regular.woff2')
+    url('../public/webfonts/fonts/EuclidCircularB-Regular.woff2')
       format('woff2'),
-    url('../assets/webfonts/fonts/EuclidCircularB-Regular.woff') format('woff');
+    url('../public/webfonts/fonts/EuclidCircularB-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
-@import url('../assets/css/font-awesome.all.css');
+@import url('../public/css/font-awesome.all.css');
 
 :root {
   --clr-primary: #ffce00;

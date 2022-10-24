@@ -54,9 +54,13 @@ const AddEntry = (props) => {
         },
       });
 
-      const response = await res.json();
+      const parsedResponse = await res.json();
+      if (res.ok) {
+        console.log(parsedResponse.message);
+      }
+      return;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error.message);
     }
   };
 
@@ -84,50 +88,46 @@ const AddEntry = (props) => {
     }
   };
 
-  const addCategoryAPI = async (label, type, icon) => {
+  const addCategoryAPI = async (queryData) => {
     try {
-      const response = await fetch('/api/categories', {
+      const res = await fetch('/api/categories', {
         method: 'POST',
-        body: JSON.stringify({
-          label: label,
-          type: type,
-          icon: icon,
-        }),
+        body: JSON.stringify(queryData),
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      const data = await response.json();
-      setCategories(data.categories);
+      const parsedResponse = await res.json();
+      if (res.ok) {
+        setCategories(parsedResponse.data);
+      }
+      console.log(parsedResponse.message);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      console.log(error.message);
     }
   };
 
-  const addCategoryLocal = (label, type, icon) => {
+  const addCategoryLocal = (queryData) => {
+    const { label, type, icon } = queryData;
+
     localStorage.setItem(
       'categories',
       JSON.stringify([
         ...categories,
-        {
-          id: Date.now(),
-          label: label,
-          type: type,
-          icon: icon,
-        },
+        { id: Date.now(), label: label, type: type, icon: icon },
       ])
     );
 
     setCategories(JSON.parse(localStorage.getItem('categories')));
   };
 
-  const addCategoryHandler = (label, type, icon) => {
+  const addCategoryHandler = (queryData) => {
     if (status === 'unauthenticated' && anonyUser) {
-      addCategoryLocal(label, type, icon);
+      addCategoryLocal(queryData);
     }
     if (status === 'authenticated') {
-      addCategoryAPI(label, type, icon);
+      addCategoryAPI(queryData);
     }
   };
 
@@ -141,12 +141,6 @@ const AddEntry = (props) => {
     <>
       <Head>
         <title>Arise | Add</title>
-        <meta name='description' content='The Best Budget Tracking App!' />
-        <link
-          rel='shortcut icon'
-          type='image/x-icon'
-          href='public/favicon.ico'
-        />
       </Head>
       <EntryForm
         categories={categories}
