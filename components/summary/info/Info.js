@@ -23,7 +23,7 @@ const Info = (props) => {
     } else {
       setEmpty(false);
     }
-  }, [props.queriesByCategory, notes]);
+  }, [categoriesWithTrend.length, notes]);
 
   const wrapperRef = useRef();
   const railRef = useRef();

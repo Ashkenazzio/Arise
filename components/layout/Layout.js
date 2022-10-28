@@ -29,13 +29,13 @@ function Layout(props) {
     if (anonymous == 'true') {
       setAnonyUser(true);
     }
-  }, []);
+  }, [setAnonyUser]);
 
   useEffect(() => {
     if (status === 'unauthenticated' && !anonyUser) {
       router.push('/login');
     }
-  }, [status, anonyUser]);
+  }, [status, anonyUser, router]);
 
   useEffect(() => {
     const preferences = JSON.parse(localStorage.getItem('preferences'));
@@ -44,7 +44,7 @@ function Layout(props) {
       setDarkTheme(preferences.darkTheme);
       setCurrency(preferences.currency);
     }
-  }, []);
+  }, [setCurrency, setDarkTheme]);
 
   useEffect(() => {
     document.body.setAttribute('dark-theme', darkTheme);

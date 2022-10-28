@@ -47,7 +47,6 @@ const Dropdown = (props) => {
                 className={styles.option}
                 key={option.id}
                 value={option.value}
-                obj={option}
               >
                 {option.name}
               </div>

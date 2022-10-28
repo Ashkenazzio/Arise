@@ -66,6 +66,7 @@ const User = (props) => {
             : userPic
         }
         className={styles.img}
+        alt='user avatar'
         width='50'
         height='50'
       />

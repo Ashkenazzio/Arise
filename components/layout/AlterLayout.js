@@ -2,6 +2,7 @@ import { useTheme } from 'context/ThemeContext';
 import { useEffect } from 'react';
 
 import styles from './Layout.module.css';
+import Image from 'next/image';
 import logo from '@/images/logo.svg';
 
 function AlterLayout(props) {
@@ -13,7 +14,7 @@ function AlterLayout(props) {
     if (preferences) {
       setDarkTheme(preferences.darkTheme);
     }
-  }, []);
+  }, [setDarkTheme]);
 
   useEffect(() => {
     document.body.setAttribute('dark-theme', darkTheme);
@@ -22,7 +23,7 @@ function AlterLayout(props) {
   return (
     <div className={styles.app}>
       <div className={styles.header}>
-        <img className={styles.logo} src={logo.src} alt='logo' />
+        <Image className={styles.logo} src={logo} alt='logo' />
       </div>
       {props.children}
     </div>

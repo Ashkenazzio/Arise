@@ -104,7 +104,7 @@ const Profile = (props) => {
     setTitle('Profile');
     setQueryControl(false);
     setFilter(false);
-  }, []);
+  }, [props.layout]);
 
   return (
     <>

@@ -48,7 +48,7 @@ const Summary = (props) => {
     setTitle('Summary');
     setQueryControl(true);
     setFilter(true);
-  }, []);
+  }, [props.layout]);
 
   const filterData = (filter, list) => {
     if (filter.id <= 5) {

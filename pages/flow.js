@@ -274,7 +274,7 @@ const Flow = (props) => {
     setTitle('Flow');
     setQueryControl(false);
     setFilter(true);
-  }, []);
+  }, [props.layout]);
 
   return (
     <>

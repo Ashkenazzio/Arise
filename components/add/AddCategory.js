@@ -51,6 +51,7 @@ const AddCategory = (props) => {
           id='add-category'
           type='text'
           value={enteredCategory.value}
+          maxLength='32'
           onChange={categoryChangeHandler}
           onBlur={categoryBlurHandler}
           error={categoryInputInvalid ? categoryInputInvalid : undefined}

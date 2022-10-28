@@ -9,7 +9,7 @@ const Settings = (props) => {
     setTitle('Settings');
     setQueryControl(false);
     setFilter(false);
-  }, []);
+  }, [props.layout]);
 
   return (
     <>

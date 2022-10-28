@@ -7,6 +7,7 @@ import logo from '@/images/logo.svg';
 import User from './user/User';
 import ButtonAlt from '@/ui/ButtonAlt';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Header = () => {
   const { data: session, status } = useSession();
@@ -15,7 +16,7 @@ const Header = () => {
 
   return (
     <div className={`${styles.header} ${darkTheme && styles.dark}`}>
-      <img className={styles.logo} src={logo.src} alt='logo' />
+      <Image className={styles.logo} src={logo} alt='logo' />
       {status === 'authenticated' && <User user={session.user} />}
       {status === 'unauthenticated' && (
         <div className={styles.actions}>

@@ -40,6 +40,7 @@ const Credential = (props) => {
           className={styles.img}
           width='50'
           height='50'
+          alt='user avatar'
         />
       )}
       {props.title !== 'Avatar:' && (
@@ -48,7 +49,7 @@ const Credential = (props) => {
 
       {!props.oauth && (
         <Button className={styles.change} onClick={() => setState(!state)}>
-          <i class='fa-solid fa-pen-to-square'></i>
+          <i className='fa-solid fa-pen-to-square'></i>
           <span>CHANGE</span>
         </Button>
       )}

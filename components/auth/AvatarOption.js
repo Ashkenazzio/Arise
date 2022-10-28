@@ -9,7 +9,7 @@ const AvatarOption = (props, ref) => {
   return (
     <div className={styles['avatar-option']}>
       <label htmlFor={avatar}>
-        <Image width='80' height='80' className={styles.badge} src={img} />
+        <Image width='80' height='80' className={styles.badge} src={img} alt='user avatar' />
       </label>
       <input type='radio' name='avatar' ref={ref} id={avatar} value={avatar} />
     </div>

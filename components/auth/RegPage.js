@@ -104,7 +104,7 @@ const RegPage = (props) => {
               title='Name'
               type='text'
               info='Please enter your name.'
-              maxlength='32'
+              maxLength='32'
               value={enteredName.value}
               onChange={nameChangeHandler}
               onBlur={nameBlurHandler}

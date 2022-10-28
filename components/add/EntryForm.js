@@ -111,6 +111,7 @@ const EntryForm = (props) => {
           id='title'
           info='Choose a title.'
           type='text'
+          maxLength='32'
           value={enteredTitle.value}
           onChange={titleChangeHandler}
           onBlur={titleBlurHandler}

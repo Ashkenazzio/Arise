@@ -94,7 +94,14 @@ const FlowForm = (props) => {
     dateChangeHandler(derivedDate);
     categoryChangeHandler(derivedCategory);
     notesChangeHandler(derivedNotes);
-  }, []);
+  }, [
+    titleChangeHandler,
+    sumChangeHandler,
+    dateChangeHandler,
+    categoryChangeHandler,
+    notesChangeHandler,
+    props,
+  ]);
 
   let formIsValid = false;
 
@@ -147,6 +154,7 @@ const FlowForm = (props) => {
         title='Title'
         id='title'
         type='text'
+        maxLength='32'
         placeholder={props.title}
         value={enteredTitle.value}
         onChange={titleChangeHandler}

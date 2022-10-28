@@ -49,7 +49,7 @@ const LoginPage = (props) => {
                 <Button onClick={loginHandler}>Login</Button>
                 <Link href='/register'>
                   <a className={styles.link}>
-                    Don't have an account? Click here to register
+                    Don&apos;t have an account? Click here to register
                   </a>
                 </Link>
               </div>

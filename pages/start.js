@@ -9,7 +9,7 @@ const GetStarted = (props) => {
     setTitle('Start');
     setQueryControl(false);
     setFilter(false);
-  }, []);
+  }, [props.layout]);
 
   return (
     <>

@@ -185,7 +185,7 @@ const AddEntry = (props) => {
     setTitle('Entries');
     setQueryControl(false);
     setFilter(false);
-  }, []);
+  }, [props.layout]);
 
   return (
     <>
