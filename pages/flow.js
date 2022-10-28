@@ -312,9 +312,14 @@ export async function getServerSideProps({ req, res }) {
     message: '',
   };
 
+  const dev = process.env.NEXTAUTH_URL === 'http://localhost:3000';
+  const server = dev
+    ? 'http://localhost:3000'
+    : 'https://arise-mocha.vercel.app';
+
   if (session) {
     try {
-      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/expenses`, {
+      const res = await fetch(`${server}/api/expenses`, {
         headers: {
           cookie: req.headers.cookie,
         },
@@ -335,7 +340,7 @@ export async function getServerSideProps({ req, res }) {
     }
 
     try {
-      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/incomes`, {
+      const res = await fetch(`${server}/api/incomes`, {
         headers: {
           cookie: req.headers.cookie,
         },
@@ -356,7 +361,7 @@ export async function getServerSideProps({ req, res }) {
     }
 
     try {
-      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`, {
+      const res = await fetch(`${server}/api/categories`, {
         headers: {
           cookie: req.headers.cookie,
         },
