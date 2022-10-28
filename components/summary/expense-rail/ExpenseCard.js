@@ -26,21 +26,29 @@ const ExpenseCard = (props) => {
 
   return (
     <div className={styles['expense-card']}>
-      <i className={`${styles.icon} ${chooseIcon()}`}></i>
+      <div className={styles.y}>
+        <i className={`${styles.icon} ${chooseIcon()}`}></i>
+      </div>
       <div className={styles.details}>
         <span className={styles.label}>{props.title}</span>
         <span className={styles.amount}>
           {currency.value}
-          {props.sum.toFixed()}
+          {props.sum.toLocaleString(undefined, {
+            maximumFractionDigits: 0,
+          })}
         </span>
-
         {trend && (
           <div
             className={`${styles.trend} ${
               trend > 0 ? styles.negative : undefined
             }`}
           >
-            <span className={styles.change}>{trend.toFixed()}%</span>
+            <span className={styles.change}>
+              {trend.toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              })}
+              %
+            </span>
             <i
               className={`fa-solid ${
                 trend > 0 ? 'fa-arrow-up-long' : 'fa-arrow-down-long'

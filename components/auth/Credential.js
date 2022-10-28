@@ -3,6 +3,7 @@ import styles from './Credential.module.css';
 import Button from '@/ui/Button';
 import Image from 'next/image';
 
+import userPic from '@/images/profile-pic.svg';
 import bear from '@/images/avatars/bear.svg';
 import cat from '@/images/avatars/cat.svg';
 import dog from '@/images/avatars/dog.svg';
@@ -32,10 +33,10 @@ const Credential = (props) => {
 
   return (
     <div className={styles.container}>
-      <span className={styles.label}>{props.title}</span>{' '}
+      <span className={styles.label}>{props.title}</span>
       {props.title === 'Avatar:' && (
         <Image
-          src={pickAvatar(props.current)}
+          src={props.current ? pickAvatar(props.current) : userPic}
           className={styles.img}
           width='50'
           height='50'
@@ -44,9 +45,13 @@ const Credential = (props) => {
       {props.title !== 'Avatar:' && (
         <span className={styles.current}>{props.current}</span>
       )}
-      <Button className={styles.change} onClick={() => setState(!state)}>
-        CHANGE
-      </Button>
+
+      {!props.oauth && (
+        <Button className={styles.change} onClick={() => setState(!state)}>
+          <i class='fa-solid fa-pen-to-square'></i>
+          <span>CHANGE</span>
+        </Button>
+      )}
     </div>
   );
 };

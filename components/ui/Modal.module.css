@@ -20,7 +20,7 @@
 @keyframes slide-down {
   from {
     opacity: 0;
-    transform: translateY(-3rem);
+    transform: translateY(-1.5rem);
   }
   to {
     opacity: 1;

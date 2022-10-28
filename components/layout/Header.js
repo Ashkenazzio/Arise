@@ -4,7 +4,7 @@ import { useAnonymousUser } from 'context/AnonymousContext';
 
 import styles from './Header.module.css';
 import logo from '@/images/logo.svg';
-import User from './User';
+import User from './user/User';
 import ButtonAlt from '@/ui/ButtonAlt';
 import Link from 'next/link';
 

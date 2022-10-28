@@ -16,9 +16,8 @@ export const authOptions = {
           const [existingUser] = await pool.query(
             `SELECT * FROM users WHERE email='${enteredEmail}'`
           );
-
           if (existingUser.length === 0) {
-            throw new Error('no user found');
+            throw Error('No user with this email has been found');
           }
 
           const passwordsMatch = await bcrypt.compare(
@@ -27,14 +26,11 @@ export const authOptions = {
           );
 
           if (!passwordsMatch) {
-            throw new Error('Could not log in - passwords are not equal!');
+            throw Error('Wrong password - try again!');
           }
-
-          pool.end();
-          console.log('User is authenticated!');
           return existingUser[0];
         } catch (error) {
-          throw new Error(error);
+          throw Error(error.message);
         }
       },
     }),

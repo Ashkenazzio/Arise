@@ -89,14 +89,6 @@ const FlowForm = (props) => {
       type: 'update-category',
     };
 
-    console.log('derived', {
-      derivedTitle,
-      derivedSum,
-      derivedDate,
-      derivedNotes,
-      derivedCategory,
-    });
-
     titleChangeHandler(derivedTitle);
     sumChangeHandler(derivedSum);
     dateChangeHandler(derivedDate);
@@ -132,8 +124,6 @@ const FlowForm = (props) => {
       notes: enteredNotes.value,
     };
 
-    console.log(queryData);
-
     const itemId = props.id;
     const list = props.list === 'Expenses' ? 'expenses' : 'incomes';
     props.onUpdateItem(itemId, list, queryData);
@@ -148,14 +138,6 @@ const FlowForm = (props) => {
     props.onDeleteItem(props.id, list);
   };
 
-  // console.log('entered', {
-  //   enteredTitle,
-  //   enteredSum,
-  //   enteredDate,
-  //   enteredNotes,
-  //   selectedCategory,
-  // });
-
   return (
     <form
       className={`${styles.form} ${props.className}`}
@@ -169,8 +151,8 @@ const FlowForm = (props) => {
         value={enteredTitle.value}
         onChange={titleChangeHandler}
         onBlur={titleBlurHandler}
-        error={titleInputInvalid ? titleInputInvalid : undefined}
-        valid={titleIsValid ? titleIsValid : undefined}
+        error={titleInputInvalid ? 1 : undefined}
+        valid={titleIsValid ? 1 : undefined}
       />
 
       <FormField
@@ -182,8 +164,8 @@ const FlowForm = (props) => {
         value={enteredSum.value}
         onChange={sumChangeHandler}
         onBlur={sumBlurHandler}
-        error={sumInputInvalid ? sumInputInvalid : undefined}
-        valid={sumIsValid ? sumIsValid : undefined}
+        error={sumInputInvalid ? 1 : undefined}
+        valid={sumIsValid ? 1 : undefined}
       />
 
       <FormField
@@ -194,8 +176,8 @@ const FlowForm = (props) => {
         value={enteredDate.value}
         onChange={dateChangeHandler}
         onBlur={dateBlurHandler}
-        error={dateInputInvalid ? dateInputInvalid : undefined}
-        valid={dateIsValid ? dateIsValid : undefined}
+        error={dateInputInvalid ? 1 : undefined}
+        valid={dateIsValid ? 1 : undefined}
       />
 
       <FormField
@@ -209,8 +191,8 @@ const FlowForm = (props) => {
         value={selectedCategory.value}
         onChange={categoryChangeHandler}
         onBlur={categoryBlurHandler}
-        error={categoryInputInvalid ? categoryInputInvalid : undefined}
-        valid={categoryIsValid ? categoryIsValid : undefined}
+        error={categoryInputInvalid ? 1 : undefined}
+        valid={categoryIsValid ? 1 : undefined}
         onAddCategory={categoryModalHandler}
         style={{ backgroundColor: 'var(--clr-light)' }}
       />

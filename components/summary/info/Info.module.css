@@ -33,7 +33,6 @@
   overflow-y: hidden;
   padding: 0.5rem 0;
   scrollbar-width: none;
-  /* position: relative; */
 }
 
 .rail::-webkit-scrollbar {
@@ -63,10 +62,6 @@
   right: 0;
   background: linear-gradient(270deg, rgba(0, 0, 0, 0.15), transparent);
   opacity: 0;
-}
-
-.multiple {
-  opacity: 1;
 }
 
 @media (min-width: 75em) {

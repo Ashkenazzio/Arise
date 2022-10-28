@@ -12,7 +12,6 @@ const ChangePassword = (props) => {
 
   const [changeUser, setChangeUser] = props.change;
 
-  const isNotEmpty = (value) => value?.trim() !== '';
   const eightCharacters = (value) => value?.trim().length >= 8;
 
   const {
@@ -21,9 +20,10 @@ const ChangePassword = (props) => {
     hasError: passwordInputInvalid,
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
-  } = useInput(isNotEmpty && eightCharacters);
+  } = useInput(eightCharacters);
 
-  const isEquelToPassword = (value) => value === enteredPassword.value;
+  const isEquelToPassword = (value) =>
+    value === enteredPassword.value && value?.trim().length >= 8;
 
   const {
     value: confirmPassword,

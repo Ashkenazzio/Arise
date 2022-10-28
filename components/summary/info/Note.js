@@ -28,7 +28,15 @@ const Note = (props) => {
           ) : (
             <span className={styles.good}>decreased</span>
           )}{' '}
-          by {props.category.trend.toFixed()}%!
+          by{' '}
+          <span className={negative ? styles.bad : styles.good}>
+            {Math.abs(
+              props.category.trend.toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              })
+            )}
+            %!
+          </span>
         </span>
         <span className={styles.advice}>
           {negative ? `Be Aware!!` : 'How Nice!'}

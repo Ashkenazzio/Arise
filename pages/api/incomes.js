@@ -9,7 +9,8 @@ async function handler(req, res) {
   if (session) {
     userId = session.user.id;
   } else {
-    return res.status(401).json({
+    res.status(401).send({
+      error: 'unauthenticated user',
       message: 'User not authenticated',
     });
   }
@@ -43,7 +44,7 @@ async function handler(req, res) {
 
       return incomesWithCategory;
     } catch (error) {
-      throw new Error(error);
+      throw Error(error);
     }
   };
 
@@ -59,7 +60,7 @@ async function handler(req, res) {
 
       return getIncomes(userId);
     } catch (error) {
-      throw new Error(error);
+      throw Error(error);
     }
   };
 
@@ -74,7 +75,7 @@ async function handler(req, res) {
 
       return getIncomes(userId);
     } catch (error) {
-      throw new Error(error);
+      throw Error(error);
     }
   };
 
@@ -86,16 +87,19 @@ async function handler(req, res) {
 
       return getIncomes(userId);
     } catch (error) {
-      throw new Error(error);
+      throw Error(error);
     }
   };
 
   if (req.method === 'GET') {
     try {
       const incomes = await getIncomes(userId);
-      res.status(200).json(incomes);
+      res.status(200).send(incomes);
     } catch (error) {
-      res.status(500).json({ error, message: 'Fetching Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... unable to get data from server 🤷🏻‍♂️',
+      });
     }
   }
 
@@ -104,9 +108,12 @@ async function handler(req, res) {
       const incomes = await addIncome(req, userId);
       res
         .status(201)
-        .json({ message: 'Income Stored Successfully', data: incomes });
+        .send({ message: 'Income Added Successfully 👍🏻', data: incomes });
     } catch (error) {
-      res.status(500).json({ error, message: 'Adding Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... adding entry failed 👎🏻',
+      });
     }
   }
 
@@ -115,9 +122,12 @@ async function handler(req, res) {
       const incomes = await updateIncome(req);
       res
         .status(201)
-        .json({ message: 'Income Updated Successfully', data: incomes });
+        .send({ message: 'Income Updated Successfully 👍🏻', data: incomes });
     } catch (error) {
-      res.status(500).json({ error, message: 'Updating Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... updating entry failed 👎🏻',
+      });
     }
   }
 
@@ -126,9 +136,12 @@ async function handler(req, res) {
       const incomes = await deleteIncome(req);
       res
         .status(201)
-        .json({ message: 'Income Deleted Successfully', data: incomes });
+        .send({ message: 'Income Deleted Successfully 👍🏻', data: incomes });
     } catch (error) {
-      res.status(500).json({ error, message: 'Deleting Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... deleting entry failed 👎🏻',
+      });
     }
   }
 }

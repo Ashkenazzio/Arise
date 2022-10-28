@@ -3,10 +3,11 @@ import { useSession } from 'next-auth/react';
 import { useAnonymousUser } from 'context/AnonymousContext';
 import { unstable_getServerSession } from 'next-auth/next';
 import { authOptions } from './api/auth/[...nextauth]';
+import { INIT_CATEGORIES } from 'lib/initData';
 
 import Head from 'next/head';
 import FlowLists from '@/flow/FlowLists';
-import { INIT_CATEGORIES } from 'lib/initData';
+import Prompt from '@/ui/Prompt';
 
 const Flow = (props) => {
   const { status } = useSession();
@@ -16,6 +17,15 @@ const Flow = (props) => {
   const [expenses, setExpenses] = useState(fetchedExpenses);
   const [incomes, setIncomes] = useState(fetchedIncomes);
   const [categories, setCategories] = useState(props.categories);
+  const [prompt, setPrompt] = useState(props.fetchedError);
+
+  const closePromptHandler = () => {
+    setPrompt({
+      res: null,
+      ok: null,
+      message: '',
+    });
+  };
 
   const fetchEntriesLocal = () => {
     const localExpensesJSON = localStorage.getItem('expenses');
@@ -66,10 +76,12 @@ const Flow = (props) => {
       const parsedResponse = await res.json();
       if (res.ok) {
         setCategories(parsedResponse.data);
+        setPrompt({ res: true, ok: true, message: parsedResponse.message });
+      } else {
+        setPrompt({ res: true, ok: false, message: parsedResponse.message });
       }
-      console.log(parsedResponse.message);
     } catch (error) {
-      console.log(error.message);
+      throw Error(error);
     }
   };
 
@@ -85,6 +97,11 @@ const Flow = (props) => {
     );
 
     setCategories(JSON.parse(localStorage.getItem('categories')));
+    setPrompt({
+      res: true,
+      ok: true,
+      message: 'Category Added Successfully 👍🏻',
+    });
   };
 
   const addCategoryHandler = (queryData) => {
@@ -107,20 +124,25 @@ const Flow = (props) => {
           'Content-Type': 'application/json',
         },
       });
-
       const parsedResponse = await res.json();
 
       if (res.ok) {
         if (list === 'expenses') {
           setExpenses(parsedResponse.data);
+          setPrompt({ res: true, ok: true, message: parsedResponse.message });
           return;
         }
         setIncomes(parsedResponse.data);
-        return;
+        setPrompt({ res: true, ok: true, message: parsedResponse.message });
+      } else {
+        setPrompt({
+          res: true,
+          ok: false,
+          message: parsedResponse.message,
+        });
       }
-      console.log(parsedResponse.message);
     } catch (error) {
-      console.log(error.message);
+      throw Error(error);
     }
   };
 
@@ -134,6 +156,12 @@ const Flow = (props) => {
       });
       setExpenses(updatedExpenses);
       localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
+
+      setPrompt({
+        res: true,
+        ok: true,
+        message: 'Item Updated Successfully 👍🏻',
+      });
       return;
     }
 
@@ -145,6 +173,12 @@ const Flow = (props) => {
     });
     setIncomes(updatedIncomes);
     localStorage.setItem('incomes', JSON.stringify(updatedIncomes));
+
+    setPrompt({
+      res: true,
+      ok: true,
+      message: 'Item Updated Successfully 👍🏻',
+    });
   };
 
   const updateItemHandler = (itemId, list, queryData) => {
@@ -171,13 +205,20 @@ const Flow = (props) => {
       if (res.ok) {
         if (list === 'expenses') {
           setExpenses(parsedResponse.data);
+          setPrompt({ res: true, ok: true, message: parsedResponse.message });
           return;
         }
         setIncomes(parsedResponse.data);
+        setPrompt({ res: true, ok: true, message: parsedResponse.message });
+      } else {
+        setPrompt({
+          res: true,
+          ok: false,
+          message: parsedResponse.message,
+        });
       }
-      console.log(parsedResponse.message);
     } catch (error) {
-      console.log(error.message);
+      throw Error(error);
     }
   };
 
@@ -193,8 +234,15 @@ const Flow = (props) => {
         setExpenses([...expenses]);
         localStorage.setItem('expenses', JSON.stringify(expenses));
       }
+
+      setPrompt({
+        res: true,
+        ok: true,
+        message: 'Item Deleted Successfully 👍🏻',
+      });
       return;
     }
+
     const item = incomes.find((i) => i.id === itemId);
     const itemIndex = incomes.indexOf(item);
 
@@ -203,6 +251,12 @@ const Flow = (props) => {
       setIncomes([...incomes]);
       localStorage.setItem('incomes', JSON.stringify(incomes));
     }
+
+    setPrompt({
+      res: true,
+      ok: true,
+      message: 'Item Deleted Successfully 👍🏻',
+    });
   };
 
   const deleteItemHandler = (itemId, list) => {
@@ -215,8 +269,10 @@ const Flow = (props) => {
   };
 
   useEffect(() => {
-    const [setTitle, setFilter] = props.layout;
+    const [setTitle, setFilter, setQueryControl] = props.layout;
+
     setTitle('Flow');
+    setQueryControl(false);
     setFilter(true);
   }, []);
 
@@ -228,10 +284,18 @@ const Flow = (props) => {
       <FlowLists
         queries={{ expenses, incomes }}
         categories={categories}
+        filter={props.filter}
         onUpdateItem={updateItemHandler}
         onDeleteItem={deleteItemHandler}
         onAddCategory={addCategoryHandler}
       />
+      {prompt.res && (
+        <Prompt
+          onClose={closePromptHandler}
+          ok={prompt.ok}
+          message={prompt.message}
+        />
+      )}
     </>
   );
 };
@@ -242,6 +306,11 @@ export async function getServerSideProps({ req, res }) {
   let fetchedExpenses = [];
   let fetchedIncomes = [];
   let fetchedCategories = INIT_CATEGORIES;
+  let fetchedError = {
+    res: null,
+    ok: null,
+    message: '',
+  };
 
   if (session) {
     try {
@@ -250,9 +319,19 @@ export async function getServerSideProps({ req, res }) {
           cookie: req.headers.cookie,
         },
       });
-      fetchedExpenses = await res.json();
+      const parsedResponse = await res.json();
+
+      if (res.ok) {
+        fetchedExpenses = parsedResponse;
+      } else {
+        fetchedError = {
+          res: true,
+          ok: false,
+          message: parsedResponse.message,
+        };
+      }
     } catch (error) {
-      throw new Error(error.message);
+      throw Error(error.message);
     }
 
     try {
@@ -261,10 +340,19 @@ export async function getServerSideProps({ req, res }) {
           cookie: req.headers.cookie,
         },
       });
+      const parsedResponse = await res.json();
 
-      fetchedIncomes = await res.json();
+      if (res.ok) {
+        fetchedIncomes = parsedResponse;
+      } else {
+        fetchedError = {
+          res: true,
+          ok: false,
+          message: parsedResponse.message,
+        };
+      }
     } catch (error) {
-      throw new Error(error.message);
+      throw Error(error.message);
     }
 
     try {
@@ -273,10 +361,19 @@ export async function getServerSideProps({ req, res }) {
           cookie: req.headers.cookie,
         },
       });
+      const parsedResponse = await res.json();
 
-      fetchedCategories = await res.json();
+      if (res.ok) {
+        fetchedCategories = parsedResponse;
+      } else {
+        fetchedError = {
+          res: true,
+          ok: false,
+          message: parsedResponse.message,
+        };
+      }
     } catch (error) {
-      throw new Error(error.message);
+      throw Error(error.message);
     }
   }
 
@@ -284,6 +381,7 @@ export async function getServerSideProps({ req, res }) {
     props: {
       queries: { fetchedExpenses, fetchedIncomes },
       categories: fetchedCategories,
+      fetchedError: fetchedError,
     },
   };
 }

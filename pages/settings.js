@@ -4,8 +4,10 @@ import { useEffect } from 'react';
 
 const Settings = (props) => {
   useEffect(() => {
-    const [setTitle, setFilter] = props.layout;
+    const [setTitle, setFilter, setQueryControl] = props.layout;
+
     setTitle('Settings');
+    setQueryControl(false);
     setFilter(false);
   }, []);
 

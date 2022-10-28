@@ -11,18 +11,15 @@ async function handler(req, res) {
     userId = session.user.id;
   }
 
-  const getUser = async (userId) => {
-    if (!userId) {
-      throw new Error({ message: 'Not authenticated' });
-    }
-
+  const getUser = async () => {
     try {
       const [user] = await pool.query('SELECT * FROM users WHERE id=(?)', [
         userId,
       ]);
-      return user;
+
+      return user[0];
     } catch (error) {
-      throw new Error(error);
+      throw Error(error.message);
     }
   };
 
@@ -34,13 +31,10 @@ async function handler(req, res) {
       !enteredName ||
       !enteredEmail ||
       !enteredPassword ||
-      !enteredAvatar ||
       enteredPassword.trim() < 8 ||
       !enteredEmail.includes('@')
     ) {
-      throw new Error({
-        message: 'Credentials did not pass backend validation',
-      });
+      throw Error('Credentials did not pass validation');
     }
 
     try {
@@ -50,9 +44,7 @@ async function handler(req, res) {
       );
 
       if (existingUser.length !== 0) {
-        throw new Error({
-          message: 'A user with the same email already exists',
-        });
+        throw Error('A user with the same email already exists');
       }
 
       const hashedPassword = await bcrypt.hash(enteredPassword, 12);
@@ -63,28 +55,29 @@ async function handler(req, res) {
         [data]
       );
 
-      return { message: 'User Created Successfully' };
+      const user = await pool.query('SELECT * FROM users WHERE email=(?)', [
+        enteredEmail,
+      ]);
+      return user;
     } catch (error) {
-      throw new Error(error);
+      throw Error(error.message);
     }
   };
 
-  const updateUser = async (req, userId) => {
-    if (!userId) {
-      throw new Error({ message: 'Not authenticated' });
-    }
+  const updateUser = async (req) => {
+    const { id, name, password, avatar } = req.body;
 
-    const { name, password, avatar, userId } = req.body;
-    const data = [name, password, avatar, userId];
-
+    const hashedPassword = await bcrypt.hash(password, 12);
     try {
       await pool.query(
         'UPDATE users SET name = (?), password = (?), avatar = (?) WHERE id = (?)',
-        [name, password, avatar, userId]
+        [name, hashedPassword, avatar, id]
       );
-      res.status(202).console.log('User Updated Successfully');
+
+      const user = await getUser(userId);
+      return user;
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      throw Error(error.message);
     }
   };
 
@@ -94,25 +87,30 @@ async function handler(req, res) {
 
   //     return { message: 'User Deleted Successfully' };
   //   } catch (error) {
-  //     throw new Error(error);
+  //     throw  Error(error);
   //   }
   // };
 
   if (req.method === 'GET') {
     try {
       const user = await getUser(userId);
-      res.status(200).json(user);
+      res.status(200).send(user);
     } catch (error) {
-      res.status(500).json({ error, message: 'Fetching Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... unable to get data from server 🤷🏻‍♂️',
+      });
     }
   }
 
   if (req.method === 'POST') {
     try {
-      const user = await addUser(req, userId);
-      res.status(201).json({ message: 'User Stored Successfully' });
+      const user = await addUser(req);
+      res
+        .status(201)
+        .send({ message: 'User Added Successfully 👍🏻', data: user });
     } catch (error) {
-      res.status(500).json({ error, message: 'Adding Failed' });
+      res.status(500).send({ error, message: error.message });
     }
   }
 
@@ -121,9 +119,12 @@ async function handler(req, res) {
       const user = await updateUser(req);
       res
         .status(201)
-        .json({ message: 'User Updated Successfully', data: user });
+        .send({ message: 'User Updated Successfully 👍🏻', data: user });
     } catch (error) {
-      res.status(500).json({ error, message: 'Updating Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... updating profile failed 👎🏻',
+      });
     }
   }
 
@@ -132,9 +133,9 @@ async function handler(req, res) {
   //       const user = await deleteUser(req);
   //       res
   //         .status(201)
-  //         .json({ message: 'User Deleted Successfully', data: user });
+  //         .send({ message: 'User Deleted Successfully 👍🏻', data: user });
   //     } catch (error) {
-  //       res.status(500).json({ error, message: 'Deleting Failed' });
+  //       res.status(500).send({ error, message: 'Deleting Failed' });
   //     }
   //   }
 }

@@ -5,7 +5,7 @@
   padding: 0.75em 1em;
   font: inherit;
   box-shadow: var(--shadow-inset);
-  outline: none;
+  /* outline: 1px solid currentColor; */
   border: 1px solid transparent;
   background-clip: padding-box;
   position: relative;

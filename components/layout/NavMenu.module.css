@@ -1,13 +1,20 @@
-.nav {
+.wrapper {
   width: 100%;
-  text-align: center;
   position: fixed;
   bottom: 0;
   left: 0;
   display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.nav {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  display: flex;
   gap: 0.5rem;
   background-color: var(--clr-light);
-  z-index: 1;
 }
 
 .nav-routes {
@@ -27,10 +34,28 @@
   display: none;
 }
 
+.credit {
+  background-color: var(--clr-accent);
+  width: 100%;
+  text-align: center;
+  color: var(--clr-body);
+  font: var(--font-small);
+  padding-top: 0.25rem;
+}
+
+.link {
+  font: var(--font-link);
+  font-size: 0.75rem;
+}
+
 @media (min-width: 37.5em) {
 }
 
 @media (min-width: 75em) {
+  .wrapper {
+    position: static;
+  }
+
   .nav {
     position: static;
     flex-direction: column;
@@ -50,5 +75,9 @@
     flex-direction: column;
     width: 100%;
     gap: 0.5rem;
+  }
+
+  .credit {
+    display: none;
   }
 }

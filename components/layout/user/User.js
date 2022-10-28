@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import UserMenu from './UserMenu';
 
+import userPic from '@/images/profile-pic.svg';
 import bear from '@/images/avatars/bear.svg';
 import cat from '@/images/avatars/cat.svg';
 import dog from '@/images/avatars/dog.svg';
@@ -57,7 +58,13 @@ const User = (props) => {
       ref={menuRef}
     >
       <Image
-        src={pickAvatar(user.avatar)}
+        src={
+          user.avatar
+            ? pickAvatar(user.avatar)
+            : user.image
+            ? user.image
+            : userPic
+        }
         className={styles.img}
         width='50'
         height='50'

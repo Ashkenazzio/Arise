@@ -1,14 +1,18 @@
 import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 import styles from './UserMenu.module.css';
 import UserItem from './UserItem';
 
 const UserMenu = (props) => {
   const { status } = useSession();
+  const router = useRouter();
 
   const [open, setOpen] = props.state;
 
   const logoutHandler = () => {
+    router.push('/login');
+
     if (status === 'authenticated') {
       signOut();
     }
@@ -21,11 +25,11 @@ const UserMenu = (props) => {
         className={`${styles.menu} ${open ? styles.active : styles.inactive}`}
         ref={props.ref}
       >
+        <div className={styles.user}>
+          <span className={styles.greetings}>Hello {props.name}!</span>
+          <span className={styles.email}>{props.email}</span>
+        </div>
         <ul className={styles.list}>
-          <div className={styles.greetings}>
-            <span>Hello {props.name}!</span>
-            <span className={styles.email}>{props.email}</span>
-          </div>
           <UserItem
             key='1'
             href='/profile'

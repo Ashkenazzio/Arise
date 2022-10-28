@@ -21,13 +21,13 @@ const Graph = (props) => {
 
 
   const chartDataObj = {
-    labels: props.expensesByCategory.map((item) => {
+    labels: props.queriesByCategory.map((item) => {
       return item.title;
     }),
     datasets: [
       {
         label: 'Expenses',
-        data: props.expensesByCategory.map((item) => {
+        data: props.queriesByCategory.map((item) => {
           return item.sum.toFixed();
         }),
         backgroundColor: [

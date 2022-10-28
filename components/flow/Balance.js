@@ -1,7 +1,7 @@
 import styles from './Balance.module.css';
 
 const Balance = (props) => {
-  const { expenses, incomes } = props.queries;
+  const [expenses, incomes] = props.queries;
 
   let totalIncome = 0;
   let totalExpense = 0;

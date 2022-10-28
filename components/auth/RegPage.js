@@ -48,9 +48,10 @@ const RegPage = (props) => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPasswordInput,
-  } = useInput(isNotEmpty && eightCharacters);
+  } = useInput(eightCharacters);
 
-  const isEquelToPassword = (value) => value === enteredPassword.value;
+  const isEquelToPassword = (value) =>
+    value === enteredPassword.value && value?.trim().length >= 8;
 
   const {
     value: enteredConfirmedPassword,
@@ -71,8 +72,7 @@ const RegPage = (props) => {
     nameIsValid &&
     emailIsValid &&
     passwordIsValid &&
-    confirmedPasswordIsValid &&
-    avatarValue
+    confirmedPasswordIsValid
   ) {
     formIsValid = true;
   }
@@ -104,6 +104,7 @@ const RegPage = (props) => {
               title='Name'
               type='text'
               info='Please enter your name.'
+              maxlength='32'
               value={enteredName.value}
               onChange={nameChangeHandler}
               onBlur={nameBlurHandler}

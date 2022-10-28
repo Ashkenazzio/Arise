@@ -7,11 +7,13 @@
   max-width: 20rem;
   gap: 1.5rem;
   padding: 2rem;
-  background-color: white;
+  background-color: var(--clr-light);
   border: 1px solid var(--clr-accent);
   border-radius: 0.75rem;
   text-align: left;
   position: relative;
+  box-shadow: 0px 0px 8px 4px rgba(160, 160, 160, 0.35);
+  /* background-clip: padding-box; */
 }
 
 .close {

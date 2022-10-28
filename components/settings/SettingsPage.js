@@ -6,7 +6,7 @@ import { useTheme } from 'context/ThemeContext';
 import { useEffect } from 'react';
 
 const SettingsPage = () => {
-  const { darkTheme, toggleTheme, setDarkTheme } = useTheme();
+  const { darkTheme, toggleTheme } = useTheme();
   const [currency, setCurrency] = useCurrency();
 
   const currencyOpts = [

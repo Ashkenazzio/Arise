@@ -9,7 +9,8 @@ async function handler(req, res) {
   if (session) {
     userId = session.user.id;
   } else {
-    return res.status(401).json({
+    res.status(401).send({
+      error: 'unauthenticated user',
       message: 'User not authenticated',
     });
   }
@@ -22,7 +23,7 @@ async function handler(req, res) {
       );
       return categories;
     } catch (error) {
-      throw new Error(error);
+      throw Error(error);
     }
   };
 
@@ -37,7 +38,7 @@ async function handler(req, res) {
 
       return getCategories(userId);
     } catch (error) {
-      throw new Error(error);
+      throw Error(error);
     }
   };
 
@@ -53,7 +54,7 @@ async function handler(req, res) {
 
       return getCategories(userId);
     } catch (error) {
-      throw new Error(error);
+      throw Error(error);
     }
   };
 
@@ -64,16 +65,19 @@ async function handler(req, res) {
 
       return getExpenses(userId);
     } catch (error) {
-      throw new Error(error);
+      throw Error(error);
     }
   };
 
   if (req.method === 'GET') {
     try {
       const categories = await getCategories(userId);
-      res.status(200).json(categories);
+      res.status(200).send(categories);
     } catch (error) {
-      res.status(500).json({ error, message: 'Fetching Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... unable to get data from server 🤷🏻‍♂️',
+      });
     }
   }
 
@@ -82,31 +86,42 @@ async function handler(req, res) {
       const categories = await addCategory(req, userId);
       res
         .status(201)
-        .json({ message: 'Category Stored Successfully', data: categories });
+        .send({ message: 'Category Added Successfully 👍🏻', data: categories });
     } catch (error) {
-      res.status(500).json({ error, message: 'Adding Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... adding category failed 👎🏻',
+      });
     }
   }
 
   if (req.method === 'PATCH') {
     try {
       const categories = await updateCategory(req);
-      res
-        .status(201)
-        .json({ message: 'Category Updated Successfully', data: categories });
+      res.status(201).send({
+        message: 'Category Updated Successfully 👍🏻',
+        data: categories,
+      });
     } catch (error) {
-      res.status(500).json({ error, message: 'Updating Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... updating category failed 👎🏻',
+      });
     }
   }
 
   if (req.method === 'DELETE') {
     try {
       const categories = await deleteCategory(req);
-      res
-        .status(201)
-        .json({ message: 'Category Deleted Successfully', data: categories });
+      res.status(201).send({
+        message: 'Category Deleted Successfully 👍🏻',
+        data: categories,
+      });
     } catch (error) {
-      res.status(500).json({ error, message: 'Deleting Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... deleting category failed 👎🏻',
+      });
     }
   }
 }

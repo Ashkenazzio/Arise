@@ -15,12 +15,12 @@ const FormField = (props, ref) => {
     >
       <label className={styles.label} htmlFor={props.id}>
         {props.title}
+        {props.required && <span className={styles.required}>required</span>}
       </label>
       {props.type === 'checkbox' && <Toggle {...props} ref={ref} />}
       {props.type === 'select' && <Select {...props} ref={ref} />}
       {props.type === 'textarea' && <TextArea {...props} ref={ref} />}
       {props.type === 'password' && <Password {...props} ref={ref} />}
-
       {props.type !== 'textarea' &&
         props.type !== 'select' &&
         props.type !== 'checkbox' &&

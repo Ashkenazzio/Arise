@@ -7,34 +7,46 @@ import { authOptions } from './api/auth/[...nextauth]';
 import Head from 'next/head';
 import SummaryPage from '@/summary/SummaryPage';
 import { getDaysAgoData } from 'lib/dateFilters';
+import Prompt from '@/ui/Prompt';
 
 const Summary = (props) => {
   const { status } = useSession();
   const [anonyUser] = useAnonymousUser();
+  const [prompt, setPrompt] = useState(props.fetchedError);
+
+  const incomeSummary = props.summary;
   const { fetchedExpenses, fetchedIncomes } = props.queries;
-
   const [expenses, setExpenses] = useState(fetchedExpenses);
-  // const [incomes, setIncomes] = useState(fetchedIncomes);
+  const [incomes, setIncomes] = useState(fetchedIncomes);
 
-  const fetchExpensesLocal = () => {
+  const fetchQueriesLocal = () => {
     const localExpensesJSON = localStorage.getItem('expenses');
+    const localIncomesJSON = localStorage.getItem('incomes');
 
     if (localExpensesJSON) {
       setExpenses(JSON.parse(localExpensesJSON));
     } else {
       setExpenses([]);
     }
+
+    if (localIncomesJSON) {
+      setIncomes(JSON.parse(localIncomesJSON));
+    } else {
+      setIncomes([]);
+    }
   };
 
   useEffect(() => {
     if (status === 'unauthenticated' && anonyUser) {
-      fetchExpensesLocal();
+      fetchQueriesLocal();
     }
   }, [status, anonyUser]);
 
   useEffect(() => {
-    const [setTitle, setFilter] = props.layout;
+    const [setTitle, setFilter, setQueryControl] = props.layout;
+
     setTitle('Summary');
+    setQueryControl(true);
     setFilter(true);
   }, []);
 
@@ -52,7 +64,15 @@ const Summary = (props) => {
     props.filter,
     expenses
   );
-  // const [incomeAgoData, incomeCompareData] = filterData(props.filter, incomes);
+  const [incomeAgoData, incomeCompareData] = filterData(props.filter, incomes);
+
+  const closePromptHandler = () => {
+    setPrompt({
+      res: null,
+      ok: null,
+      message: '',
+    });
+  };
 
   return (
     <>
@@ -60,9 +80,23 @@ const Summary = (props) => {
         <title>Arise | Summary</title>
       </Head>
       <SummaryPage
-        expenses={[expenseAgoData, expenseCompareData]}
-        // incomes={[incomeAgoData, incomeCompareData]}
+        queries={
+          !incomeSummary
+            ? props.filter.id
+              ? [expenseAgoData, expenseCompareData]
+              : [expenses]
+            : props.filter.id
+            ? [incomeAgoData, incomeCompareData]
+            : [incomes]
+        }
       />
+      {prompt.res && (
+        <Prompt
+          onClose={closePromptHandler}
+          ok={prompt.ok}
+          message={prompt.message}
+        />
+      )}
     </>
   );
 };
@@ -72,6 +106,11 @@ export async function getServerSideProps({ req, res }) {
 
   let fetchedExpenses = [];
   let fetchedIncomes = [];
+  let fetchedError = {
+    res: null,
+    ok: null,
+    message: '',
+  };
 
   if (session) {
     try {
@@ -80,9 +119,19 @@ export async function getServerSideProps({ req, res }) {
           cookie: req.headers.cookie,
         },
       });
-      fetchedExpenses = await res.json();
+      const parsedResponse = await res.json();
+
+      if (res.ok) {
+        fetchedExpenses = parsedResponse;
+      } else {
+        fetchedError = {
+          res: true,
+          ok: false,
+          message: parsedResponse.message,
+        };
+      }
     } catch (error) {
-      throw new Error(error.message);
+      throw Error(error.message);
     }
 
     try {
@@ -91,16 +140,26 @@ export async function getServerSideProps({ req, res }) {
           cookie: req.headers.cookie,
         },
       });
+      const parsedResponse = await res.json();
 
-      fetchedIncomes = await res.json();
+      if (res.ok) {
+        fetchedIncomes = parsedResponse;
+      } else {
+        fetchedError = {
+          res: true,
+          ok: false,
+          message: parsedResponse.message,
+        };
+      }
     } catch (error) {
-      throw new Error(error.message);
+      throw Error(error.message);
     }
   }
 
   return {
     props: {
       queries: { fetchedExpenses, fetchedIncomes },
+      fetchedError: fetchedError,
     },
   };
 }

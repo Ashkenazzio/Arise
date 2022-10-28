@@ -114,8 +114,9 @@ const EntryForm = (props) => {
           value={enteredTitle.value}
           onChange={titleChangeHandler}
           onBlur={titleBlurHandler}
-          error={titleInputInvalid ? titleInputInvalid : undefined}
-          valid={titleIsValid ? titleIsValid : undefined}
+          error={titleInputInvalid ? 1 : undefined}
+          valid={titleIsValid ? 1 : undefined}
+          required
         />
 
         <FormField
@@ -138,8 +139,9 @@ const EntryForm = (props) => {
           value={enteredSum.value}
           onChange={sumChangeHandler}
           onBlur={sumBlurHandler}
-          error={sumInputInvalid ? sumInputInvalid : undefined}
-          valid={sumIsValid ? sumIsValid : undefined}
+          error={sumInputInvalid ? 1 : undefined}
+          valid={sumIsValid ? 1 : undefined}
+          required
         />
 
         <FormField
@@ -150,8 +152,9 @@ const EntryForm = (props) => {
           value={enteredDate.value}
           onChange={dateChangeHandler}
           onBlur={dateBlurHandler}
-          error={dateInputInvalid ? dateInputInvalid : undefined}
-          valid={dateIsValid ? dateIsValid : undefined}
+          error={dateInputInvalid ? 1 : undefined}
+          valid={dateIsValid ? 1 : undefined}
+          required
         />
 
         <FormField
@@ -163,13 +166,14 @@ const EntryForm = (props) => {
           value={selectedCategory.value}
           onChange={categoryChangeHandler}
           onBlur={categoryBlurHandler}
-          error={categoryInputInvalid ? categoryInputInvalid : undefined}
-          valid={categoryIsValid ? categoryIsValid : undefined}
+          error={categoryInputInvalid ? 1 : undefined}
+          valid={categoryIsValid ? 1 : undefined}
           onAddCategory={categoryModalHandler}
+          required
         />
 
         <FormField
-          title='Notes (Optional)'
+          title='Notes'
           id='notes'
           info='Add additional information if you have any.'
           type='textarea'

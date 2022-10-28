@@ -7,9 +7,7 @@ import Button from '@/ui/Button';
 import ButtonAlt from '@/ui/ButtonAlt';
 
 const ChangeCredentials = (props) => {
-  const [authUser] = useAuthUser();
-
-  const isConfirmPassword = (value) => value === authUser.password;
+  const eightCharacters = (value) => value;
 
   const {
     value: enteredConfirm,
@@ -17,14 +15,12 @@ const ChangeCredentials = (props) => {
     hasError: confirmInputInvalid,
     valueChangeHandler: confirmChangeHandler,
     inputBlurHandler: confirmBlurHandler,
-  } = useInput(isConfirmPassword);
+  } = useInput(eightCharacters);
 
   const changeCredentialsHandler = (e) => {
     e.preventDefault();
 
-    props.onChangeCredential();
-    props.onClose();
-    props.reset();
+    props.onChangeCredential(enteredConfirm.value, props.changeUser.user);
   };
 
   return (
@@ -35,14 +31,23 @@ const ChangeCredentials = (props) => {
           title='Password:'
           info='Please enter your current password to confirm changes.'
           id='confirm-changes'
-          type='text'
+          type='password'
           value={enteredConfirm.value}
           onChange={confirmChangeHandler}
           onBlur={confirmBlurHandler}
-          error={confirmInputInvalid ? confirmInputInvalid : undefined}
+          error={
+            props.feedback
+              ? props.feedback
+              : confirmInputInvalid
+              ? confirmInputInvalid
+              : undefined
+          }
           valid={confirmIsValid ? confirmIsValid : undefined}
         />
       </div>
+      {props.feedback && (
+        <div className={styles.feedback}>{props.feedback}</div>
+      )}
       <div className={styles.actions}>
         <ButtonAlt onClick={props.onClose}>BACK</ButtonAlt>
         <Button disabled={!confirmIsValid} onClick={changeCredentialsHandler}>

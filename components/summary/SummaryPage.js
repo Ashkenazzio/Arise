@@ -9,31 +9,27 @@ import { DUMMY_QUERIES } from 'lib/initData';
 import Link from 'next/link';
 
 const SummaryPage = (props) => {
-  const [expenses, expenseCompares] = props.expenses;
-  // const [incomes, incomeCompares] = props.incomes;
+  const [queries, queryCompares] = props.queries;
   const [empty, setEmpty] = useState(false);
 
   useEffect(() => {
-    if (expenses.length === 0) {
+    if (queries.length === 0) {
       setEmpty(true);
     } else {
       setEmpty(false);
     }
-  }, [expenses]);
+  }, [queries]);
 
-  const expensesTotalByCategory = queryTotalByCategory(expenses);
-  const expenseComparesTotalByCategory = queryTotalByCategory(expenseCompares);
-  const expensesByCategoryWithTrend = getTrend(
-    expenseComparesTotalByCategory,
-    expensesTotalByCategory
-  );
+  const queriesTotalByCategory = queryTotalByCategory(queries);
+  let queriesByCategoryWithTrend;
 
-  // const incomesTotalByCategory = queryTotalByCategory(incomes);
-  // const incomeComparesTotalByCategory = queryTotalByCategory(incomeCompares);F
-  // const incomesByCategoryWithTrend = getTrend(
-  //   incomeComparesTotalByCategory,
-  //   incomesTotalByCategory
-  // );
+  if (queryCompares) {
+    const queryComparesTotalByCategory = queryTotalByCategory(queryCompares);
+    queriesByCategoryWithTrend = getTrend(
+      queryComparesTotalByCategory,
+      queriesTotalByCategory
+    );
+  }
 
   return (
     <div className={styles.view}>
@@ -49,28 +45,25 @@ const SummaryPage = (props) => {
         </div>
       )}
       <ExpenseRail
-        expensesByCategory={
-          empty ? DUMMY_QUERIES.expenses.array : expensesByCategoryWithTrend
+        queriesByCategory={
+          empty
+            ? DUMMY_QUERIES
+            : queriesByCategoryWithTrend
+            ? queriesByCategoryWithTrend
+            : queriesTotalByCategory
         }
-        // incomesByCategory={
-        //   empty ? DUMMY_QUERIES.expenses.array : incomesByCategoryWithTrend
-        // }
       />
       <Graph
-        expensesByCategory={
-          empty ? DUMMY_QUERIES.expenses.array : expensesTotalByCategory
-        }
-        // incomesByCategory={
-        //   empty ? DUMMY_QUERIES.expenses.array : incomesTotalByCategory
-        // }
+        queriesByCategory={empty ? DUMMY_QUERIES : queriesTotalByCategory}
       />
       <Info
-        expensesByCategory={
-          empty ? DUMMY_QUERIES.expenses.array : expensesByCategoryWithTrend
+        queriesByCategory={
+          empty
+            ? DUMMY_QUERIES
+            : queriesByCategoryWithTrend
+            ? queriesByCategoryWithTrend
+            : queriesTotalByCategory
         }
-        // incomesByCategory={
-        //   empty ? DUMMY_QUERIES.expenses.array : incomesByCategoryWithTrend
-        // }
       />
     </div>
   );

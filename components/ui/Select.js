@@ -16,6 +16,7 @@ const Select = (props, ref) => {
         }`}
         ref={ref}
         onChange={onChangeHandler}
+        value={props.value}
       >
         <option className={styles.option} key={0} id={0} value={0}>
           Choose a category...

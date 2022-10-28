@@ -1,27 +1,18 @@
-import styles from './ProfilePage.module.css';
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
 
+import styles from './ProfilePage.module.css';
 import Button from '@/ui/Button';
 import ButtonAlt from '@/ui/ButtonAlt';
 import Credential from './Credential';
 import ChangeAvatar from './ChangeAvatar';
 import ChangeName from './ChangeName';
 import ChangePassword from './ChangePassword';
-import ChangeCredentials from './ChangeCredentials';
 
 const ProfilePage = (props) => {
-  const { data: session, status } = useSession();
-
-  const [changeUser, setChangeUser] = useState({
-    user: { ...session.user },
-    change: false,
-  });
-
+  const [changeUser, setChangeUser] = props.changeUser;
   const [nameModal, setNameModal] = useState(false);
   const [avatarModal, setAvatarModal] = useState(false);
   const [passwordModal, setPasswordModal] = useState(false);
-  const [credentialsModal, setCredentialsModal] = useState(false);
 
   const nameModalHandler = () => {
     setNameModal(!nameModal);
@@ -35,24 +26,17 @@ const ProfilePage = (props) => {
     setPasswordModal(!passwordModal);
   };
 
-  const credentialsModalHandler = () => {
-    setCredentialsModal(!credentialsModal);
-  };
-
-  const resetHandler = (event) => {
-    if (event) {
-      event.preventDefault();
-    }
-
-    setChangeUser({
-      user: { ...session.user },
-      change: false,
-    });
-  };
+  if (!props.user) {
+    return (
+      <div className={styles.view}>
+        <p>You have to be signed in to view the profile page.</p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.view}>
-      <h2 className={styles.title}>Hello {session.user.name} </h2>
+      <h2 className={styles.title}>Hello {props.user.name} </h2>
       <div className={styles.credentials}>
         <div className={styles.container}>
           <span className={styles.label}>Email:</span>
@@ -63,6 +47,7 @@ const ProfilePage = (props) => {
           title='Name:'
           current={changeUser.user.name}
           state={[nameModal, setNameModal]}
+          oauth={props.user.image}
         />
         {nameModal && (
           <ChangeName
@@ -75,6 +60,7 @@ const ProfilePage = (props) => {
           title='Avatar:'
           current={changeUser.user.avatar}
           state={[avatarModal, setAvatarModal]}
+          oauth={props.user.image}
         />
         {avatarModal && (
           <ChangeAvatar
@@ -87,6 +73,7 @@ const ProfilePage = (props) => {
           title='Password:'
           current='********'
           state={[passwordModal, setPasswordModal]}
+          oauth={props.user.image}
         />
         {passwordModal && (
           <ChangePassword
@@ -97,18 +84,24 @@ const ProfilePage = (props) => {
       </div>
 
       <div className={styles.actions}>
-        <ButtonAlt onClick={resetHandler}>CLEAR CHANGES</ButtonAlt>
-        <Button onClick={credentialsModalHandler} disabled={!changeUser.change}>
-          SAVE CHANGES
-        </Button>
+        {props.user.image && (
+          <h3>
+            Users authenticated using a third-party login cannot edit their
+            profile{' '}
+          </h3>
+        )}
+        {!props.user.image && (
+          <>
+            <ButtonAlt onClick={props.onReset}>CLEAR CHANGES</ButtonAlt>
+            <Button
+              onClick={props.credentialsModalHandler}
+              disabled={!changeUser.change}
+            >
+              SAVE CHANGES
+            </Button>
+          </>
+        )}
       </div>
-      {credentialsModal && (
-        <ChangeCredentials
-          onClose={credentialsModalHandler}
-          onChangeCredential={props.onChangeCredential}
-          reset={resetHandler}
-        />
-      )}
     </div>
   );
 };

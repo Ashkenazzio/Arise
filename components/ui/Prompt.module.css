@@ -1,0 +1,54 @@
+.backdrop {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  z-index: 998;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+  background-color: var(--clr-light);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-box);
+  padding: 1.5rem;
+  outline: 2px solid var(--clr-success-700);
+  z-index: 999;
+  animation: slide-down 300ms ease-out forwards;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font: var(--font-bold);
+}
+
+.content h2 {
+  text-align: center;
+}
+
+.error {
+  outline: 2px solid var(--clr-error-700);
+}
+
+.btn {
+  background-color: var(--clr-success);
+}
+
+.btn-error {
+  background-color: var(--clr-error);
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

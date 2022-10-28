@@ -5,24 +5,42 @@ import { INIT_CATEGORIES } from 'lib/initData';
 
 import Head from 'next/head';
 import EntryForm from 'components/add/EntryForm';
-import Modal from '@/ui/Modal';
+import Prompt from '@/ui/Prompt';
 
 const AddEntry = (props) => {
   const { status } = useSession();
   const [anonyUser] = useAnonymousUser();
   const [categories, setCategories] = useState(INIT_CATEGORIES);
+  const [prompt, setPrompt] = useState({
+    res: null,
+    ok: null,
+    message: '',
+  });
+
+  const closePromptHandler = () => {
+    setPrompt({
+      res: null,
+      ok: null,
+      message: '',
+    });
+  };
 
   const fetchCategoriesAPI = async () => {
     try {
       const res = await fetch('/api/categories');
+      const parsedResponse = await res.json();
+
       if (res.ok) {
-        const data = await res.json();
-        setCategories(data);
+        setCategories(parsedResponse);
       } else {
-        //handle bad response
+        setPrompt({
+          res: true,
+          ok: false,
+          message: parsedResponse.message,
+        });
       }
     } catch (error) {
-      throw new Error(error.message);
+      throw Error(error);
     }
   };
 
@@ -53,14 +71,23 @@ const AddEntry = (props) => {
           'Content-Type': 'application/json',
         },
       });
-
       const parsedResponse = await res.json();
+
       if (res.ok) {
-        console.log(parsedResponse.message);
+        setPrompt({
+          res: true,
+          ok: true,
+          message: parsedResponse.message,
+        });
+      } else {
+        setPrompt({
+          res: true,
+          ok: false,
+          message: parsedResponse.message,
+        });
       }
-      return;
     } catch (error) {
-      console.log(error.message);
+      throw Error(error.message);
     }
   };
 
@@ -71,12 +98,26 @@ const AddEntry = (props) => {
         queryList,
         JSON.stringify([{ id: Date.now(), ...queryData }])
       );
-      return;
+      setPrompt({
+        res: true,
+        ok: true,
+        message: `${
+          queryList === 'expenses' ? 'Expense' : 'Income'
+        } Stored Successfully 👍🏻`,
+      });
     }
     const parsedJSON = JSON.parse(currentLocalJSON);
 
     parsedJSON.push({ id: Date.now(), ...queryData });
     localStorage.setItem(queryList, JSON.stringify(parsedJSON));
+
+    setPrompt({
+      res: true,
+      ok: true,
+      message: `${
+        queryList === 'expenses' ? 'Expense' : 'Income'
+      } Added Successfully 👍🏻`,
+    });
   };
 
   const addItemHandler = (queryData, queryList) => {
@@ -101,10 +142,12 @@ const AddEntry = (props) => {
       const parsedResponse = await res.json();
       if (res.ok) {
         setCategories(parsedResponse.data);
+        setPrompt({ res: true, ok: true, message: parsedResponse.message });
+      } else {
+        setPrompt({ res: true, ok: false, message: parsedResponse.message });
       }
-      console.log(parsedResponse.message);
     } catch (error) {
-      console.log(error.message);
+      throw Error(error);
     }
   };
 
@@ -120,6 +163,11 @@ const AddEntry = (props) => {
     );
 
     setCategories(JSON.parse(localStorage.getItem('categories')));
+    setPrompt({
+      res: true,
+      ok: true,
+      message: 'Category Added Successfully 👍🏻',
+    });
   };
 
   const addCategoryHandler = (queryData) => {
@@ -132,10 +180,12 @@ const AddEntry = (props) => {
   };
 
   useEffect(() => {
-    const [setTitle, setFilter] = props.layout;
+    const [setTitle, setFilter, setQueryControl] = props.layout;
+
     setTitle('Entries');
+    setQueryControl(false);
     setFilter(false);
-  }, [props.layout]);
+  }, []);
 
   return (
     <>
@@ -147,6 +197,13 @@ const AddEntry = (props) => {
         onAddItem={addItemHandler}
         onAddCategory={addCategoryHandler}
       />
+      {prompt.res && (
+        <Prompt
+          onClose={closePromptHandler}
+          ok={prompt.ok}
+          message={prompt.message}
+        />
+      )}
     </>
   );
 };

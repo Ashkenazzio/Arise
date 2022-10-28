@@ -9,8 +9,9 @@ async function handler(req, res) {
   if (session) {
     userId = session.user.id;
   } else {
-    return res.status(401).json({
-      message: 'User not authenticated',
+    res.status(401).send({
+      error: 'unauthenticated user',
+      message: 'User not authenticated ',
     });
   }
 
@@ -43,7 +44,7 @@ async function handler(req, res) {
       });
       return expensesWithCategory;
     } catch (error) {
-      throw new Error(error);
+      throw Error(error);
     }
   };
 
@@ -59,7 +60,7 @@ async function handler(req, res) {
 
       return getExpenses(userId);
     } catch (error) {
-      throw new Error(error);
+      throw Error(error);
     }
   };
 
@@ -73,7 +74,7 @@ async function handler(req, res) {
       );
       return getExpenses(userId);
     } catch (error) {
-      throw new Error(error);
+      throw Error(error);
     }
   };
 
@@ -85,16 +86,19 @@ async function handler(req, res) {
 
       return getExpenses(userId);
     } catch (error) {
-      throw new Error(error);
+      throw Error(error);
     }
   };
 
   if (req.method === 'GET') {
     try {
       const expenses = await getExpenses(userId);
-      res.status(200).json(expenses);
+      res.status(200).send(expenses);
     } catch (error) {
-      res.status(500).json({ error, message: 'Fetching Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... unable to get data from server 🤷🏻‍♂️',
+      });
     }
   }
 
@@ -103,9 +107,12 @@ async function handler(req, res) {
       const expenses = await addExpense(req, userId);
       res
         .status(201)
-        .json({ message: 'Expense Stored Successfully', data: expenses });
+        .send({ message: 'Expense Added Successfully 👍🏻', data: expenses });
     } catch (error) {
-      res.status(500).json({ error, message: 'Adding Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... adding entry failed 👎🏻',
+      });
     }
   }
 
@@ -114,9 +121,12 @@ async function handler(req, res) {
       const expenses = await updateExpense(req);
       res
         .status(201)
-        .json({ message: 'Expense Updated Successfully', data: expenses });
+        .send({ message: 'Expense Updated Successfully 👍🏻', data: expenses });
     } catch (error) {
-      res.status(500).json({ error, message: 'Updating Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... updating entry failed 👎🏻',
+      });
     }
   }
 
@@ -125,9 +135,12 @@ async function handler(req, res) {
       const expenses = await deleteExpense(req);
       res
         .status(201)
-        .json({ message: 'Expense Deleted Successfully', data: expenses });
+        .send({ message: 'Expense Deleted Successfully 👍🏻', data: expenses });
     } catch (error) {
-      res.status(500).json({ error, message: 'Deleting Failed' });
+      res.status(500).send({
+        error,
+        message: 'Something went wrong... deleting entry failed 👎🏻',
+      });
     }
   }
 }

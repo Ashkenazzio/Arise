@@ -17,10 +17,6 @@
   height: clamp(4rem, 4vw, 6rem);
 }
 
-.logo {
-  cursor: pointer;
-}
-
 .main {
   display: grid;
   grid-template-columns: 1fr;
@@ -49,6 +45,7 @@
   justify-content: space-between;
   align-items: flex-end;
   padding: 0 0em 1em 0.5em;
+  gap: 0.5rem;
 }
 
 div.dropdown {
@@ -59,7 +56,7 @@ div.dropdown {
   background-color: transparent;
   color: var(--clr-dark);
   font-size: 1.33rem;
-  z-index: 10;
+  z-index: 100;
   box-shadow: none;
 }
 
@@ -74,9 +71,13 @@ div.dropdown {
   text-align: right;
   color: var(--clr-body);
   font: var(--font-small);
-
-  /* position: absolute; */
+  position: absolute;
   bottom: 0;
+}
+
+.link {
+  font: var(--font-link);
+  font-size: 0.75rem;
 }
 
 @media (min-width: 37.5em) {
@@ -90,15 +91,5 @@ div.dropdown {
     padding: min(2rem, 1.66vw);
     grid-template-columns: 22% 1fr;
     height: 100%;
-  }
-
-  .credit {
-    width: 100%;
-    padding: 0.5rem 1rem;
-    text-align: right;
-    color: var(--clr-body);
-    font: var(--font-small);
-    /* position: absolute; */
-    bottom: 0;
   }
 }

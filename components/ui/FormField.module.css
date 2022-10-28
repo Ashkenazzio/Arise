@@ -6,9 +6,26 @@
 }
 
 .label {
+  display: flex;
+  gap: 0.25em;
+  align-items: flex-end;
   width: 100%;
   font: var(--font-body);
   color: var(--clr-dark);
+}
+
+.required {
+  margin-left: auto;
+  font: var(--font-small);
+  font-size: 0.75rem;
+  color: var(--clr-error-700);
+}
+
+.optional {
+  margin-left: auto;
+  font: var(--font-small);
+  font-size: 0.75rem;
+  color: var(--clr-secondary-700);
 }
 
 .info {

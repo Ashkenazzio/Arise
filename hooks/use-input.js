@@ -15,7 +15,6 @@ const useInput = (validateValue) => {
   const valueChangeHandler = (e) => {
     if (e.type === 'select-one') {
       const state = { value: e.value, payload: e.payload };
-      // console.log('state from select-one', state);
       setEnteredValue(state);
       return;
     }
@@ -28,7 +27,6 @@ const useInput = (validateValue) => {
 
     if (e.type === 'update-category') {
       const state = { value: e.value, payload: e.payload };
-      // console.log('state from update-category', state);
       setEnteredValue(state);
       return;
     }

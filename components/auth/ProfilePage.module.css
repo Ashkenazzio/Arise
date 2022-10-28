@@ -24,6 +24,7 @@
 .title {
   font: var(--font-h2);
   color: var(--clr-secondary);
+  text-transform: capitalize;
 }
 
 .credentials {
