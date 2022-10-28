@@ -24,6 +24,8 @@ async function handler(req, res) {
       `SELECT * FROM users WHERE email='${userEmail}'`
     );
 
+    pool.end();
+
     const passwordsMatch = await bcrypt.compare(
       enteredPassword,
       existingUser[0].password

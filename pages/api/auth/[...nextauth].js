@@ -16,6 +16,9 @@ export const authOptions = {
           const [existingUser] = await pool.query(
             `SELECT * FROM users WHERE email='${enteredEmail}'`
           );
+
+          pool.end();
+
           if (existingUser.length === 0) {
             throw Error('No user with this email has been found');
           }

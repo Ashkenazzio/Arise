@@ -17,6 +17,7 @@ async function handler(req, res) {
         userId,
       ]);
 
+      pool.end();
       return user[0];
     } catch (error) {
       throw Error(error.message);
@@ -55,10 +56,12 @@ async function handler(req, res) {
         [data]
       );
 
-      const user = await pool.query('SELECT * FROM users WHERE email=(?)', [
+      const [user] = await pool.query('SELECT * FROM users WHERE email=(?)', [
         enteredEmail,
       ]);
-      return user;
+
+      pool.end();
+      return user[0];
     } catch (error) {
       throw Error(error.message);
     }
@@ -74,6 +77,7 @@ async function handler(req, res) {
         [name, hashedPassword, avatar, id]
       );
 
+      pool.end();
       const user = await getUser(userId);
       return user;
     } catch (error) {
@@ -84,6 +88,8 @@ async function handler(req, res) {
   // const deleteUser = async (userId) => {
   //   try {
   //     await pool.query('DELETE FROM users WHERE id = (?)', [userId]);
+
+  //     pool.end();
 
   //     return { message: 'User Deleted Successfully' };
   //   } catch (error) {
