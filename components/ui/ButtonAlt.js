@@ -1,6 +1,5 @@
-import styles from './Button.module.css';
-import Button from './Button';
 import { forwardRef } from 'react';
+import styles from './Button.module.css';
 
 const ButtonAlt = (props, ref) => {
   return (

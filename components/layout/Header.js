@@ -21,10 +21,10 @@ const Header = () => {
       {status === 'unauthenticated' && (
         <div className={styles.actions}>
           <Link href={'/login'}>
-            <ButtonAlt>Login</ButtonAlt>
+            <ButtonAlt>login</ButtonAlt>
           </Link>
           <Link href={'/register'}>
-            <ButtonAlt>Register</ButtonAlt>
+            <ButtonAlt>register</ButtonAlt>
           </Link>
         </div>
       )}

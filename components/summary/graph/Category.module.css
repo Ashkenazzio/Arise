@@ -1,0 +1,27 @@
+.category {
+  display: flex;
+  gap: 0.5rem;
+  font: var(--font-body);
+  color: var(--clr-body);
+  align-items: center;
+  cursor: pointer;
+  transition: 300ms ease;
+}
+
+.category::before {
+  content: '';
+  width: 0.75em;
+  height: 0.75em;
+  background-color: currentColor;
+  border-radius: 100vmax;
+  transition: 300ms ease;
+}
+
+.crossed {
+  text-decoration: line-through;
+}
+
+.crossed::before {
+  background-color: transparent;
+  border: solid 0.5px currentColor;
+}

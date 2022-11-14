@@ -1,0 +1,7 @@
+.loader {
+  width: 0.5rem;
+  height: 0.5rem;
+  margin: 2rem auto;
+  border-radius: 100vmax;
+  background: var(--clr-body);
+}

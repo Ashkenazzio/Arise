@@ -6,7 +6,7 @@ const GetStarted = (props) => {
   useEffect(() => {
     const [setTitle, setFilter, setQueryControl] = props.layout;
 
-    setTitle('Start');
+    setTitle('');
     setQueryControl(false);
     setFilter(false);
   }, [props.layout]);

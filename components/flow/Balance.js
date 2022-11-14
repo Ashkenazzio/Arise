@@ -1,3 +1,6 @@
+import { motion } from 'framer-motion';
+import { balanceContainerVars, balanceVars } from 'lib/framer-variants';
+
 import styles from './Balance.module.css';
 
 const Balance = (props) => {
@@ -31,7 +34,8 @@ const Balance = (props) => {
   };
 
   return (
-    <div
+    <motion.div
+      variants={balanceContainerVars}
       className={styles.container}
       style={{
         color: isNegative ? 'var(--clr-error)' : 'var(--clr-success)',
@@ -47,15 +51,18 @@ const Balance = (props) => {
           ></div>
         </div>
       </div>
-      <div className={styles['balance-container']}>
+      <motion.div
+        variants={balanceVars}
+        className={styles['balance-container']}
+      >
         <span className={styles.balance}>
           {balance !== 0 && isNegative ? '-' : '+'}
           {Math.abs(balance).toLocaleString(undefined, {
             maximumFractionDigits: 0,
           })}
         </span>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

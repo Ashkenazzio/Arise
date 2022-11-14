@@ -39,7 +39,6 @@ async function handler(req, res) {
           },
           notes: income.notes,
         };
-        pool.end();
         return withCategory;
       });
 
@@ -59,7 +58,6 @@ async function handler(req, res) {
         [data]
       );
 
-      pool.end();
       return getIncomes(userId);
     } catch (error) {
       throw Error(error);
@@ -75,7 +73,6 @@ async function handler(req, res) {
         [title, sum, date, category.id, notes, itemId]
       );
 
-      pool.end();
       return getIncomes(userId);
     } catch (error) {
       throw Error(error);
@@ -88,7 +85,6 @@ async function handler(req, res) {
     try {
       await pool.query('DELETE FROM incomes WHERE id = (?)', [itemId]);
 
-      pool.end();
       return getIncomes(userId);
     } catch (error) {
       throw Error(error);

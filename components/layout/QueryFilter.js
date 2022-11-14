@@ -3,7 +3,7 @@ import styles from './QueryFilter.module.css';
 const QueryFilter = (props) => {
   const [incomes, setIncomes] = props.summary;
   return (
-    <div
+    <button
       onClick={() => setIncomes(!incomes)}
       className={`${styles.container} ${incomes ? styles.changed : null}`}
     >
@@ -15,7 +15,7 @@ const QueryFilter = (props) => {
           Incomes
         </span>
       </div>
-    </div>
+    </button>
   );
 };
 

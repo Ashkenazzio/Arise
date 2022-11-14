@@ -28,10 +28,9 @@
 .rail {
   height: 100%;
   display: flex;
-  gap: 1rem;
-  overflow-x: scroll;
+  gap: 1.5rem;
+  overflow-x: auto;
   overflow-y: hidden;
-  padding: 0.5rem 0;
   scrollbar-width: none;
 }
 
@@ -43,25 +42,34 @@
   font: var(--font-bold);
   font-size: 1.25rem;
   text-align: center;
+  width: 100%;
 }
 
 .shadow {
   position: absolute;
-  z-index: 100;
-  width: 1rem;
+  z-index: 2;
   height: 100%;
+  max-width: 20vw;
 }
 
-.shadow--top {
+.shadow-top {
   left: 0;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.15), transparent);
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.22) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
   opacity: 0;
 }
 
-.shadow--bottom {
+.shadow-bottom {
   right: 0;
-  background: linear-gradient(270deg, rgba(0, 0, 0, 0.15), transparent);
-  opacity: 0;
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.22) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  height: var(--info-scroll-shadow-bottom-height);
 }
 
 @media (min-width: 75em) {
@@ -71,23 +79,37 @@
 
   .rail {
     flex-direction: column;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
   }
 
   .shadow {
+    position: absolute;
+    z-index: 2;
+    height: auto;
+    max-width: auto;
     width: 100%;
-    height: 1rem;
+    max-height: 20vw;
   }
 
-  .shadow--top {
+  .shadow-top {
     top: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), transparent);
-    opacity: 0;
+    left: auto;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.22) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 
-  .shadow--bottom {
+  .shadow-bottom {
     bottom: 0;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.15), transparent);
+    right: auto;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.22) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    height: var(--info-scroll-shadow-bottom-height);
   }
 }

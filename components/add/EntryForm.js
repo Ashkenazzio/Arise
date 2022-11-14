@@ -1,11 +1,13 @@
-import styles from './EntryForm.module.css';
 import { useState } from 'react';
 import useInput from 'hooks/use-input';
+import { motion } from 'framer-motion';
 
+import styles from './EntryForm.module.css';
 import Button from '@/ui/Button';
 import ButtonAlt from '@/ui/ButtonAlt';
 import FormField from '@/ui/FormField';
 import AddCategory from './AddCategory';
+import { entryFormVars, formFieldVars } from 'lib/framer-variants';
 
 const stringIsNotEmpty = (value) => value?.trim() !== '';
 const numIsNotZero = (value) => value !== '' && value !== 0;
@@ -101,9 +103,8 @@ const EntryForm = (props) => {
     props.onAddItem(queryData, enteredList);
     resetHandler();
   };
-
   return (
-    <div className={styles.view}>
+    <motion.div variants={entryFormVars} className={styles.view}>
       <h2 className={styles.heading}>Add a new entry</h2>
       <form className={styles.form}>
         <FormField
@@ -181,12 +182,12 @@ const EntryForm = (props) => {
           value={enteredNotes.value}
           onChange={notesChangeHandler}
         />
-        <div className={styles.actions}>
-          <ButtonAlt onClick={resetHandler}>CLEAR</ButtonAlt>
+        <motion.div variants={formFieldVars} className={styles.actions}>
+          <ButtonAlt onClick={resetHandler}>clear</ButtonAlt>
           <Button disabled={!formIsValid} onClick={submitHandler}>
-            ADD
+            add
           </Button>
-        </div>
+        </motion.div>
         {addCategory && (
           <AddCategory
             onClose={categoryModalHandler}
@@ -194,7 +195,7 @@ const EntryForm = (props) => {
           />
         )}
       </form>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,12 +1,14 @@
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import { signOut, useSession } from 'next-auth/react';
+import { motion } from 'framer-motion';
 
 import FormField from '@/ui/FormField';
 import Button from '@/ui/Button';
 import ButtonAlt from '@/ui/ButtonAlt';
 import Link from 'next/link';
 import styles from './LoginPage.module.css';
+import { formFieldVars, loginVars } from 'lib/framer-variants';
 
 const LoginPage = (props) => {
   const { status } = useSession();
@@ -37,22 +39,22 @@ const LoginPage = (props) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.login}>
+    <>
+      <motion.section variants={loginVars} className={styles.login}>
         {status === 'unauthenticated' && (
           <>
             <h1 className={styles.title}>Login</h1>
             <form className={styles.form}>
               <FormField title='Email' type='email' ref={emailRef} />
               <FormField title='Password' type='password' ref={passwordRef} />
-              <div className={styles.actions}>
+              <motion.div variants={formFieldVars} className={styles.actions}>
                 <Button onClick={loginHandler}>Login</Button>
                 <Link href='/register'>
                   <a className={styles.link}>
                     Don&apos;t have an account? Click here to register
                   </a>
                 </Link>
-              </div>
+              </motion.div>
             </form>
           </>
         )}
@@ -60,19 +62,19 @@ const LoginPage = (props) => {
           <div className={styles.actions}>
             <h2>Looks like your already logged in!</h2>
             <Link href={'/start'}>
-              <Button className={styles.back}>BACK TO APP</Button>
+              <Button className={styles.back}>back to app</Button>
             </Link>
-            <ButtonAlt onClick={logoutHandler}>Logout</ButtonAlt>
+            <ButtonAlt onClick={logoutHandler}>logout</ButtonAlt>
           </div>
         )}
-      </div>
+      </motion.section>
 
       {status === 'unauthenticated' && (
         <ButtonAlt onClick={proceedAnonHandler}>
           Proceed without logging in
         </ButtonAlt>
       )}
-    </div>
+    </>
   );
 };
 

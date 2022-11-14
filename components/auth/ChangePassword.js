@@ -72,12 +72,12 @@ const ChangePassword = (props) => {
         />
       </div>
       <div className={styles.actions}>
-        <ButtonAlt onClick={props.onClose}>CANCEL</ButtonAlt>
+        <ButtonAlt onClick={props.onClose}>cancel</ButtonAlt>
         <Button
           disabled={!passwordIsValid || !confirmIsValid}
           onClick={changePasswordHandler}
         >
-          CHANGE
+          change
         </Button>
       </div>
     </Modal>

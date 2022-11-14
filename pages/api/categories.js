@@ -22,7 +22,6 @@ async function handler(req, res) {
         [userId]
       );
 
-      pool.end();
       return categories;
     } catch (error) {
       throw Error(error);
@@ -38,7 +37,6 @@ async function handler(req, res) {
         [data]
       );
 
-      pool.end();
       return getCategories(userId);
     } catch (error) {
       throw Error(error);
@@ -55,7 +53,6 @@ async function handler(req, res) {
         [label, type, icon, categoryId]
       );
 
-      pool.end();
       return getCategories(userId);
     } catch (error) {
       throw Error(error);
@@ -67,7 +64,6 @@ async function handler(req, res) {
     try {
       await pool.query('DELETE FROM categories WHERE id = (?)', [categoryId]);
 
-      pool.end();
       return getExpenses(userId);
     } catch (error) {
       throw Error(error);

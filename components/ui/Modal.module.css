@@ -5,16 +5,17 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
-  z-index: 10;
-  background-color: rgba(0, 0, 0, 0.33);
+  z-index: 1001;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal {
   background-color: var(--clr-light);
   border-radius: 1rem;
   box-shadow: var(--shadow-box);
-  z-index: 11;
+  z-index: 1002;
   animation: slide-down 300ms ease-out forwards;
+  margin-inline: 1rem;
 }
 
 @keyframes slide-down {

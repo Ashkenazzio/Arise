@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useAnonymousUser } from 'context/AnonymousContext';
-import { INIT_CATEGORIES } from 'lib/initData';
+import { INIT_CATEGORIES } from 'lib/utilities/initData';
 
 import Head from 'next/head';
 import EntryForm from 'components/add/EntryForm';

@@ -3,7 +3,8 @@ import { useSession } from 'next-auth/react';
 import { useAnonymousUser } from 'context/AnonymousContext';
 import { unstable_getServerSession } from 'next-auth/next';
 import { authOptions } from './api/auth/[...nextauth]';
-import { INIT_CATEGORIES } from 'lib/initData';
+import { INIT_CATEGORIES } from 'lib/utilities/initData';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import Head from 'next/head';
 import FlowLists from '@/flow/FlowLists';
@@ -289,13 +290,15 @@ const Flow = (props) => {
         onDeleteItem={deleteItemHandler}
         onAddCategory={addCategoryHandler}
       />
-      {prompt.res && (
-        <Prompt
-          onClose={closePromptHandler}
-          ok={prompt.ok}
-          message={prompt.message}
-        />
-      )}
+      <AnimatePresence>
+        {prompt.res && (
+          <Prompt
+            onClose={closePromptHandler}
+            ok={prompt.ok}
+            message={prompt.message}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };
@@ -313,9 +316,7 @@ export async function getServerSideProps({ req, res }) {
   };
 
   const dev = process.env.NEXTAUTH_URL === 'http://localhost:3000';
-  const server = dev
-    ? 'http://localhost:3000'
-    : 'https://arise-mocha.vercel.app';
+  const server = dev ? 'http://localhost:3000' : process.env.NEXTAUTH_URL;
 
   if (session) {
     try {

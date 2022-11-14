@@ -11,9 +11,9 @@ const DeletePrompt = (props) => {
           Are You Sure You Want To Delete This Entry?
         </h3>
         <div className={styles.actions}>
-          <Button onClick={props.onClose}>NO</Button>
+          <Button onClick={props.onClose}>no</Button>
           <Button className={styles.delete} onClick={props.onDelete}>
-            YES
+            yes
           </Button>
         </div>
       </div>

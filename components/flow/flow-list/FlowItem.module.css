@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  width: 100%;
+  background-color: var(--clr-accent);
+  color: var(--clr-dark);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font: var(--font-body);
+  cursor: pointer;
+  transition: all 300ms ease-out;
+}
+
+.container::before {
+  content: attr(icon);
+  color: var(--clr-error);
+  font-size: 1.5em;
+  margin-right: 0.5rem;
+}
+
+.container[icon='+']::before {
+  color: var(--clr-success);
+}
+
+.container.open {
+  padding: 1rem;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.sum {
+  display: flex;
+  justify-content: flex-end;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.hide {
+  visibility: hidden;
+  max-height: 0;
+}
+
+.show {
+  visibility: visible;
+  max-height: auto;
+}

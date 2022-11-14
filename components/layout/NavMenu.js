@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 
 import styles from './NavMenu.module.css';
 import NavItem from './NavItem';
-import Link from 'next/link';
 
 const NavMenu = () => {
   const { status } = useSession();
@@ -12,16 +11,18 @@ const NavMenu = () => {
   const logoutHandler = () => {
     router.push('/login');
 
-    if (status === 'authenticated') {
-      signOut();
-    }
-    localStorage.setItem('arise-anonymous', false);
+    setTimeout(() => {
+      if (status === 'authenticated') {
+        signOut();
+      }
+      localStorage.setItem('arise-anonymous', false);
+    }, 5);
   };
 
   return (
-    <div className={styles.wrapper}>
-      <ul className={styles.nav}>
-        <div className={styles['nav-routes']}>
+    <aside className={styles.wrapper}>
+      <nav className={styles.nav}>
+        <ul className={styles['nav-routes']}>
           <NavItem
             href='/start'
             title='Get Started'
@@ -38,8 +39,8 @@ const NavMenu = () => {
             title='Summary'
             icon={String.fromCharCode(0xf200)}
           />
-        </div>
-        <div className={styles['nav-actions']}>
+        </ul>
+        <ul className={styles['nav-actions']}>
           <NavItem
             href='/settings'
             title='Settings'
@@ -50,15 +51,9 @@ const NavMenu = () => {
             title='Logout'
             icon={String.fromCharCode(0xf2f5)}
           />
-        </div>
-      </ul>
-      <footer className={styles.credit}>
-        Designed and developed by{' '}
-        <Link href={'https://ashkenazzio.github.io'}>
-          <span className={styles.link}>Omri Ashkenazi </span>
-        </Link>
-      </footer>
-    </div>
+        </ul>
+      </nav>
+    </aside>
   );
 };
 

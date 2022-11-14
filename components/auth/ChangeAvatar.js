@@ -54,8 +54,8 @@ const ChangeAvatar = (props) => {
         </div>
       </div>
       <div className={styles.actions}>
-        <ButtonAlt onClick={props.onClose}>CANCEL</ButtonAlt>
-        <Button onClick={changeAvatarHandler}>CHANGE</Button>
+        <ButtonAlt onClick={props.onClose}>cancel</ButtonAlt>
+        <Button onClick={changeAvatarHandler}>change</Button>
       </div>
     </Modal>
   );

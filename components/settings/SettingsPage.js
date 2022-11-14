@@ -1,9 +1,12 @@
-import Dropdown from '@/ui/Dropdown';
-import DarkToggle from '@/ui/DarkToggle';
-import styles from './SettingsPage.module.css';
 import { useCurrency } from 'context/CurrencyContext';
 import { useTheme } from 'context/ThemeContext';
 import { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { settingsVars } from 'lib/framer-variants';
+
+import Dropdown from '@/ui/Dropdown';
+import DarkToggle from '@/ui/DarkToggle';
+import styles from './SettingsPage.module.css';
 
 const SettingsPage = () => {
   const { darkTheme, toggleTheme } = useTheme();
@@ -26,7 +29,7 @@ const SettingsPage = () => {
   }, [darkTheme, currency]);
 
   return (
-    <div className={styles.view}>
+    <motion.div variants={settingsVars} className={styles.view}>
       <div className={styles.setting}>
         <span className={styles.label}>Dark Mode:</span>
         <DarkToggle
@@ -44,7 +47,7 @@ const SettingsPage = () => {
           value={currency}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,6 +1,6 @@
 {
   "name": "arise",
-  "version": "0.1.0",
+  "version": "0.9.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,14 +11,15 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "chart.js": "^3.9.1",
-    "d3": "^7.6.1",
+    "chartjs-plugin-datalabels": "^2.1.0",
+    "chartjs-plugin-deferred": "^2.0.0",
+    "framer-motion": "^7.6.4",
     "mysql2": "^2.3.3",
     "next": "12.2.4",
     "next-auth": "^4.14.0",
     "react": "18.2.0",
     "react-chartjs-2": "^4.3.1",
-    "react-dom": "18.2.0",
-    "react-query": "^3.39.2"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "eslint": "8.21.0",

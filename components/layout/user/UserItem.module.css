@@ -18,7 +18,7 @@
 .item:hover {
   transform: scale(1.05);
   background-color: var(--clr-secondary-700);
-  color: var(--clr-light);
+  color: white;
 }
 
 .item[icon=''] {
@@ -27,6 +27,6 @@
 }
 
 .item[icon='']:hover {
-  color: var(--clr-light);
+  color: white;
   background-color: var(--clr-error-700);
 }

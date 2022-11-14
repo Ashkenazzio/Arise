@@ -1,12 +1,10 @@
 .view {
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
   height: 100%;
   min-height: 0;
-  /* background-color: var(--clr-light); */
-  /* box-shadow: var(--shadow-box); */
   border-radius: 1rem;
-  /* padding: 1rem; */
   gap: 1rem;
   position: relative;
 }
@@ -27,8 +25,7 @@
   left: 0;
   background-color: rgba(0, 0, 0, 0.75);
   border-radius: 1rem;
-  z-index: 11;
-  /* pointer-events: none; */
+  z-index: 15;
 }
 
 .message {
@@ -37,9 +34,10 @@
   background-color: rgba(0, 0, 0, 0.8);
   padding: 1.5em;
   border-radius: 1rem;
-  color: var(--clr-light);
-  outline: 1px solid var(--clr-light);
+  color: white;
+  outline: 1px solid white;
   text-align: center;
+  line-height: 150%;
 }
 
 .message h3 {
@@ -50,8 +48,8 @@
 }
 
 .message p {
-  color: var(--clr-accent);
-  margin-bottom: 0.5rem;
+  color: white;
+  margin-bottom: 2rem;
 }
 
 .link {

@@ -5,7 +5,7 @@
   font: var(--font-button);
   padding: 0.75em 1.5em;
   background-color: var(--clr-secondary);
-  color: var(--clr-light);
+  color: white;
   border-radius: 0.5em;
   transition: transform 150ms ease;
   position: relative;
@@ -13,6 +13,7 @@
   outline: none;
   border: none;
   box-shadow: var(--shadow-inner);
+  text-transform: capitalize;
 }
 
 .btn-alt {

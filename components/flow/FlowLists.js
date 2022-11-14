@@ -1,8 +1,10 @@
-import { getDaysAgoData } from 'lib/dateFilters';
+import { getDaysAgoData } from 'lib/utilities/dateFilters';
+import { motion } from 'framer-motion';
 
 import styles from './FlowLists.module.css';
-import FlowList from './FlowList';
+import FlowList from './flow-list/FlowList';
 import Balance from './Balance';
+import { flowPageVars } from 'lib/framer-variants';
 
 const FlowLists = (props) => {
   const { expenses, incomes } = props.queries;
@@ -19,9 +21,8 @@ const FlowLists = (props) => {
 
   const [expenseAgoData] = filterData(props.filter, expenses);
   const [incomeAgoData] = filterData(props.filter, incomes);
-
   return (
-    <div className={styles.view}>
+    <motion.div variants={flowPageVars} className={styles.view}>
       <FlowList
         list='Expenses'
         queries={props.filter.id ? expenseAgoData : expenses}
@@ -45,7 +46,7 @@ const FlowLists = (props) => {
         onDeleteItem={props.onDeleteItem}
         onAddCategory={props.onAddCategory}
       />
-    </div>
+    </motion.div>
   );
 };
 

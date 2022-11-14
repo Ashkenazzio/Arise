@@ -7,10 +7,11 @@
   padding: 0.5rem;
   color: var(--clr-subtle);
   border-radius: 0.5rem;
-  font: var(--font-subtitle);
+  font: var(--font-h3);
   font-size: clamp(0.75rem, 1.25vw, 1.5rem);
   transition: all 400ms ease;
   cursor: pointer;
+  --clr-dark: #0e0e2c;
 }
 
 .item::before {
@@ -35,16 +36,16 @@
 }
 
 .item[icon='']:hover {
-  color: var(--clr-light);
+  color: white;
   background-color: var(--clr-error-700);
 }
 
 .item[icon='']:hover::before {
-  color: var(--clr-light);
+  color: white;
 }
 
 .item.active {
-  color: var(--clr-light);
+  color: white;
   background-color: var(--clr-secondary);
 }
 
@@ -73,6 +74,7 @@
     padding: 1em 0.75em;
     background-color: var(--clr-accent);
     transition: all 400ms ease;
+    min-width: 16rem;
   }
 
   .item::before {

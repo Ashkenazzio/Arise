@@ -49,9 +49,9 @@ const ChangeCredentials = (props) => {
         <div className={styles.feedback}>{props.feedback}</div>
       )}
       <div className={styles.actions}>
-        <ButtonAlt onClick={props.onClose}>BACK</ButtonAlt>
+        <ButtonAlt onClick={props.onClose}>back</ButtonAlt>
         <Button disabled={!confirmIsValid} onClick={changeCredentialsHandler}>
-          CONFIRM CHANGES
+          confirm changes
         </Button>
       </div>
     </Modal>

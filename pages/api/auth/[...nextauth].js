@@ -1,5 +1,4 @@
 import NextAuth from 'next-auth';
-
 import CredentialsProvider from 'next-auth/providers/credentials';
 import pool from 'lib/dbConnection';
 import bcrypt from 'bcryptjs';
@@ -16,8 +15,6 @@ export const authOptions = {
           const [existingUser] = await pool.query(
             `SELECT * FROM users WHERE email='${enteredEmail}'`
           );
-
-          pool.end();
 
           if (existingUser.length === 0) {
             throw Error('No user with this email has been found');

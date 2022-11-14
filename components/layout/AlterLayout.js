@@ -1,11 +1,24 @@
 import { useTheme } from 'context/ThemeContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Router } from 'next/router';
 
 import styles from './Layout.module.css';
 import Image from 'next/image';
 import logo from '@/images/logo.svg';
+import Loader from '@/ui/Loader';
 
 function AlterLayout(props) {
+  const [loading, setLoading] = useState(false);
+
+  Router.events.on('routeChangeStart', (url) => {
+    setLoading(true);
+  });
+
+  Router.events.on('routeChangeComplete', (url) => {
+    setLoading(false);
+  });
+
   const { darkTheme, setDarkTheme } = useTheme();
 
   useEffect(() => {
@@ -21,12 +34,22 @@ function AlterLayout(props) {
   }, [darkTheme]);
 
   return (
-    <div className={styles.app}>
-      <div className={styles.header}>
-        <Image className={styles.logo} src={logo} alt='logo' />
-      </div>
-      {props.children}
-    </div>
+    <AnimatePresence>
+      <motion.div
+        initial='hidden'
+        animate='enter'
+        exit='hidden'
+        className={styles.app}
+      >
+        <header className={styles.header}>
+          <Image className={styles.logo} src={logo} alt='logo' />
+        </header>
+        <div className={styles['alt-container']}>
+          {loading && <Loader />}
+          {!loading && props.children}
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 

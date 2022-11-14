@@ -6,7 +6,7 @@ import { authOptions } from './api/auth/[...nextauth]';
 
 import Head from 'next/head';
 import SummaryPage from '@/summary/SummaryPage';
-import { getDaysAgoData } from 'lib/dateFilters';
+import { getDaysAgoData } from 'lib/utilities/dateFilters';
 import Prompt from '@/ui/Prompt';
 
 const Summary = (props) => {
@@ -50,7 +50,7 @@ const Summary = (props) => {
     setFilter(true);
   }, [props.layout]);
 
-  const filterData = (filter, list) => {
+  const filterData = (list, filter) => {
     if (filter.id <= 5) {
       return getDaysAgoData(list, filter.value);
     }
@@ -61,10 +61,11 @@ const Summary = (props) => {
   };
 
   const [expenseAgoData, expenseCompareData] = filterData(
-    props.filter,
-    expenses
+    expenses,
+    props.filter
   );
-  const [incomeAgoData, incomeCompareData] = filterData(props.filter, incomes);
+
+  const [incomeAgoData, incomeCompareData] = filterData(incomes, props.filter);
 
   const closePromptHandler = () => {
     setPrompt({
@@ -89,6 +90,7 @@ const Summary = (props) => {
             ? [incomeAgoData, incomeCompareData]
             : [incomes]
         }
+        list={incomeSummary ? 'Incomes' : 'Expenses'}
       />
       {prompt.res && (
         <Prompt

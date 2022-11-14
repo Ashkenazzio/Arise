@@ -50,7 +50,7 @@ const Credential = (props) => {
       {!props.oauth && (
         <Button className={styles.change} onClick={() => setState(!state)}>
           <i className='fa-solid fa-pen-to-square'></i>
-          <span>CHANGE</span>
+          <span>change</span>
         </Button>
       )}
     </div>

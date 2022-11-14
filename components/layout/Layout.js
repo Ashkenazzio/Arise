@@ -3,14 +3,16 @@ import { useTheme } from 'context/ThemeContext';
 import { useCurrency } from 'context/CurrencyContext';
 import { useAnonymousUser } from 'context/AnonymousContext';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import styles from './Layout.module.css';
 import Header from './Header';
 import NavMenu from './NavMenu';
 import Dropdown from '@/ui/Dropdown';
 import QueryFilter from './QueryFilter';
-import Link from 'next/link';
+import { mainContainerVars } from 'lib/framer-variants';
+import Loader from '@/ui/Loader';
 
 function Layout(props) {
   const [anonyUser, setAnonyUser] = useAnonymousUser();
@@ -23,6 +25,15 @@ function Layout(props) {
   const [filterElement, setFilterElement] = useState(false);
   const [queryControl, setQueryControl] = useState(false);
   const [incomeSummary, setIncomeSummary] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  Router.events.on('routeChangeStart', (url) => {
+    setLoading(true);
+  });
+
+  Router.events.on('routeChangeComplete', (url) => {
+    setLoading(false);
+  });
 
   useEffect(() => {
     const anonymous = localStorage.getItem('arise-anonymous');
@@ -71,37 +82,53 @@ function Layout(props) {
   return (
     <div className={styles.app}>
       <Header />
-      <main className={styles.main}>
-        <NavMenu />
-        <div className={styles.container}>
-          <div className={styles['top-bar']}>
-            <h1 className={styles.title}>{title}</h1>
-            {queryControl && (
-              <QueryFilter summary={[incomeSummary, setIncomeSummary]} />
-            )}
-            {filterElement && (
-              <Dropdown
-                className={styles.dropdown}
-                state={[filter, setFilter]}
-                options={filterOpts}
-              />
-            )}
-          </div>
-          {Children.map(props.children, (child) => {
-            return cloneElement(child, {
-              layout: [setTitle, setFilterElement, setQueryControl],
-              filter: filter,
-              control: queryControl,
-              summary: incomeSummary,
-            });
-          })}
-        </div>
-      </main>
+      <AnimatePresence>
+        <motion.main
+          variants={mainContainerVars}
+          initial='hidden'
+          animate='enter'
+          exit='hidden'
+          className={styles.main}
+        >
+          <NavMenu />
+          <section className={styles.container}>
+            <header className={styles['top-bar']}>
+              <h1 className={styles.title}>{title}</h1>
+              <div className={styles.controls}>
+                {queryControl && (
+                  <QueryFilter summary={[incomeSummary, setIncomeSummary]} />
+                )}
+                {filterElement && (
+                  <Dropdown
+                    className={styles.dropdown}
+                    state={[filter, setFilter]}
+                    options={filterOpts}
+                  />
+                )}
+              </div>
+            </header>
+            {loading && <Loader />}
+            {!loading &&
+              Children.map(props.children, (child) => {
+                return cloneElement(child, {
+                  layout: [setTitle, setFilterElement, setQueryControl],
+                  filter: filter,
+                  control: queryControl,
+                  summary: incomeSummary,
+                });
+              })}
+          </section>
+        </motion.main>
+      </AnimatePresence>
       <footer className={styles.credit}>
         Designed and developed by{' '}
-        <Link href={'https://ashkenazzio.github.io'}>
-          <span className={styles.link}>Omri Ashkenazi </span>
-        </Link>
+        <a
+          href='https://ashkenazzio.github.io'
+          target='_blank'
+          className={`${styles.link} icon-before`}
+        >
+          Omri Ashkenazi
+        </a>
       </footer>
     </div>
   );

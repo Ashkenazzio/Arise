@@ -2,6 +2,9 @@ import { ThemeProvider } from 'context/ThemeContext';
 import { CurrencyProvider } from 'context/CurrencyContext';
 import { SessionProvider } from 'next-auth/react';
 import { AnonymousProvider } from 'context/AnonymousContext';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import * as ga from '../lib/google-analytics';
 
 import 'styles/globals.css';
 import Head from 'next/head';
@@ -9,6 +12,19 @@ import Layout from '@/layout/Layout';
 import AlterLayout from '@/layout/AlterLayout';
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      ga.pageview(url);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
+
   if (Component.getLayout) {
     return Component.getLayout(
       <SessionProvider session={pageProps.session}>

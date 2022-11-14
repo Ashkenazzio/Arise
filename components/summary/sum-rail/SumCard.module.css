@@ -1,0 +1,88 @@
+.sum-card {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--clr-accent);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+  font-size: clamp(1.5em, 1.75vw, 2rem);
+  background-color: var(--clr-light);
+  border-radius: 100vmax;
+  color: var(--clr-secondary);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.amount {
+  font: var(--font-h2);
+  font-weight: 700;
+  color: var(--clr-secondary);
+  height: 1em;
+}
+
+.label {
+  font: var(--font-subtitle);
+  font-weight: 600;
+  color: var(--clr-subtle);
+}
+
+.trend {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+  color: var(--clr-success);
+  font: var(--font-small);
+  font-weight: 700;
+}
+
+.change {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  background-color: var(--clr-success-200);
+  padding: 0.25em;
+  border-radius: 0.5em;
+}
+
+.nochange {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  background-color: hsl(240, 17%, 86%);
+  color: var(--clr-subtle);
+  padding: 0.25em 0.5em;
+  border-radius: 0.5em;
+}
+
+.nochange::after {
+  content: '--';
+}
+
+.change::after {
+  content: '\f175';
+}
+
+.negative {
+  color: var(--clr-error);
+}
+
+.above > .change::after {
+  content: '\f176';
+}
+
+.negative span {
+  background-color: var(--clr-error-200);
+  color: var(--clr-error);
+}

@@ -1,12 +1,14 @@
-import styles from './SummaryPage.module.css';
-
-import ExpenseRail from './expense-rail/ExpenseRail';
-import Graph from './data-vis/Graph';
-import Info from './info/Info';
 import { useEffect, useState } from 'react';
-import { queryTotalByCategory, getTrend } from 'lib/queryFilters';
-import { DUMMY_QUERIES } from 'lib/initData';
+import { queryTotalByCategory, getTrend } from 'lib/utilities/queryFilters';
+import { DUMMY_QUERIES } from 'lib/utilities/initData';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { summaryPageVars } from 'lib/framer-variants';
+
+import styles from './SummaryPage.module.css';
+import SumRail from './sum-rail/SumRail';
+import Graph from './graph/Graph';
+import Info from './info/Info';
 
 const SummaryPage = (props) => {
   const [queries, queryCompares] = props.queries;
@@ -30,21 +32,24 @@ const SummaryPage = (props) => {
       queriesTotalByCategory
     );
   }
-
   return (
-    <div className={styles.view}>
+    <motion.div variants={summaryPageVars} className={styles.view}>
       {empty && (
         <div className={styles.placeholder}>
           <div className={styles.message}>
             <h3>Nothing to Show Yet!</h3>
-            <p>You need to add entries to make use of the Summary section.</p>
+            <p>
+              There are no entries listed to summarize.
+              <br /> Try adding some or adjusting the filters to make use of the
+              summary section.
+            </p>
             <Link href={'/add'}>
               <span className={styles.link}>Click Here To Add Entries</span>
             </Link>
           </div>
         </div>
       )}
-      <ExpenseRail
+      <SumRail
         queriesByCategory={
           empty
             ? DUMMY_QUERIES
@@ -52,9 +57,11 @@ const SummaryPage = (props) => {
             ? queriesByCategoryWithTrend
             : queriesTotalByCategory
         }
+        list={props.list}
       />
       <Graph
         queriesByCategory={empty ? DUMMY_QUERIES : queriesTotalByCategory}
+        list={props.list}
       />
       <Info
         queriesByCategory={
@@ -64,8 +71,9 @@ const SummaryPage = (props) => {
             ? queriesByCategoryWithTrend
             : queriesTotalByCategory
         }
+        list={props.list}
       />
-    </div>
+    </motion.div>
   );
 };
 

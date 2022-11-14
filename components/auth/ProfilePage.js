@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 import styles from './ProfilePage.module.css';
 import Button from '@/ui/Button';
@@ -7,6 +8,7 @@ import Credential from './Credential';
 import ChangeAvatar from './ChangeAvatar';
 import ChangeName from './ChangeName';
 import ChangePassword from './ChangePassword';
+import { profileVars } from 'lib/framer-variants';
 
 const ProfilePage = (props) => {
   const [changeUser, setChangeUser] = props.changeUser;
@@ -35,7 +37,7 @@ const ProfilePage = (props) => {
   }
 
   return (
-    <div className={styles.view}>
+    <motion.div variants={profileVars} className={styles.view}>
       <h2 className={styles.title}>Hello {props.user.name} </h2>
       <div className={styles.credentials}>
         <div className={styles.container}>
@@ -92,17 +94,17 @@ const ProfilePage = (props) => {
         )}
         {!props.user.image && (
           <>
-            <ButtonAlt onClick={props.onReset}>CLEAR CHANGES</ButtonAlt>
+            <ButtonAlt onClick={props.onReset}>clear changes</ButtonAlt>
             <Button
               onClick={props.credentialsModalHandler}
               disabled={!changeUser.change}
             >
-              SAVE CHANGES
+              save changes
             </Button>
           </>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

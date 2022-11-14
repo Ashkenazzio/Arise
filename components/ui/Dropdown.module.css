@@ -2,18 +2,20 @@
   background-color: var(--clr-accent);
   color: var(--clr-body);
   border-radius: 0.5rem;
-  padding: 0.75em 1em;
-  font: inherit;
+  padding: 0 1em;
+  font-weight: 600;
   box-shadow: var(--shadow-inset);
   /* outline: 1px solid currentColor; */
   border: 1px solid transparent;
   background-clip: padding-box;
   position: relative;
-  font-weight: 500;
+  width: max-content;
+  white-space: nowrap;
 }
 
 .trigger {
   display: flex;
+  width: max-content;
   gap: 1rem;
   justify-content: space-between;
   align-items: center;
@@ -40,7 +42,6 @@
   overflow-y: scroll;
   scrollbar-width: none;
   border-radius: 0.5rem;
-  z-index: 10;
 }
 
 .content::-webkit-scrollbar {
@@ -54,6 +55,7 @@
   font-weight: normal;
   color: var(--clr-body);
   font: var(--font-small);
+  font-weight: 600;
 }
 
 .option:hover {

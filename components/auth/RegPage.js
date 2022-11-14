@@ -1,6 +1,8 @@
 import styles from './RegPage.module.css';
 import { useState } from 'react';
 import useInput from 'hooks/use-input';
+import { motion } from 'framer-motion';
+import { registerVars } from 'lib/framer-variants';
 
 import FormField from '@/ui/FormField';
 import Button from '@/ui/Button';
@@ -95,8 +97,8 @@ const RegPage = (props) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.register}>
+
+      <motion.section variants={registerVars} className={styles.register}>
         <h1 className={styles.title}>Register</h1>
         <form className={styles.form} onSubmit={onSubmitHandler}>
           <div className={styles.credentials}>
@@ -105,6 +107,7 @@ const RegPage = (props) => {
               type='text'
               info='Please enter your name.'
               maxLength='32'
+              required
               value={enteredName.value}
               onChange={nameChangeHandler}
               onBlur={nameBlurHandler}
@@ -117,6 +120,7 @@ const RegPage = (props) => {
               title='Email'
               type='email'
               info='Please enter a valid email address.'
+              required
               value={enteredEmail.value}
               onChange={emailChangeHandler}
               onBlur={emailBlurHandler}
@@ -129,6 +133,7 @@ const RegPage = (props) => {
               title='Password'
               type='password'
               info={`Please enter a password that's at least 8 characters long.`}
+              required
               value={enteredPassword.value}
               onChange={passwordChangeHandler}
               onBlur={passwordBlurHandler}
@@ -144,6 +149,7 @@ const RegPage = (props) => {
               title='Confirm Password'
               type='password'
               info='Please enter your chosen password again.'
+              required
               value={enteredConfirmedPassword.value}
               onChange={confirmedPasswordChangeHandler}
               onBlur={confirmedPasswordBlurHandler}
@@ -174,7 +180,7 @@ const RegPage = (props) => {
             </div>
           </div>
           <div className={styles.actions}>
-            <Button disabled={!formIsValid}>Register</Button>
+            <Button disabled={!formIsValid}>register</Button>
             <Link href='/login' className={styles.link}>
               <a className={styles.link}>
                 Already have an account? Click here to login
@@ -182,8 +188,7 @@ const RegPage = (props) => {
             </Link>
           </div>
         </form>
-      </div>
-    </div>
+      </motion.section>
   );
 };
 

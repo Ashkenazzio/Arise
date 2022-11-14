@@ -1,17 +1,29 @@
-import styles from './Modal.module.css';
-
 import ReactDOM from 'react-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { backdropVars, modalVars } from 'lib/framer-variants';
+
+import styles from './Modal.module.css';
 
 const Overlay = (props) => {
   return (
-    <div className={styles.backdrop} onClick={props.onClose}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <div className={`${styles.content} ${props.className}`}>
-          {props.children}
-        </div>
-      </div>
-    </div>
+    <AnimatePresence>
+      <motion.div
+        variants={backdropVars}
+        className={styles.backdrop}
+        onClick={props.onClose}
+      >
+        <motion.div
+          variants={modalVars}
+          className={styles.modal}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className={`${styles.content} ${props.className}`}>
+            {props.children}
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

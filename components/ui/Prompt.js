@@ -1,13 +1,22 @@
 import ReactDOM from 'react-dom';
 import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import styles from './Prompt.module.css';
 import Button from './Button';
+import { backdropVars, modalVars } from 'lib/framer-variants';
 
 const Overlay = (props) => {
   return (
-    <div className={styles.backdrop} onClick={props.onClose}>
-      <div
+    <motion.div
+      variants={backdropVars}
+      exit='exit'
+      className={styles.backdrop}
+      onClick={props.onClose}
+    >
+      <motion.div
+        variants={modalVars}
+        exit='hidden'
         className={`${styles.modal} ${!props.ok ? styles.error : undefined}`}
         onClick={(e) => e.stopPropagation()}
       >
@@ -21,8 +30,8 @@ const Overlay = (props) => {
             OK
           </Button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

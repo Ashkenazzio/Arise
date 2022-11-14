@@ -1,85 +1,152 @@
 @font-face {
-  font-family: 'Euclid Circular B';
-  src: local('Euclid Circular B Medium'), local('EuclidCircularB-Medium'),
-    url('../public/webfonts/fonts/EuclidCircularB-Medium.woff2') format('woff2'),
-    url('../public/webfonts/fonts/EuclidCircularB-Medium.woff2') format('woff');
-  font-weight: 500;
+  font-family: 'Nunito';
+  src: local('Nunito Light'), local('Nunito-Light'),
+    url('../public/webfonts/fonts/Nunito-Light.woff2') format('woff2'),
+    url('../public/webfonts/fonts/Nunito-Light.woff') format('woff');
+  font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Euclid Circular B';
-  src: local('Euclid Circular B SemiBold'), local('EuclidCircularB-SemiBold'),
-    url('../public/webfonts/fonts/EuclidCircularB-SemiBold.woff2')
-      format('woff2'),
-    url('../public/webfonts/fonts/EuclidCircularB-SemiBold.woff') format('woff');
+  font-family: 'Nunito';
+  src: local('Nunito Light Italic'), local('Nunito-LightItalic'),
+    url('../public/webfonts/fonts/Nunito-LightItalic.woff2') format('woff2'),
+    url('../public/webfonts/fonts/Nunito-LightItalic.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: local('Nunito Regular'), local('Nunito-Regular'),
+    url('../public/webfonts/fonts/Nunito-Regular.woff2') format('woff2'),
+    url('../public/webfonts/fonts/Nunito-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: local('Nunito Italic'), local('Nunito-Italic'),
+    url('../public/webfonts/fonts/Nunito-Italic.woff2') format('woff2'),
+    url('../public/webfonts/fonts/Nunito-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: local('Nunito SemiBold'), local('Nunito-SemiBold'),
+    url('../public/webfonts/fonts/Nunito-SemiBold.woff2') format('woff2'),
+    url('../public/webfonts/fonts/Nunito-SemiBold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Euclid Circular B';
-  src: local('Euclid Circular B SemiBold Italic'),
-    local('EuclidCircularB-SemiBoldItalic'),
-    url('../public/webfonts/fonts/EuclidCircularB-SemiBoldItalic.woff2')
-      format('woff2'),
-    url('../public/webfonts/fonts/EuclidCircularB-SemiBoldItalic.woff')
-      format('woff');
+  font-family: 'Nunito';
+  src: local('Nunito SemiBold Italic'), local('Nunito-SemiBoldItalic'),
+    url('../public/webfonts/fonts/Nunito-SemiBoldItalic.woff2') format('woff2'),
+    url('../public/webfonts/fonts/Nunito-SemiBoldItalic.woff') format('woff');
   font-weight: 600;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Euclid Circular B';
-  src: local('Euclid Circular B Regular'), local('EuclidCircularB-Regular'),
-    url('../public/webfonts/fonts/EuclidCircularB-Regular.woff2')
-      format('woff2'),
-    url('../public/webfonts/fonts/EuclidCircularB-Regular.woff') format('woff');
-  font-weight: normal;
+  font-family: 'Nunito';
+  src: local('Nunito Bold'), local('Nunito-Bold'),
+    url('../public/webfonts/fonts/Nunito-Bold.woff2') format('woff2'),
+    url('../public/webfonts/fonts/Nunito-Bold.woff') format('woff');
+  font-weight: 700;
   font-style: normal;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: local('Nunito Bold Italic'), local('Nunito-BoldItalic'),
+    url('../public/webfonts/fonts/Nunito-BoldItalic.woff2') format('woff2'),
+    url('../public/webfonts/fonts/Nunito-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
 }
 
 @import url('../public/css/font-awesome.all.css');
 
 :root {
   --clr-primary: #ffce00;
-  --clr-secondary: #4547e3;
+  --clr-secondary: hsl(239, 80%, 58%);
   --clr-secondary-700: #575ae6;
   --clr-secondary-100: #ededfc;
   --clr-secondary-50: #f6f6fe;
-  --clr-success: #31d0aa;
-  --clr-success-700: #59D9BA;
-  --clr-success-100: #cbf3ea;
-  --clr-error: #f03838;
-  --clr-error-700: #f46a6a;
-  --clr-error-100: #fbcdcd;
-  --clr-error-50: #fef5f5;
+  --clr-success: #2bbb98;
+  --clr-success-700: #68cdb5;
+  --clr-success-200: #cde9e2;
+  --clr-error: #ec4848;
+  --clr-error-700: #f27171;
+  --clr-error-200: #f4cfcf;
+  --clr-error-50: #f4ebeb;
   --clr-body: #4a4a68;
   --clr-subtle: #8c8ca1;
   --clr-dark: #0e0e2c;
   --clr-accent: #ecf1f4;
   --clr-light: #fbfcfd;
+  --clr-outline: #c9c9d9;
+
+  --clr-chart-blue: #97bfff;
+  --clr-chart-red: #e4736a;
+  --clr-chart-green: #92e06c;
+  --clr-chart-yellow: #f7b941;
+  --clr-chart-purple: #9a88d8;
+  --clr-chart-pink: #e89aea;
+  --clr-chart-salmon: #e986ac;
+
+  --clr-chart-blue-hover: #97bfff;
+  --clr-chart-red-hover: #e4736a;
+  --clr-chart-green-hover: #a1e87d;
+  --clr-chart-yellow-hover: #f7b941;
+  --clr-chart-purple-hover: #9a88d8;
+  --clr-chart-pink-hover: #e89aea;
+  --clr-chart-salmon-hover: #e986ac;
 
   --hover-brightness: 1.05;
 
-  --ff-primary: 'Euclid Circular B', sans-serif;
+  --ff-primary: 'Nunito', sans-serif;
 
-  --font-h1: 500 clamp(2rem, 2.75vw, 3rem) 'Euclid Circular B', sans-serif;
-  --font-h2: 500 clamp(1.5rem, 2.5vw, 2.5rem) 'Euclid Circular B', sans-serif;
-  --font-h3: 500 clamp(1.25rem, 1.5vw, 1.5rem) 'Euclid Circular B', sans-serif;
-  --font-subtitle: 500 clamp(1.125rem, 1.25vw, 1.5rem) 'Euclid Circular B',
-    sans-serif;
-  --font-body: normal 1rem 'Euclid Circular B', sans-serif;
-  --font-bold: 600 1rem 'Euclid Circular B', sans-serif;
-  --font-small: 500 0.875rem 'Euclid Circular B', sans-serif;
-  --font-pretitle: 600 0.75rem 'Euclid Circular B', sans-serif;
-  --font-button: 600 1rem 'Euclid Circular B', sans-serif;
-  --font-link: italic 500 1rem 'Euclid Circular B', sans-serif;
+  --font-h1: 700 clamp(2rem, 2.75vh, 3rem) 'Nunito', sans-serif;
+  --font-h2: 700 clamp(1.5rem, 2.5vh, 2.5rem) 'Nunito', sans-serif;
+  --font-h3: 700 clamp(1.25rem, 1.5vh, 1.5rem) 'Nunito', sans-serif;
+  --font-subtitle: normal clamp(1.125rem, 1.25vh, 1.25rem) 'Nunito', sans-serif;
+  --font-body: normal 1rem 'Nunito', sans-serif;
+  --font-bold: 700 1rem 'Nunito', sans-serif;
+  --font-small: normal 0.875rem 'Nunito', sans-serif;
+  --font-pretitle: 600 0.75rem 'Nunito', sans-serif;
+  --font-button: 700 1rem 'Nunito', sans-serif;
+  --font-link: italic 600 1rem 'Nunito', sans-serif;
 
   --shadow-box: 0px 1px 2px rgba(14, 14, 44, 0.15),
     0px 4px 8px rgba(14, 14, 44, 0.2);
   --shadow-inner: 0px -1px 0.5px rgba(14, 14, 44, 0.4) inset;
   --shadow-inset: 0px 2px 2px -1px rgba(14, 14, 44, 0.1) inset;
+
+  --sum-scroll-shadow-bottom-width: 0;
+  --sum-scroll-shadow-bottom-height: 0;
+  --sum-scroll-shadow-bottom-opacity: 0;
+
+  --info-scroll-shadow-bottom-width: 0;
+  --info-scroll-shadow-bottom-height: 0;
+  --info-scroll-shadow-bottom-opacity: 0;
+
+  --graph-scroll-arrow-right-opacity: 1;
+}
+
+[dark-theme='true'] {
+  --clr-secondary-50: #2b2b36;
+  --clr-body: #ecf1f4;
+  --clr-subtle: #8c8ca1;
+  --clr-dark: #fbfcfd;
+  --clr-accent: #1e1e2a;
+  --clr-light: #121221;
+  --clr-outline: #dedefa;
 }
 
 *,
@@ -88,16 +155,19 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
 }
 
 body {
   min-height: 100vh;
-  background-color: var(--clr-secondary-50);
-  display: flex;
   scroll-behavior: smooth;
+  background-color: var(--clr-secondary-50);
   font-family: var(--ff-primary);
   color: var(--clr-body);
-  filter: invert(1) hue-rotate(180) !important;
 }
 
 body::-webkit-scrollbar {
@@ -111,10 +181,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 #__next {
-  display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
 }
 
 .icon-before::before,
@@ -125,21 +193,8 @@ body::-webkit-scrollbar-thumb {
   font: var(--fa-font-solid);
 }
 
-[dark-theme='true'] {
-  --clr-primary: #ffce00;
-  --clr-secondary: #4547e3;
-  --clr-secondary-700: #575ae6;
-  --clr-secondary-100: #ededfc;
-  --clr-secondary-50: #262636;
-  --clr-body: #ecf1f4;
-  --clr-subtle: #8c8ca1;
-  --clr-dark: #fbfcfd;
-  --clr-accent: #4a4a68;
-  --clr-light: #0e0e2c;
-}
-
 @media (min-width: 75em) {
   #__next {
-    max-height: 100vh;
+    height: 100vh;
   }
 }

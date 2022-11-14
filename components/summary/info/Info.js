@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 
 import styles from './Info.module.css';
 import Note from './Note';
+import { infoContainerVars, infoRailVars, noteVars } from 'lib/framer-variants';
 
 const Info = (props) => {
   const categoriesWithTrend = props.queriesByCategory.filter(
@@ -9,7 +11,6 @@ const Info = (props) => {
   );
   const [notes, setNotes] = useState(categoriesWithTrend.length);
   const [empty, setEmpty] = useState(false);
-  const [scroll, setScroll] = useState(false);
 
   const onClose = () => {
     setNotes((prevNotes) => prevNotes - 1);
@@ -17,13 +18,15 @@ const Info = (props) => {
 
   useEffect(() => {
     setNotes(categoriesWithTrend.length);
+  }, [categoriesWithTrend.length]);
 
+  useEffect(() => {
     if (notes === 0) {
       setEmpty(true);
     } else {
       setEmpty(false);
     }
-  }, [categoriesWithTrend.length, notes]);
+  }, [notes]);
 
   const wrapperRef = useRef();
   const railRef = useRef();
@@ -31,37 +34,65 @@ const Info = (props) => {
   const shadowBottomRef = useRef();
 
   useEffect(() => {
-    setScroll(
-      railRef.current.scrollHeight > railRef.current.clientHeight ||
-        railRef.current.scrollWidth > railRef.current.clientWidth
-    );
-  }, [notes]);
+    if (window.innerWidth < 1200) {
+      const contentScrollWidth =
+        railRef.current.scrollWidth - wrapperRef.current.offsetWidth;
+      const currentScroll = railRef.current.scrollLeft / contentScrollWidth;
 
-  useEffect(() => {
-    const contentScrollHeight =
-      railRef.current.scrollHeight - wrapperRef.current.offsetHeight;
+      if (contentScrollWidth > 0) {
+        shadowBottomRef.current.style.setProperty(
+          '--sum-scroll-shadow-bottom-width',
+          `${1 + (5 - currentScroll)}rem`
+        );
+        shadowBottomRef.current.style.setProperty(
+          '--sum-scroll-shadow-bottom-opacity',
+          1 - currentScroll
+        );
+      }
 
-    const contentScrollWidth =
-      railRef.current.scrollWidth - wrapperRef.current.offsetWidth;
-
-    railRef.current.addEventListener('scroll', (e) => {
-      if (contentScrollHeight === 0) {
-        if (contentScrollWidth === 0) {
+      railRef.current.addEventListener('scroll', (e) => {
+        if (contentScrollWidth <= 0) {
           return;
         }
         const currentScroll = railRef.current.scrollLeft / contentScrollWidth;
+
         shadowTopRef.current.style.opacity = currentScroll;
+        shadowTopRef.current.style.width = `${1 + (5 + currentScroll)}rem`;
         shadowBottomRef.current.style.opacity = 1 - currentScroll;
-        return;
-      }
+        shadowBottomRef.current.style.width = `${1 + (5 - currentScroll)}rem`;
+      });
+    } else {
+      const contentScrollHeight =
+        railRef.current.scrollHeight - wrapperRef.current.offsetHeight;
       const currentScroll = railRef.current.scrollTop / contentScrollHeight;
-      shadowTopRef.current.style.opacity = currentScroll;
-      shadowBottomRef.current.style.opacity = 1 - currentScroll;
-    });
-  }, [notes]);
+
+      if (contentScrollHeight > 0) {
+        shadowBottomRef.current.style.setProperty(
+          '--sum-scroll-shadow-bottom-height',
+          `${1 + (5 - currentScroll)}rem`
+        );
+        shadowBottomRef.current.style.setProperty(
+          '--sum-scroll-shadow-bottom-opacity',
+          1 - currentScroll
+        );
+      }
+
+      railRef.current.addEventListener('scroll', (e) => {
+        if (contentScrollHeight <= 0) {
+          return;
+        }
+        const currentScroll = railRef.current.scrollLeft / contentScrollHeight;
+
+        shadowTopRef.current.style.opacity = currentScroll;
+        shadowTopRef.current.style.height = `${1 + (5 + currentScroll)}rem`;
+        shadowBottomRef.current.style.opacity = 1 - currentScroll;
+        shadowBottomRef.current.style.height = `${1 + (5 - currentScroll)}rem`;
+      });
+    }
+  }, []);
 
   return (
-    <div className={styles.container}>
+    <motion.div variants={infoContainerVars} className={styles.container}>
       <h3 className={styles.label}>Useful Information</h3>
       <div ref={wrapperRef} className={styles.wrapper}>
         <div
@@ -70,20 +101,27 @@ const Info = (props) => {
         ></div>
         <div
           ref={shadowBottomRef}
-          style={{ opacity: scroll ? 1 : 0 }}
           className={`${styles.shadow} ${styles['shadow--bottom']}`}
         ></div>
-        <div ref={railRef} className={styles.rail}>
+        <motion.div
+          variants={infoRailVars}
+          ref={railRef}
+          className={styles.rail}
+        >
           {empty && <span className={styles.blank}>nothing to report! 🙌🏻</span>}
-          {!empty &&
-            categoriesWithTrend.map((category) => {
-              return (
-                <Note key={category.id} category={category} close={onClose} />
-              );
-            })}
-        </div>
+          {categoriesWithTrend.map((category) => {
+            return (
+              <Note
+                key={category.id}
+                category={category}
+                close={onClose}
+                list={props.list}
+              />
+            );
+          })}
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -47,28 +47,28 @@ const AddCategory = (props) => {
           </div>
         </div>
         <FormField
-          title='Category Title:'
-          id='add-category'
-          type='text'
-          value={enteredCategory.value}
-          maxLength='32'
-          onChange={categoryChangeHandler}
-          onBlur={categoryBlurHandler}
-          error={categoryInputInvalid ? categoryInputInvalid : undefined}
-          valid={categoryIsValid ? categoryIsValid : undefined}
-        />
-        <FormField
           title='Expense/Income:'
           id='list-type'
           type='checkbox'
           className={styles.toggle}
           onChange={() => setChecked(!checked)}
         />
+        <FormField
+          title='Title:'
+          id='add-category'
+          type='text'
+          value={enteredCategory.value}
+          maxLength='32'
+          onChange={categoryChangeHandler}
+          onBlur={categoryBlurHandler}
+          error={categoryInputInvalid ? 1 : undefined}
+          valid={categoryIsValid ? 1 : undefined}
+        />
       </div>
       <div className={styles.actions}>
-        <ButtonAlt onClick={props.onClose}>CANCEL</ButtonAlt>
+        <ButtonAlt onClick={props.onClose}>cancel</ButtonAlt>
         <Button disabled={!categoryIsValid} onClick={addCategoryHandler}>
-          ADD CATEGORY
+          add category
         </Button>
       </div>
     </Modal>

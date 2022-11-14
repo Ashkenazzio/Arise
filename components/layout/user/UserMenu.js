@@ -13,15 +13,17 @@ const UserMenu = (props) => {
   const logoutHandler = () => {
     router.push('/login');
 
-    if (status === 'authenticated') {
-      signOut();
-    }
-    localStorage.setItem('arise-anonymous', false);
+    setTimeout(() => {
+      if (status === 'authenticated') {
+        signOut();
+      }
+      localStorage.setItem('arise-anonymous', false);
+    }, 5);
   };
 
   return (
     <div className={styles.container} onClick={() => setOpen(!open)}>
-      <div
+      <nav
         className={`${styles.menu} ${open ? styles.active : styles.inactive}`}
         ref={props.ref}
       >
@@ -58,7 +60,7 @@ const UserMenu = (props) => {
             title={'Logout'}
           />
         </ul>
-      </div>
+      </nav>
     </div>
   );
 };

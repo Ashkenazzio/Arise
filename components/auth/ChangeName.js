@@ -45,9 +45,9 @@ const ChangeName = (props) => {
         />
       </div>
       <div className={styles.actions}>
-        <ButtonAlt onClick={props.onClose}>CANCEL</ButtonAlt>
+        <ButtonAlt onClick={props.onClose}>cancel</ButtonAlt>
         <Button disabled={!nameIsValid} onClick={changeNameHandler}>
-          CHANGE
+          change
         </Button>
       </div>
     </Modal>
