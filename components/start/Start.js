@@ -70,7 +70,7 @@ const Start = () => {
           id='add'
           className={styles.intro}
         >
-          <div className={styles.heading} num='1.'>
+          <div className={styles.heading} data-number='1.'>
             <div className={styles.headings}>
               <h2 className={styles.title}>Add Entries</h2>
               <span className={styles.subtitle}>
@@ -90,6 +90,7 @@ const Start = () => {
             <motion.div variants={sectionElementVars} className={styles.img}>
               <Image
                 style={{ borderRadius: '0.25rem', objectFit: 'cover' }}
+                alt='type selector'
                 src={type_selector}
               />
             </motion.div>
@@ -108,6 +109,7 @@ const Start = () => {
             <motion.div variants={sectionElementVars} className={styles.img}>
               <Image
                 style={{ borderRadius: '0.25rem', objectFit: 'cover' }}
+                alt='new category'
                 src={new_category}
               />
             </motion.div>
@@ -119,7 +121,7 @@ const Start = () => {
           id='flow'
           className={styles.intro}
         >
-          <div className={styles.heading} num='2.'>
+          <div className={styles.heading} data-number='2.'>
             <div className={styles.headings}>
               <h2 className={styles.title}>Browse Your Flow</h2>
               <span className={styles.subtitle}>
@@ -139,6 +141,7 @@ const Start = () => {
             <motion.div variants={sectionElementVars} className={styles.img}>
               <Image
                 style={{ borderRadius: '0.25rem', objectFit: 'cover' }}
+                alt='balance component'
                 src={balance}
               />
             </motion.div>
@@ -153,12 +156,14 @@ const Start = () => {
                 You can easily edit the entries you added by pressing them and
                 entering edit mode. You can either change the details of the
                 entry or delete it completely. Press the item again to exit item
-                edit or confirm your changes by pressing the 'Edit' button.
+                edit or confirm your changes by pressing the &apos;Edit&apos;
+                button.
               </p>
             </motion.div>
             <motion.div variants={sectionElementVars} className={styles.img}>
               <Image
                 style={{ borderRadius: '0.25rem', objectFit: 'cover' }}
+                alt='edit entries'
                 src={edit_entries}
               />
             </motion.div>
@@ -170,7 +175,7 @@ const Start = () => {
           id='summary'
           className={styles.intro}
         >
-          <div className={styles.heading} num='3.'>
+          <div className={styles.heading} data-number='3.'>
             <div className={styles.headings}>
               <h2 className={styles.title}>Summarize And Adapt</h2>
               <span className={styles.subtitle}>
@@ -191,6 +196,7 @@ const Start = () => {
             <motion.div variants={sectionElementVars} className={styles.img}>
               <Image
                 style={{ borderRadius: '0.25rem', objectFit: 'cover' }}
+                alt='sum cards'
                 src={sum_cards}
               />
             </motion.div>
@@ -209,6 +215,7 @@ const Start = () => {
             <motion.div variants={sectionElementVars} className={styles.img}>
               <Image
                 style={{ borderRadius: '0.25rem', objectFit: 'cover' }}
+                alt='graph'
                 src={graph}
               />
             </motion.div>
@@ -224,6 +231,7 @@ const Start = () => {
             <motion.div variants={sectionElementVars} className={styles.img}>
               <Image
                 style={{ borderRadius: '0.25rem', objectFit: 'cover' }}
+                alt='useful information component'
                 src={useful_info}
               />
             </motion.div>

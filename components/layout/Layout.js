@@ -125,6 +125,7 @@ function Layout(props) {
         <a
           href='https://ashkenazzio.github.io'
           target='_blank'
+          rel='noreferrer'
           className={`${styles.link} icon-before`}
         >
           Omri Ashkenazi
