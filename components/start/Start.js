@@ -8,7 +8,7 @@ import {
 
 import styles from './Start.module.css';
 import Image from 'next/image';
-import untitled from '@/images/untitled.png';
+import untitled from '@/images/start_section/untitled.png';
 import type_selector from '@/images/start_section/type_selector.png';
 import new_category from '@/images/start_section/new_category.png';
 import balance from '@/images/start_section/balance.png';
