@@ -44,7 +44,9 @@ const Start = () => {
         >
           <div className={`${styles.title} ${styles['main-title']}`}>
             <h1>Welcome🤗</h1>
-            <span className={styles.subtitle}>Let's start lifting you up.</span>
+            <span className={styles.subtitle}>
+              Let&apos;s start lifting you up.
+            </span>
           </div>
           <motion.div variants={startBlockVars} className={styles.block}>
             <motion.div variants={sectionElementVars} className={styles.text}>
@@ -59,6 +61,7 @@ const Start = () => {
             <motion.div variants={sectionElementVars} className={styles.img}>
               <Image
                 style={{ borderRadius: '0.25rem', objectFit: 'cover' }}
+                alt='main image'
                 src={untitled}
               />
             </motion.div>
